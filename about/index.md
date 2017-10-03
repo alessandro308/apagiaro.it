@@ -5,29 +5,7 @@ tags: [about]
 date: 2017-07-01
 comments: false
 ---
-<script type="application/ld+json">
-    {
-      "@context": "http://schema.org",
-      "@type": "Person",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Pisa",
-        "addressRegion": "PI",
-        "postalCode": "56125",
-      },
-      "email": "mailto:alessandropagiaro@gmail.com",
-      "image": "http://apagiaro.it/assets/img/me.png",
-      "jobTitle": "Student",
-      "name": "Alessandro Pagiaro",
-      "birthDate": "1994.08.30",
-      "gender": "male",
-      "nationality": "Italian",
-      "url": "http://apagiaro.it",
-	    "sameAs" : [ "https://www.facebook.com/alessandro308",
-      "https://www.linkedin.com/in/alessandro-pagiaro-9a5a5496/",
-      "https://twitter.com/alessandro308"]
-    }
-</script>
+
 <img src="{{ site.url }}/assets/img/me2.png" style="width: 200px; margin: 10px" align="left" />
 Sono un giovane sviluppatore italiano, appassionato di tecnologie web. Sono costantemente alla ricerca di progetti che possano aiutarmi ad ampliare le mie conoscenze. 
 
