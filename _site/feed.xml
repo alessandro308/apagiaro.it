@@ -1,0 +1,990 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="https://apagiaro.it/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="https://apagiaro.it/feed.xml" rel="self" type="application/atom+xml" /><link href="https://apagiaro.it/" rel="alternate" type="text/html" /><updated>2017-10-09T18:34:15+02:00</updated><id>https://apagiaro.it/</id><title type="html">Alessandro Pagiaro</title><subtitle>Studente di Informatica presso l'Università di Pisa. Scout a tempo perso.</subtitle><entry><title type="html">How to create sorted run for merge-sort larger than M (memory size) using SnowPlow Algorithm</title><link href="https://apagiaro.it/snowplow-algorithm/" rel="alternate" type="text/html" title="How to create sorted run for merge-sort larger than M (memory size) using SnowPlow Algorithm" /><published>2017-08-26T00:00:00+02:00</published><updated>2017-08-26T00:00:00+02:00</updated><id>https://apagiaro.it/snowplow-algorithm</id><content type="html" xml:base="https://apagiaro.it/snowplow-algorithm/">&lt;p&gt;If we design an algoritmh and we stop thinking about CPU time and focus our attention on main bottleneck of “computer speed”, we have to fucus our attention on IO access in (main) memory. Moreover this introduce new problem, how to optimize access in memory?&lt;/p&gt;
+
+&lt;p&gt;If I design a mergesort algorithm, I’ll find useful to build a &lt;em&gt;k-way mergesort&lt;/em&gt; where the complexity decrease when the run size increas [1]. So it’s useful to find a way to create a sorted run as long as we can.&lt;/p&gt;
+
+&lt;p&gt;We can use some tecnique, one of them called Algorithm R (Replacement selection) by Knuth [2], or, more funny, the snowplow algorithm. It outputs a sorted runs of size greater that &lt;code class=&quot;highlighter-rouge&quot;&gt;M&lt;/code&gt; (memory size), with average size equal to &lt;code class=&quot;highlighter-rouge&quot;&gt;2M&lt;/code&gt; and then you can use this sorted runs as input in a (&lt;em&gt;k-way&lt;/em&gt;) mergesort.&lt;/p&gt;
+
+&lt;h2 id=&quot;step-1&quot;&gt;Step 1&lt;/h2&gt;
+&lt;p&gt;First of all you need to create an min heaptree with M element in main memory. This tree can be build in &lt;code class=&quot;highlighter-rouge&quot;&gt;O(n)&lt;/code&gt; time.&lt;/p&gt;
+
+&lt;h2 id=&quot;step-2&quot;&gt;Step 2&lt;/h2&gt;
+&lt;p&gt;Get an element &lt;code class=&quot;highlighter-rouge&quot;&gt;e&lt;/code&gt; from unsorted set (saved in external memory), and then compare it with the minimum element &lt;code class=&quot;highlighter-rouge&quot;&gt;m&lt;/code&gt; extracted from min-headtree.&lt;/p&gt;
+
+&lt;h5 id=&quot;case-1&quot;&gt;Case 1&lt;/h5&gt;
+&lt;p&gt;If the element is less then extracted one, i.d. &lt;code class=&quot;highlighter-rouge&quot;&gt;e &amp;lt; m&lt;/code&gt;, then put &lt;code class=&quot;highlighter-rouge&quot;&gt;e&lt;/code&gt; in unsorted bucket in main memory and send &lt;code class=&quot;highlighter-rouge&quot;&gt;e&lt;/code&gt; to output.&lt;/p&gt;
+
+&lt;h5 id=&quot;case-2&quot;&gt;Case 2&lt;/h5&gt;
+&lt;p&gt;Else if the element is greater than the minimum, i.d. &lt;code class=&quot;highlighter-rouge&quot;&gt;e &amp;gt; m&lt;/code&gt; then send &lt;code class=&quot;highlighter-rouge&quot;&gt;m&lt;/code&gt; to output and add new element &lt;code class=&quot;highlighter-rouge&quot;&gt;e&lt;/code&gt; in heaptree then heapify the tree - &lt;code class=&quot;highlighter-rouge&quot;&gt;O(log n)&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;step-3&quot;&gt;Step 3&lt;/h2&gt;
+&lt;p&gt;If heapTree is empty&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;build a new heaptree with unsorted element put in main mamory bucket
+-(notice that if heaptree is empty, the unsorted bucket contains M-1 elements)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;else&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;back to First Step&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If the external sorted elements in external memory ends, extract min from min-headtree until it became empty.&lt;/p&gt;
+
+&lt;h1 id=&quot;example&quot;&gt;Example&lt;/h1&gt;
+
+&lt;p&gt;Here I provide a small example to show how this algorithm works.
+&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/snowplow.jpg&quot; alt=&quot;SnowPlow Algorithm Example&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;So the sorted runs are:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;2 3 6 23 54 61&lt;/li&gt;
+  &lt;li&gt;1 5 9 42&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;As Ferragina says on [1], &lt;em&gt;Snow-Plow builds &lt;code class=&quot;highlighter-rouge&quot;&gt;O(n=M)&lt;/code&gt; sorted runs, each longer than M and actually of length 2M on average. Using Snow-Plow for the formation of sorted runs in a Merge-based sorting scheme, this achieves an I/O-complexity of \( O(\frac{n}{B}log_{2}{\frac{n}{2M}})\) on average.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;p&gt;[1] The magic of Algorithm, lecture notes of Paolo Ferragina&lt;/p&gt;
+
+&lt;p&gt;[2] Donald E. Knuth. The Art of Computer Programming: volume 3. Addison-Wesley, 2nd
+Edition, 1998.&lt;/p&gt;</content><category term="algorithm" /><category term="english" /><summary type="html">A simple algorithm to create runs larger than memory size</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma, parte 3</title><link href="https://apagiaro.it/intro-crittografia-3/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma, parte 3 " /><published>2017-08-26T00:00:00+02:00</published><updated>2017-08-26T00:00:00+02:00</updated><id>https://apagiaro.it/intro-crittografia-3</id><content type="html" xml:base="https://apagiaro.it/intro-crittografia-3/">&lt;p&gt;Dopo aver visto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia&quot;&gt;prima parte&lt;/a&gt; come scambiarsi una chiave senza doverla comunicare in chiaro, abbiamo visto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia-2&quot;&gt;seconda parte&lt;/a&gt; come è possibile scambiarsi messaggi cifrati senza neanche doversi scambiare una chiave, tramite l’uso dell’RSA.&lt;/p&gt;
+
+&lt;p&gt;Lo scopo di oggi è vedere come sfruttare l’RSA, o qualsiasi altro algoritmo di cifratura asimmetrico, per verificare l’identità di un mittente come se lui lo avesse firmato.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://www.ordineingegneri.ancona.it/sites/default/files/firmadigitale.jpg&quot; alt=&quot;firma&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;la-firma-digitale&quot;&gt;La firma digitale&lt;/h1&gt;
+&lt;p&gt;Bob mi manda un messaggio: “Il pagamento puoi effettuarlo al seguente IBAN: IT000….001”. Ed ecco il problema, come verifico che quel messaggio sia stato spedito effettivamente da Bob e non sia stato intercettato da qualcuno che ha prontamente modificato l’IBAN con il suo?&lt;/p&gt;
+
+&lt;p&gt;Di certo non è cifrando il messaggio che risolvo la cosa poichè cifrando qualcosa lui è in grado di verificare che solo io possa leggere il messaggio ma io non sono in grado di verificare chi abbia spedito il messaggio.&lt;/p&gt;
+
+&lt;h3 id=&quot;recap&quot;&gt;Recap&lt;/h3&gt;
+&lt;p&gt;Come avevamo già visto, ogni utente in un sistema di crittografia asimmetrica dispone di due chiavi: la &lt;em&gt;chiave pubblica&lt;/em&gt; e la &lt;em&gt;chiave privata&lt;/em&gt;. La caratteristica è che la chiave pubblica può essere liberamente comunicata a chiunque e la chiave privata invece rimane segreta. Inoltre, il legame tra queste due chiavi è che, applicando prima una e poi l’altra al messaggio, il testo viene cifrato e decifrato, potremmo dire che sono una l’inverso dell’altra. In formula, sia &lt;em&gt;C(m, k)&lt;/em&gt; l’algoritmo usato, &lt;em&gt;m&lt;/em&gt; il messaggio e &lt;em&gt;k&lt;/em&gt; la chiave usata:&lt;/p&gt;
+
+&lt;p&gt;\[ m = C(C(m, k_{pu}), k_{pr}) = C(C(m, k_{pr}), k_{pu})\]&lt;/p&gt;
+
+&lt;h2 id=&quot;come-firmare-un-messaggio&quot;&gt;Come firmare un messaggio&lt;/h2&gt;
+&lt;p&gt;Per firmare un messaggio dobbiamo quindi trovare un modo per sfruttare cifrare il messaggio in un modo che solo il reale mittente potrebbe fare.&lt;/p&gt;
+
+&lt;p&gt;La cosa che potrebbe certificare il mittente di essere Bob è il dimostrare di conoscere la sua chiave privata, \( k_{pr-B}\). Certo, Bob non può però rivelare al mondo (altrimenti non sarebbe più privata) questo dato e quindi escogita un modo che trovo geniale: usa l’algoritmo di cifratura al contrario, invece che cifrare con la chiave pubblica del ricevente, cifra con la sua chiave privata. Chiaramente tutti saranno in grado di “decifrare” il messaggio, basterà applicare la chiave pubblica di Bob. Il nostro scopo infatti, vi ricordo, non è cifrare il messaggio ma fare in modo di verificare l’identità del mittente.&lt;/p&gt;
+
+&lt;p&gt;Cosa comporta questo? Che il messaggio è cifrato con una chiave che solo Bob può conoscere e di cui tutti sono in grado di verificarne la correttezza poichè tutti conoscono la &lt;em&gt;chiave pubblica&lt;/em&gt; di Bob e quindi, dato che una è &lt;em&gt;“inverso”&lt;/em&gt; dell’altra, è possibile effettuare \( m = C(C(m, k_{pr}), k_{pu}) \).&lt;/p&gt;
+
+&lt;h3 id=&quot;abbreviare-il-messaggio-hashing&quot;&gt;Abbreviare il messaggio: hashing&lt;/h3&gt;
+&lt;p&gt;Certo che però cifrare un intero messaggio che spediremo &lt;em&gt;anche&lt;/em&gt; in chiaro (il nostro scopo ora infatti non è di spedire il messaggi cifrato, avevamo già visto come fare per quello, ma di spedire un messaggio e autenticarlo) vuol dire raddoppiare la quantità di dati da spedire e calcolare il messaggio cifrato su una grande quantità di dati inutilmente.&lt;/p&gt;
+
+&lt;p&gt;Se poi ci mettiamo anche il fatto che gli algoritmi di cifratura asimmetrica sono molto più complessi da un punto di vista computazionale dei classici algoritmi a cifratura simmetrica, per fare un esempio una password lunga 2048 bits usata in un cifrario RSA viene, da un punto di vista di sicurezza, comparata ad una lunga solo 128 bits in un cifrario AES (uno dei più usati cifrari simmetrici in circolazione)… ecco che tutti risulta inefficiente!&lt;/p&gt;
+
+&lt;p&gt;Come aggirare il problema? Non viene di solito cifrato il messagio completo ma una sua sintesi, l’output cioè di una funzione &lt;em&gt;hash&lt;/em&gt;, &lt;em&gt;h(m)&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;cosa-è-una-funzione-hash&quot;&gt;Cosa è una funzione hash?&lt;/h4&gt;
+&lt;p&gt;Ecco, questa cosa è forse un po’ tecnica e si discosta un po’ dal &lt;em&gt;mood&lt;/em&gt; di queste pagine che volevano essere una cosa generale da far capire a tutti. Tuttavia provo a lasciare le cose più semplici possibili, decidete voi se lo sono abbastanza da leggerle.&lt;/p&gt;
+
+&lt;p&gt;Una funzione hash è una funzione che, dato in input un qualsiasi messaggio (stringa di bits di qualsiasi lunghezza), restituisce in output una serie di bits di lunghezza fissa. Chiaramente questa cosa comporta che vi sono moltissimi (leggasi infiniti) messaggi che possono corrispondere ad uno stesso &lt;em&gt;hash&lt;/em&gt;, cioè:
+\[ \exists i, j \ s.t.\ h(i)=h(j) \]&lt;/p&gt;
+
+&lt;p&gt;Tale affermazione è abbastanza intuitiva, infiniti inputs, finiti possibili outputs, infiniti inputs collideranno per il &lt;em&gt;pigeonhole principle&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;E allora? E allora si cerca di usare funzioni &lt;em&gt;hash&lt;/em&gt; abbastanza casuali tali che due input simili non presentino lo stesso &lt;em&gt;hash&lt;/em&gt; o, ancora meglio, questo &lt;em&gt;hash&lt;/em&gt; sia molto differente. Facendo un esempio, potremmo usare una famosa funzione hash, la SHA-256:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sha256(&quot;ciao a tutti&quot;) = d866234a1931e169288df6353923629cb4297c299da5fdfbe00b7fa42861eb98
+sha256(&quot;ciao a tutte&quot;) = 41a0afdbed24669aad1da115f0e8577277a41ec351ac6a6c7169a8e6f28b7084
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Un’altra caratteristica di queste funzioni, per la loro natura dimensionale (infiniti input, finiti output), è che non sono invertibili. Se vi dessi quindi l’output &lt;code class=&quot;highlighter-rouge&quot;&gt;d866234a1931e169288df6353923629cb4297c299da5fdfbe00b7fa42861eb98&lt;/code&gt; non sareste in grado di capire quale input lo ha generato (avreste infiniti input tra cui scegliere).&lt;/p&gt;
+
+&lt;h2 id=&quot;come-funziona-la-firma&quot;&gt;Come funziona la firma&lt;/h2&gt;
+
+&lt;p&gt;L’idea, per tornare ai nostri scopi, è di per sè molto semplice: mandare due valori, il messaggio in chiaro e l’hash del messaggio cifrato con la chiave privata&lt;/p&gt;
+
+&lt;p&gt;\[ &amp;lt;m, C(h(m), K_{pr-B})&amp;gt; \]&lt;/p&gt;
+
+&lt;p&gt;Un eventuale ricevente non deve far nient’altro che prendere la &lt;em&gt;chiave pubblica&lt;/em&gt; di Bob, e applicarla al secondo componente spedito. Se il procedimento è andato a buon fine il risultato sarà \( &amp;lt;m, h(m)&amp;gt; \). Basterà quindi calcolare l’hash di &lt;em&gt;m&lt;/em&gt; e confrontarlo con il risultato della decifratura.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/facebook.png&quot; alt=&quot;facebook certificato&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;il-problema-della-verifica-della-chiave-pubblica&quot;&gt;Il problema della verifica della chiave pubblica&lt;/h1&gt;
+&lt;p&gt;Si introduce, in tutto questo ragionamento, un problema che, quando abbiamo introdotto i cifrari asimmetrici, avevamo ignorato.&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;Come verifico che la chiave pubblica di Bob sia realmente &lt;i&gt;xyz&lt;/i&gt; e non sia, in realtà &lt;i&gt;abc&lt;/i&gt;?&lt;/b&gt;&lt;/center&gt;
+
+&lt;p&gt;In altre parole, come verifico che nessuno abbia sostituito la pagina dove Bob ha scritto la sua chiave pubblica con una pagina contenente la sua per validare lui un “finto” messaggio?&lt;/p&gt;
+
+&lt;p&gt;Chiaramente come possiamo immaginare si è trovata una soluzione anche a questo e viene usata in maniera consistente ogni qual volta navighiamo in &lt;em&gt;https&lt;/em&gt; sul web. Sono stati creati delle &lt;em&gt;certification authority&lt;/em&gt; che si fanno carico di certificare la validità delle varie chiavi pubbliche. Se voglio che tutti siano sicuri che la mia chiave pubblica è \(k_{mia}\), me la faccio certificare da una &lt;em&gt;certification authority&lt;/em&gt; che si salverà \(k_{mia}\) e la comunicherà corretta a chiunque la richieda.&lt;/p&gt;
+
+&lt;p&gt;A questo punto si torna alla domanda con cui avevamo aperto questa serie di articoli sulla crittografia, &lt;strong&gt;chi certifica la Certification Authority&lt;/strong&gt;?&lt;/p&gt;
+
+&lt;p&gt;Beh, in tal caso diciamo che si autocertificano, o meglio, per capirlo bisogna capire in che scenario si utilizzano. Quando navighiamo noi usiamo un browser che si connetterà in maniera cifrata a vari server verificando l’identità di ognuno di questi leggendo la &lt;em&gt;chiave pubblica&lt;/em&gt; dichiarata (la questione è un po’ più complicata ma cerchiamo di lasciarla più semplice possibile). A questo punto, si connette alla &lt;em&gt;certification authority&lt;/em&gt; per controllare la validità. Questa connessione che effettua avviene con il metodo di cifratura asimmetrica visto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia-2&quot;&gt;seconda parte&lt;/a&gt; e, la chiave pubblica della &lt;em&gt;c. a.&lt;/em&gt;, il browser la conosce perchè ce l’ha salvata nel suo database locale. E chi l’ha inserita in quel database? Diciamo che il programmatore potrebbe aver inserito le principale &lt;em&gt;c.a.&lt;/em&gt; e quando scaricate il browser ve le ritrovate già lì pronte, e poi a cascata tutte le altre.&lt;/p&gt;
+
+&lt;p&gt;Per vedere tutte queste cose, sui siti che visitate, basta cliccare sul lucchetto posto, solitamente, alla sinistra dell’url nella barra degli indirizzo. Vi dovreste ritrovare una schermata simile a quella mostrata nell’immagine qui sopra con tutti i dati di cui abbiamo parlato oggi che ora, spero, sarete in grado di capire un po’ meglio.&lt;/p&gt;</content><category term="crittografia" /><category term="RSA" /><category term="firma digitale" /><summary type="html">La firma digitale</summary></entry><entry><title type="html">Man-in-the-middle per tutti con Bettercap</title><link href="https://apagiaro.it/bettercap-guida-ita/" rel="alternate" type="text/html" title="Man-in-the-middle per tutti con Bettercap" /><published>2017-08-24T00:00:00+02:00</published><updated>2017-08-24T00:00:00+02:00</updated><id>https://apagiaro.it/bettercap-guida-ita</id><content type="html" xml:base="https://apagiaro.it/bettercap-guida-ita/">&lt;p&gt;Una delle cose che ci si immagina, quando si pensa alla sicurezza informatica, è l’intercettare e modificare il traffico internet di un computer &lt;em&gt;target&lt;/em&gt; per fare quello che ci occorre.&lt;/p&gt;
+
+&lt;div class=&quot;notice&quot;&gt;
+&lt;h3&gt;Attenzione!!!&lt;/h3&gt;
+Blocchiamoci un attimo prima di fare qualsiasi cosa, se intercettate traffico o vi immettete in una rete di cui non avete l'autorizzazione, state facendo, come dire, un bel reato penale! Ci sono tante cose legali per cui uno potrebbe trovare utile queste cose, come ad esempio:
+&lt;ul&gt;
+ &lt;li&gt;Reverse engineering per verificare dei protocolli di rete&lt;/li&gt;
+ &lt;li&gt;Controllare la sicurezza di alcuni dispositivi IoT&lt;/li&gt;
+ &lt;li&gt;Provare ad analizzare il traffico del network&lt;/li&gt;
+ &lt;li&gt;NON per hackerare il profilo Facebook del vicino&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;p&gt;L’idea di questa guida è spiegare quindi come fare per intercettare il traffico della rete wifi a cui uno è connesso per poi poterlo analizzare in vari modi (e gestire il tutto, magari, tramite delle politiche QoS specifiche). Se non ti serve analizzare le reti potresti comunque trovare questa guida divertente ma, come sempre, occhio a come utilizzi questa cosa!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.bettercap.org/assets/logo.png&quot; alt=&quot;Bettercap Logo&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;bettercap-potenza-e-semplicità&quot;&gt;Bettercap: potenza e semplicità&lt;/h1&gt;
+&lt;p&gt;Lo strumento che andremo ad utilizzare è Bettercap, sviluppato da &lt;a href=&quot;https://github.com/evilsocket&quot;&gt;EvilSocket&lt;/a&gt;, uno sviluppatore italiano. La descrizione sul ufficiale è&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;BetterCAP is a powerful, flexible and portable tool created to perform various types of MITM attacks against a network, manipulate HTTP, HTTPS and TCP traffic in realtime, sniff for credentials and much more.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Insomma, è un bell’oggettino per fare man-in-the-middle (MITM) con pochi comandi da terminale, nel mio caso, divertirsi un po’ tra coinquilini e farsi &lt;em&gt;code injection&lt;/em&gt; a vicenda.&lt;/p&gt;
+
+&lt;p&gt;A questo punto, se ne sai un pochino di reti, vai direttamente sul &lt;a href=&quot;https://www.bettercap.org&quot;&gt;sito ufficiale&lt;/a&gt; che ti risulterà più veloce di questa guida, altrimenti continua pure…&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.cyberciti.biz/media/new/tips/2007/08/linux-internet-model-network-stack.gif&quot; alt=&quot;Network Layers&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;come-sono-fatte-le-reti&quot;&gt;Come sono fatte le reti&lt;/h1&gt;
+&lt;p&gt;Innanzitutto occorre dire qualche cosina sulle reti. Parlavo con un mio amico che mi chiedeva &lt;strong&gt;se, analizzando le onde radio che passavano vicino al mio computer, fossi in grado di vedere cosa gli altri stessero facendo.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Ma certo… Aprite Wireshark, analizzate i pacchetti wifi e… E chiaramente non vedete nulla di interessante, solo numeri e lettere a caso! Questo perchè, fortunatamente, tutto il traffico che il nostro pc scambia con il router è per lo più cifrato. Dico per lo più perchè poi dipende da 3000 fattori, ma la maggior parte dei router che usiamo, utilizzano come metodo di sicurezza della password il protocollo WPA-qualcosa e quindi il traffico è cifrato.&lt;/p&gt;
+
+&lt;p&gt;“Ah, bene!”, ha detto il mio amico, &lt;strong&gt;“Allora basta conoscere la password del router e puoi leggere tutto…“.&lt;/strong&gt; E ancora no! Il problema è che questi nuovi protocolli di sicurezza fanno in modo che una volta che il computer si è connesso alla rete wifi, crei una password unica tra lui e il router ed usi quella, proprio per evitare che qualcu’altro della rete intercetti il traffico.&lt;/p&gt;
+
+&lt;p&gt;E allora come fa Bettercap a fare intereccetare il tutto al computer su cui è eseguito? &lt;strong&gt;Bettercap riesce forzare il computer del mio coinquilino a spedire i pacchetti che dovrebbero essere destinati al router a me&lt;/strong&gt; e quindi, potendoli, tendenzialmente, decifrare, puoi farci un po’ tutto quello che vuoi. Cioè, detto in altre parole, crea la situazione chiamata man-in-the-middle (MITM).
+Tendenzialmente perchè in realtà poi c’è di mezzo l’&lt;em&gt;https&lt;/em&gt;, quindi… un passo alla volta.&lt;/p&gt;
+
+&lt;p&gt;Quindi, siamo arrivati al punto in cui, il mio coinquilino, o meglio il suo computer, spedisce i pacchetti internet a me invece che al router.&lt;/p&gt;
+
+&lt;p&gt;Come fa Bettercap a dire al pc del mio coinquilino di spedire pacchetti a me? Praticamente succede questo, all’interno della rete, ogni dispositivo si crea una tabella, chiamata &lt;em&gt;tabella ARP&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Questa tabella serve per fare in modo che un pacchetto internet (contrassegnato con un IP specifico) venga spedito al reale destinatario. L’indirizzo IP difatto è una targa “temporanea”, virtuale, che domani può cambiare, mentre ogni scheda di rete ha un indirizzo MAC che rimane sempre lo stesso (ora, anche qui non è propriamente vero che resta sempre uguale, si può cambiare, ma tendenzialemnte resta sempre lo stesso) e viene usato per identificare realmente a quale dispositivo bisogna mandare i pacchetti.&lt;/p&gt;
+
+&lt;div class=&quot;notice&quot;&gt;
+&lt;h3&gt;Come vedere la tabella ARP del tuo pc&lt;/h3&gt;
+Per vedere la tabella ARP del tuo computer UNIX (cioè Linux, Mac o altre cosette meno conosciute), basta dare il comando &lt;i&gt;arp -a&lt;/i&gt;. Vedrete quindi la tabella di tutti i dispositivi che il tuo computer conosce e a cui ha associato l'indirizzo IP al rispettivo MAC Address. Se non vedete tutti i dispositivi della rete probabilmente è perchè il vostro dispositivo non ha mai interagito con quelli mancanti nella tabella. Un semplice &lt;i&gt;ping IP_MANCANTE&lt;/i&gt; dovrebbe risolvere il problema.
+&lt;/div&gt;
+
+&lt;p&gt;Il problema di questa tabella, che permette a Bettercap di far funzionare il tutto, è che ogni dispositivo può mandare messaggi nella rete in &lt;em&gt;broadcast&lt;/em&gt; che di fatto sono coppie &amp;lt;IP, MAC address&amp;gt; dove l’IP può essere qualsiasi cosa, non per forza quello a lui realmente assegnato e non vi è autenticazione per garantire che questo avvenga solo per chi ne ha realemnte diritto. E quindi il computer su cui è eseguito Bettercap (supponiamo abbia indirizzo MAC  00:00:00:ZZ:ZZ:ZZ e indirizzo IP 192.168.1.72) manda nella rete i seguenti pacchetti:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&amp;lt;192.168.1.1, 00:00:00:ZZ:ZZ:ZZ&amp;gt;&lt;/li&gt;
+  &lt;li&gt;&amp;lt;192.168.1.2, 00:00:00:ZZ:ZZ:ZZ&amp;gt;&lt;/li&gt;
+  &lt;li&gt;&amp;lt;192.168.1.3, 00:00:00:ZZ:ZZ:ZZ&amp;gt;&lt;/li&gt;
+  &lt;li&gt;&amp;lt;192.168.1.4, 00:00:00:ZZ:ZZ:ZZ&amp;gt;
+ …&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;e così via per tutti gli indirizzi IP presenti nella rete. D’ora in avanti, quindi, tutti i computer che credono quei messaggi autentici manderanno al computer con Bettercap i pacchetti destinati al router (che sarà uno di quegli indirizzi IP, di solito 192.168.1.1 o 192.168.1.254) e Bettercap potrà analizzarli senza problemi in quanto transitano sulla scheda di rete a cui ha accesso.&lt;/p&gt;
+
+&lt;p&gt;‘Na ficata no?!&lt;/p&gt;
+
+&lt;h3 id=&quot;difesa-e-raggiri&quot;&gt;Difesa e raggiri&lt;/h3&gt;
+&lt;p&gt;Come sempre, a ogni vulnerabilità si cerca un rimedio. Effettivamente esistono numerosi programmi online che bloccano gli indirizzi IP che cercano di inondare la rete con pacchetti ARP &lt;em&gt;melevoli&lt;/em&gt;. Se ci pensate è abbastanza semplice, se un indirizzo MAC dichiara di essere tutti gli indirizzi IP della rete c’è qualcosa che non va…&lt;/p&gt;
+
+&lt;p&gt;Nel caso il vostro router abbia una qualche protezione di questo genere, è possibile, con Bettercap, cercare di intercettare, con l’&lt;em&gt;ARP poisoning&lt;/em&gt;, quella tecnica appena vista, solo il dispositivo &lt;em&gt;target&lt;/em&gt;, in tal caso, l’attacco effettuato sarà &lt;em&gt;half-duplex&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Se poi, ancora una volta questa cosa non dovesse funzionare perchè il dispositivo &lt;em&gt;target&lt;/em&gt; a sua volta controlla i pacchetti ARP, è possibile cambiare metodologia e passare ad un attacco basato sul protocollo ICMP, di cui trovate maggior informazioni direttamente nella documentazione del tool.&lt;/p&gt;
+
+&lt;h2 id=&quot;bettercap&quot;&gt;Bettercap&lt;/h2&gt;
+&lt;p&gt;Arriviamo al dunque, come fare tutto questo con Bettercap?&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo bettercap -s
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Capite perchè da così tante soddisfazioni, semplicemente con &lt;code class=&quot;highlighter-rouge&quot;&gt;-s&lt;/code&gt; lui fa tutte quelle cose lì.&lt;/p&gt;
+
+&lt;p&gt;Ci sono poi varie opzioni annesse, ad esempio&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo bettercap -s arp --full-duplex
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;che manda quei pacchetti per dirottare il traffico sia al &lt;em&gt;target&lt;/em&gt; che al router (contrariamente effettua un attacco &lt;em&gt;half-duplex&lt;/em&gt; citato prima), potendo così vedere la botta e risposta completa, le pagine richieste e quelle ricevute dalla rete.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.dreamgroup.it/wp-content/uploads/2017/01/CKe4csi.png&quot; alt=&quot;https&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;e-la-cifratura&quot;&gt;E la cifratura?&lt;/h1&gt;
+
+&lt;p&gt;Come potete immaginare, chiaramente, non è proprio così semplice poi nella realtà. Certo, abbiamo visto come reindirizzare il traffico della rete sul nostro PC e analizzarlo ma… se questi pacchetti che ci arrivano sono cifrati tra il &lt;em&gt;target&lt;/em&gt; e il &lt;em&gt;server&lt;/em&gt; (leggi, sito web a cui mi connetto), posso intercettarli quanto voglio ma non sarò in grado di leggerli. E questa è quasi la totalità dei casi, ogni qual volta il sito a cui il destinatario si connette è in &lt;em&gt;https&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;E quindi, non ci arrendiamo mica…
+Bettercap ci viene nuovamente in aiuto con varie tecniche, la più semplice è l’&lt;em&gt;ssl-strip&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;ssl-strip&quot;&gt;SSL STRIP&lt;/h2&gt;
+&lt;p&gt;Questa tecnica è stata introdotta da Moxie Marlinspike nel 2009 e consiste nel sostituire i link che dovrebbero essere sicuro con altri di cui abbiamo il controllo. Mi spiego meglio.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Tiziano (il nostro Target) apre un sito in http, i cui contenuti non sono quindi cifrati&lt;/li&gt;
+  &lt;li&gt;Intercettata quindi questa pagina, si sostituiscono tutti i suoi link interni con altri link, banalmente togliendo la &lt;em&gt;s&lt;/em&gt; di &lt;em&gt;https&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;Si inoltra il pacchetto pulito dai link che poterebbero a pagine cifrate e si continua come sempre&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Questa cosa funziona, chiaramente, se la primissima pagina non è cifrata, altrimenti non siamo in grado di &lt;em&gt;“pulire”&lt;/em&gt; il link.&lt;/p&gt;
+
+&lt;p&gt;Quindi ora fate un test, andate sulla pagina di Google connettendovi tramite http, cioè scrivete nel browser &lt;em&gt;http://google.it&lt;/em&gt;.
+Con altissima probabilità verrete reindirizzati alla pagina cifrata, tutta colpa di HSTS.&lt;/p&gt;
+
+&lt;h3 id=&quot;hsts&quot;&gt;HSTS&lt;/h3&gt;
+&lt;p&gt;HTTP Strict Transport Security (HSTS) è un protocollo con cui il server può dire al browser che cerca di visitarlo che lui accetta solo connessioni cifrate, proprio per evitare attacchi come quelli appena descritti sopra. E allora?&lt;/p&gt;
+
+&lt;p&gt;E allora ecco la soluzione, introdotta da Leonardo Nve Egea al BlackHat Asia 2014. Poichè la politica HSTS si applica a specifici domini per lo più, basta sostituire il dominio e così, il link &lt;code class=&quot;highlighter-rouge&quot;&gt;https://wwww.facebook.com&lt;/code&gt; viene modificato in &lt;code class=&quot;highlighter-rouge&quot;&gt;https://wwww.facebook.com&lt;/code&gt;. Certo, qualcuno potrebbe accorgersene ma quanti di voi contano quante &lt;code class=&quot;highlighter-rouge&quot;&gt;w&lt;/code&gt; ci sono quando aprite ogni link?&lt;/p&gt;
+
+&lt;p&gt;E ora? E ora quel &lt;code class=&quot;highlighter-rouge&quot;&gt;wwww.facebook.com&lt;/code&gt; deve essere risolto da qualche DNS, ma chiaramente nessuno può risolverlo. Ma dov’è il problema, tanto tutto il traffico passa per il computer attaccante, può farsi lui di risolvere il dominio, aprire la connessione cifrata con il sito e rigirare il pacchetto decifrato al &lt;em&gt;target&lt;/em&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;ancora-meglio&quot;&gt;Ancora meglio?&lt;/h2&gt;
+&lt;p&gt;Beh, Bettercap permette di fare anche di più, permette di installare un certificare di sicurezza e comunicare in HTTPS con il &lt;em&gt;target&lt;/em&gt; così che il tutto diventa ancora più complesso da verificare, ma anche tutto più complesso da raccontarvi ora.&lt;/p&gt;
+
+&lt;p&gt;Vuoi provare? Avvia Bettercap con queste opzioni:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo bettercap -T IP_CELLULARE --proxy 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Ora prendi il tuo cellulare, vai nella Home di questo sito (che è senza &lt;em&gt;http&lt;/em&gt;, perchè aihmè, se lo fanno pagare) e quindi clicca sull’icona di LinkedIn. Come vedrai sarai su qualcosa come &lt;em&gt;wwwww.linkedin.it/…&lt;/em&gt; (a me ne mostra 5 di &lt;em&gt;w&lt;/em&gt;), e sarete in grado di vedere il traffico generato senza che questo sia cifrato.&lt;/p&gt;
+
+&lt;h4 id=&quot;cosa-possiamo-imparare&quot;&gt;Cosa possiamo imparare?&lt;/h4&gt;
+&lt;p&gt;Occhio a quando non siete in &lt;em&gt;https&lt;/em&gt;!!&lt;/p&gt;
+
+&lt;h1 id=&quot;installazione&quot;&gt;Installazione&lt;/h1&gt;
+&lt;p&gt;Si può facilemnte installare in vari modi, tra cui&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gem install bettercap
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;o seguendo la &lt;a href=&quot;https://www.bettercap.org/index.html#document-install&quot;&gt;documentazione&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Una volta installato non dovete far altro che avviarlo, da terminale, con il seguente comando&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo bettercap -T 192.168.1.10 -X -I interfaccia
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;dove -T IP (opzionale) rappresenta l’IP di cui volete intercettare il traffico, &lt;em&gt;interfaccia&lt;/em&gt; è il nome dell’interfaccia su cui attivate il tutto, ad esempio la mia interfaccia wifi è en1, puoi scoprire la tua con un &lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Per il resto la &lt;a href=&quot;https://www.bettercap.org/index.html&quot;&gt;documentazione&lt;/a&gt; ufficiale è molto chiara, quindi potete andare direttamente lì per leggere le mille opzioni previste e usarle.&lt;/p&gt;</content><category term="crittografia" /><category term="MITM" /><category term="sicurezza" /><category term="bettercap" /><summary type="html">Due/tre cosine spiegate su Bettercap</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma, parte 2</title><link href="https://apagiaro.it/intro-crittografia-2/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma, parte 2" /><published>2017-08-22T00:00:00+02:00</published><updated>2017-08-22T00:00:00+02:00</updated><id>https://apagiaro.it/intro-crittografia-2</id><content type="html" xml:base="https://apagiaro.it/intro-crittografia-2/">&lt;p&gt;Come avevamo già visto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia&quot;&gt;prima parte&lt;/a&gt;, uno dei problemi principale di quando dobbiamo cifrare qualcosa è il comunicare la chiave di decifrazione al destinatario in quanto non possiamo cifrarla in alcun modo. A risolvere questo problema ci pensano gli algoritmi di crittografia asimmetrica.&lt;/p&gt;
+
+&lt;p&gt;Avete presente quel discorso fatto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia&quot;&gt;prima parte&lt;/a&gt; in cui si diceva che trovare un inverso di un numero &lt;i&gt;n&lt;/i&gt; quando c’è di mezzo l’operatore &lt;em&gt;modulo&lt;/em&gt; non è poi così tanto banale? Ecco, è proprio ancora questa cosa che venne in aiuto a Ronald Rivest, Adi Shamir e Leonard Adleman nel 1977.&lt;/p&gt;
+
+&lt;h2 id=&quot;come-avremmo-fatto-100-anni-fa&quot;&gt;Come avremmo fatto 100 anni fa..&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;http://www.intecosas.com/immagini/catalogo/materiali_consumo/lucchetti_CISA/lucchetto_ottone.jpg&quot; alt=&quot;lucchetti&quot; /&gt;
+In uno scenario classico, se volessimo scambiarci messaggi tramite posta assicurandoci che nessuno di noi legga il messaggio potremmo fare una cosa del genere :&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Ti mando una scatolina con dentro il messaggio e chiudo la scatolina con un lucchetto&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Non possiamo chiaramente spedirci la chiave dei lucchetti, questa potrebbe essere intercettata…&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Te ricevi la scatolina, ci aggiungi un tuo lucchetto conservando la chiave e mi rimandi la scatolina&lt;/li&gt;
+  &lt;li&gt;La ricevo, rimuovo il mio lucchetto e ti rispedisco la scatolina, chiusa questa volta con il tuo lucchetto&lt;/li&gt;
+  &lt;li&gt;La ricevi, la apri e leggi il messaggio&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Per anni si è inseguita quest’idea ma quando si tratta di operazioni matematiche per cifrare e decifrare messaggi non sempre queste sono interscambiabili, in altre parole, se provassi a fare una cosa del tipo:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Prendo un messaggio &lt;em&gt;m&lt;/em&gt; e lo cifro, ottenendo \( C_a(m) \)&lt;/li&gt;
+  &lt;li&gt;Te ricevi il crittogramma (cioè il messaggio cifrato) e lo cifri a tua volta, ottenendo \( C_b(C_a(m)) \) e me lo rispedisci&lt;/li&gt;
+  &lt;li&gt;Io lo ricevo, applico la funzione di decifrazione &lt;em&gt;D&lt;/em&gt; ottenendo \( D_a(C_b(C_a(m))) \) e ti rimando il tutto&lt;/li&gt;
+  &lt;li&gt;Te lo decifri e…&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;e niente, ti ritrovi con una serie di lettere (&lt;em&gt;bit&lt;/em&gt;) senza senso, a caso di cui non riesci più a capire quale fosse l’ordine iniziale, perchè, appunto, non possiamo applicare queste funzioni di decifrazione in un ordine diverso da quelle inverso rispetto alla cifratura.&lt;/p&gt;
+
+&lt;h2 id=&quot;cifrare-e-decifrare-due-mondi-in-parallelo&quot;&gt;Cifrare e decifrare, due mondi in parallelo…&lt;/h2&gt;
+&lt;p&gt;Chiarito quindi che questa strada non funziona bisogna cercare dei metodi per cifrare e decifrare che utilizzini dei &lt;em&gt;trucchetti&lt;/em&gt; perchè tutto funzioni. Questi &lt;em&gt;trucchetti&lt;/em&gt; consistono nel trovare un modo per generare due chiavi, una di cifratura ed una di decifratura tali che&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Generare queste due chiavi insieme è semplice&lt;/li&gt;
+  &lt;li&gt;Generare una di queste due chiavi, data l’altra non è facile (che in informatica vuol dire che ci vuole troppo tempo, troppe risorse di calcolo…)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Sembrano condizioni complicate ma pensate a quest’esempio, vi chiedo di darmi due numeri &lt;em&gt;A, B&lt;/em&gt; tali che \( A = B^2 \). Ora, noi non avete difficoltà a darmi questa coppia di numeri, se ad esempio sceglieste \( B = 1,4512\), calcolare &lt;em&gt;A&lt;/em&gt; sarebbe molto semplice, basta fare \( B&lt;em&gt;B = A = 2,10598144\). Se vi dessi, invece, solamente A, chiedendovi di calcolare *B&lt;/em&gt;, risulterebbe tutto più complicato da fare senza calcolatrice (con la calcolatrice basterebbe fare &lt;em&gt;radice quadrata di B&lt;/em&gt;). Questo esempio giocattolo cosa vuol insegnare, che esistono modi che sono facili da trovare se si conoscono dei trucchetti (nel nostro caso conoscendo &lt;em&gt;B&lt;/em&gt; tutto è facile), ma complicati se non si conosce l’informazione completa o si è vincolati a scegliere qualcosa in relazioe ad altro già dato.&lt;/p&gt;
+
+&lt;p&gt;Se è chiara quest’idea possiamo provare a vedere come funziona uno dei più famosi algoritmi asimmetrici, l’RSA.&lt;/p&gt;
+
+&lt;h1 id=&quot;lalgoritmo-di-crittografia-asimmetrica-rsa&quot;&gt;L’algoritmo di crittografia asimmetrica RSA&lt;/h1&gt;
+
+&lt;p&gt;Lo scopo di questo algoritmo è, innanzitutto, generare due coppie di numeri
+\[ K_{pu} = &amp;lt;e, n&amp;gt; \]
+\[ K_{pr} = &amp;lt;d, n&amp;gt; \]
+dove, con \( K_{pu} \) identifichiamo la &lt;em&gt;public key&lt;/em&gt;, la chiave pubblica, mentre con \( K_{pr} \) la &lt;em&gt;private key&lt;/em&gt;. Cosa cambia tra queste due chiavi? Beh, una è pubblica ed una è privata. In altre parole, posso pubblicare liberamente in giro nel mondo la mia &lt;em&gt;chiave pubblica&lt;/em&gt; e tutti possono cifrare usando quella, ma solamente io che conosco la &lt;em&gt;chiave privata&lt;/em&gt; sono in grado di decifrare il messaggio. E per questa cosa delle due chiavi differenti prende l’aggettivo &lt;em&gt;asimmetrico&lt;/em&gt;. Inoltre, conoscendo la mia &lt;em&gt;chiave pubblica&lt;/em&gt; non è affatto banale trovare la mia &lt;em&gt;chiave privata&lt;/em&gt;. È invece molto semplice generare le due chiavi insieme.&lt;/p&gt;
+
+&lt;h2 id=&quot;una-cosa-difficile-come-scomporre-in-fattori-primi&quot;&gt;Una cosa difficile come scomporre in fattori primi…&lt;/h2&gt;
+&lt;p&gt;Com’è possibile? Una delle cose che andremo a sfruttare è il fatto che conoscere i numeri primi che scompongono un numero qualsiasi &lt;em&gt;n&lt;/em&gt; non è semplice. Se ad esempio vi chiedessi quali sono i fattori primi di 15 tutti voi mi direste senza problemi la risposta: 3 e 5. Beh, quali sono i fattori di 145? Qualcuno con un minimo di abilità nel calcolo mentale può arrivarci: 5 e 29. Bene, e se vi chiedessi i fattori di 42342316719343? Vi do un suggerimento, questo numero è composto da solamente due numeri primi. La risposta? I primi che lo scompongono sono: 1232453 e 34356131. Come ho fatto a calcolare la scomposizione? Semplice, non l’ho fatto! Ho scelto prima i due numeri primi e poi ho trovato 42342316719343.&lt;/p&gt;
+
+&lt;p&gt;Ancora una volta, un problema può essere molto semplice se visto da una diversa angolazione. E proprio questa difficoltà nel trovare i fattori primi di un numero sarà un punto su cui si baserà l’RSA. Difatti sarà molto facile generare le \( K_{pu}, K_{pr}\) conoscendo la scomposizione di &lt;em&gt;n&lt;/em&gt; (che è quello stesso &lt;em&gt;n&lt;/em&gt; che compare in \( K_{pu}, K_{pr}\)) ma sarà difficile farlo se non si conoscono questi fattori primi che sono complicati da trovare. Se magari ve lo stesse chiedendo, anche con i computer che fanno i calcoli veloci è complicato perchè il numero di operazioni che bisogna fare cresce tantissimo al crescere di &lt;em&gt;n&lt;/em&gt;, cioè se scegliamo &lt;em&gt;n=35&lt;/em&gt; dobbiamo fare un numero di operazioni accettabili, ma già con quel numero 42342316719343 non è poi così scontato, se poi pensate al fatto che i numeri che vengono scelti nella realtà sono grandi circa \( 2^2048\), cioè numero composti da più di 600 cifre, ecco che la difficoltà appare evidente.&lt;/p&gt;
+
+&lt;h2 id=&quot;lalgoritmo&quot;&gt;L’algoritmo&lt;/h2&gt;
+&lt;p&gt;Detto questo, possiamo quindi vedere l’algoritmo generale, senza scegliere nel dettaglio (possiamo vedere nei commenti approfondimenti o chiarire qualcosa).&lt;/p&gt;
+
+&lt;p&gt;Nel nostro esempio, come la volta scorsa, sarà Alice che vuole mandare un messaggio a Bob.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Bob sceglie due numeri primi &lt;em&gt;p, q&lt;/em&gt; molto grandi&lt;/li&gt;
+  &lt;li&gt;Bob calcola \( n = p*q \) e calcola \( \Phi(n) = (p-1)(q-1) \), dove \(\Phi\) è anche detta &lt;a href=&quot;https://it.wikipedia.org/wiki/Funzione_φ_di_Eulero&quot;&gt;funzione di Eulero&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Bob sceglie ora un numero &lt;em&gt;e&lt;/em&gt; tale che \( e &amp;lt; \Phi(n) \), intero che sia coprimo con \(\Phi(n)\), cioè \( MCD(e, \Phi(n)) = 1\).&lt;/li&gt;
+  &lt;li&gt;Bob calcola ora 
+ 	\[ d = e^{-1} \ mod\ \Phi(n) \]
+ che è un’operazione molto complicata se non si conosce \(\Phi(n)\), ma per conosce  \(\Phi(n)\) occorre conoscere la scomposizioni in fattori primi di &lt;em&gt;n&lt;/em&gt; e quindi ecco qui che ci siamo ricondotti all’esempio visto prima.&lt;/li&gt;
+  &lt;li&gt;Bob pubblica dove preferisce la sua chiave pubblica
+ 	\[ K_{pu} = &amp;lt;e, n&amp;gt;\]&lt;/li&gt;
+  &lt;li&gt;Bob si conserva la sua chiave privata &lt;em&gt;d&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A questo punto Alice non deve far altro che prendere la chiave pubblica di Bob e usarla per cifrare il suo messaggio. In che modo?&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Alice prende \( K_{pu} = &amp;lt;e, n&amp;gt;\) e il messaggio m&lt;/li&gt;
+  &lt;li&gt;Spedisce a Bob il crittogramma &lt;em&gt;C&lt;/em&gt;
+ 	\[ C = m^e \ mod\ n\]&lt;/li&gt;
+  &lt;li&gt;Bob lo riceve, lo eleva alla sua chiave pubblica e lo decifra
+ \[ m = C^d \ mod\ n\]
+essendo &lt;em&gt;d&lt;/em&gt;, l’inverso di &lt;em&gt;e&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Non voglio ora annoiarvi con la dimostrazione del perchè questa cosa funziona, ci sono vari teoremi dietro che sfruttano le proprietà dei numero in un campo modulare. Trovate una buona spiegazione su &lt;a href=&quot;https://it.wikipedia.org/wiki/RSA&quot;&gt;Wikipedia&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Nel prossimo post vediamo come sfrutturare questa cosa per firmare dei documenti e avere la certezza che il firmatario sia effettivamente chi dice di essere (cioè validare la firma).&lt;/p&gt;</content><category term="crittografia" /><category term="RSA" /><summary type="html">La crittografia asimmetrica</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma</title><link href="https://apagiaro.it/intro-crittografia/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma" /><published>2017-08-21T00:00:00+02:00</published><updated>2017-08-21T00:00:00+02:00</updated><id>https://apagiaro.it/intro-crittografia</id><content type="html" xml:base="https://apagiaro.it/intro-crittografia/">&lt;p&gt;Da sempre l’uomo cerca modi per nascondere i propri messaggi. Erodoto narra che nell’antica Persia i messaggi venivano scritti sulla testa degli schiavi, si attendeva che i capelli crescessero e venivano mandati come messaggeri. 
+Ad oggi, con l’introduzione dei computer siamo in grado chiaramente di usare metodi più veloci e sofisticati che spesso risultano come un’enorme magia agli occhi dei meno tecnici. Lo scopo di questa pagina è quindi quella di fornire l’idea di base delle nuove tecniche senza entrare nel dettaglio, un po’ come un mago che rivela i suoi trucchi, fornendo in caso riferimenti più specifici e tecnici per approfondire. Troverete in fondo alla pagina un piccolo glossario con i termini che noi informatici amiamo usare ma che spesso non sono chiari a chi non è dell’ambiente.&lt;/p&gt;
+
+&lt;p&gt;Iniziamo subito nel dire che esistono due tipi di &lt;a href=&quot;#glossario&quot;&gt;algoritmi&lt;/a&gt; crittografici, quelli simmetrici e quelli asimmetrici.
+Quelli simmetrici sono quelli che solitamente ti immagini quando pensi ad un modo per cifrare e decifrare qualcosa. All’asilo scrivevi le parole al contrario, quello era una algoritmo simmetrico perchè per decifrare il tutto dovevi… beh, dovevi semplicemente leggere le parole al contrario. L’idea, nel caso simmetrico, è quello che la &lt;a href=&quot;#glossario&quot;&gt;chiave&lt;/a&gt; di cifratura è la stessa di decifratura.&lt;/p&gt;
+
+&lt;p&gt;Un esempio di cifrario simmetrico piuttosto semplice è quello di Cesare dove ogni lettera viene sostituita da un’altra applicando uno &lt;i&gt;shift&lt;/i&gt; all’alfabeto. Questa immagine vi chiarirà tutto:
+&lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Caesar3.svg/300px-Caesar3.svg.png&quot; alt=&quot;cifrario di cesare&quot; /&gt;
+In questo caso, la chiave sarà la quantità di lettere traslate, nell’immagine &lt;i&gt;chiave=2&lt;/i&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;il-problema-dello-scambio-della-chiave&quot;&gt;Il problema dello scambio della chiave&lt;/h1&gt;
+&lt;p&gt;Ecco, qui si introduce il principale problema della crittografia moderna, come scambiarsi una chiave? Di certo non posso cifrarla perchè cifrando una chiave avrei bisogno della chiave per cifrare la chiave, che a sua volta richiederebbe… Avete capito no? 
+Il modo più semplice è quello di vedersi di persona e scambiarsi la chiave, anche perchè qualsiasi altro modo potrebbe essere intercettato (una chiamate al telefono, una mail, un messaggio…).&lt;/p&gt;
+
+&lt;p&gt;A questo problema qualcuno è riuscito a trovare una soluzione. La maggior parte degli algoritmi utilizza metodi matematici quindi da ora in poi la nostra chiave sarà un numero, potete facilmente immaginare come creare un numero da una parola, ad esempio dicendo che A=1, B=2, C=3… e facendo quindi diventare la parola ABCABC = 123123.&lt;/p&gt;
+
+&lt;p&gt;Ecco, qui vorrei spiegarvi l’algoritmo ma utilizza un po’ di strumenti matematici che al liceo non insegnano, cercherò di essere più chiaro possibile.&lt;/p&gt;
+
+&lt;h5 id=&quot;allerta-qui-si-parla-di-matematica&quot;&gt;Allerta, qui si parla di matematica!!&lt;/h5&gt;
+&lt;p&gt;Introduciamo un &lt;a href=&quot;#glossario&quot;&gt;operatore matematico&lt;/a&gt; chiamato &lt;i&gt;modulo&lt;/i&gt; (mod) che restituisce come risultato il resto della divisione intera tra il primo e il secondo termine dell’operazione.&lt;/p&gt;
+
+&lt;p&gt;Facciamo un paio di esempi:&lt;/p&gt;
+
+&lt;p&gt;\[ 10 \ mod \ 3 = 1 \]&lt;/p&gt;
+
+&lt;p&gt;Questo perchè 10 diviso 3 fa 3 con il resto di 1. Se è chiaro il concetto, sapete dirmi quanto fa \( 15 \ mod\ 4  \)?
+Il risultato è 3. È interessante notare che il risultato dell’operatore modulo tra due numeri &lt;i&gt;x&lt;/i&gt; e &lt;i&gt;y&lt;/i&gt; è al più &lt;i&gt;y-1&lt;/i&gt;, altrimenti potevo dividere ancora per &lt;i&gt;y&lt;/i&gt; e il resto inferiore. Ma forse vi sto solo confondendo con questa ultima frase… Quindi, torniamo a noi.&lt;/p&gt;
+
+&lt;p&gt;Un’altro operatore che andiamo ad usare è l’elevamento a potenza, molto più familiare a tutti noi che ci dice quante volte un numero deve essere moltiplicato per se stesso:
+\[ 4^4 = 16\]&lt;/p&gt;
+
+&lt;h2 id=&quot;scambio-di-chiavi-diffie-hellman-1976-wikipedia&quot;&gt;Scambio di chiavi Diffie-Hellman (1976) &lt;a href=&quot;https://it.wikipedia.org/wiki/Scambio_di_chiavi_Diffie-Hellman&quot;&gt;Wikipedia&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;Facciamo un esempio di questo &lt;a href=&quot;#glossario&quot;&gt;protocollo&lt;/a&gt; (si, lo so, prima l’ho chiamato algoritmo ed ora protocollo, cambia la definizione ma potete pensarlo comunque come una serie di passi per trovare una soluzione al nostro problema di scambio delle chiavi, non ci formalizziamo sulle definizioni).
+Chiamiamo i due tipi che vogliono trovare una chiave condivisa comune Alice e Bob (a volte semplicemente abbreviati con A e B).&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A e B si accordano su due numeri, \( p, g \), dove p è un numero primo e g è un &lt;a href=&quot;#glossario&quot;&gt;generatore&lt;/a&gt;. Nel nostro esempio &lt;i&gt; p = 23, g=5&lt;/i&gt;. Questi numeri vengono scambiati tra Alice e Bob in maniera del tutto normale, senza dover nascondere nulla.&lt;/li&gt;
+  &lt;li&gt;A questo punto, Alice sceglie un suo numero &lt;b&gt;segreto&lt;/b&gt; a e Bob fa lo stesso, scegliendo un numero b.
+ Nel nostro esempio: &lt;i&gt;a=6, b=15&lt;/i&gt;.&lt;/li&gt;
+  &lt;li&gt;Alice manda a Bob \(g^a\ mod\ p \), nel nostro esempio \( 5^6\ mod\ 23 = 8 \).&lt;/li&gt;
+  &lt;li&gt;Bob fa lo stesso, mandando ad Alice \(g^b\ mod\ p \), cioè \(5^{15}\ mod\ 23 = 19 \).&lt;/li&gt;
+  &lt;li&gt;A questo punto, sia Bob che Alice sono in grado di calcolare la chiave finale prendendo il numero che gli è arrivato ed elevandolo con il loro numero segreto.&lt;br /&gt;
+ Alice farà quindi \( (g^b\ mod\ p)^a\ mod\ p \) mentre Bob farà \( (g^a\ mod\ p)^b\ mod\ p \).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Al termine di queste operazioni, sia Alice che Bob sono in possesso di \(g^{ab}=g^{ba} \). E potranno usare questo come chiave condivisa.&lt;/p&gt;
+
+&lt;h5 id=&quot;allerta-qui-si-parla-di-matematica-1&quot;&gt;Allerta, qui si parla di matematica!!&lt;/h5&gt;
+&lt;p&gt;Qui arriva la parte complicata, convincervi che questa cosa funziona senza entrare in dettagli matematici complessi. Chiaramente tutta questa cosa funziona perchè usiamo quel famoso operatore &lt;i&gt;modulo&lt;/i&gt;, senza infatti quello, tutto questo protocollo crollerebbe perchè potrei facilmente capire qual era il numero segreto di Alice semplicemente facendo \( \log_g{g^a} \). (Ok, ok, forse il logaritmo non è proprio la cosa più familiare a tutti ma fidatevi, è una cosa davvero semplicissima da fare).&lt;/p&gt;
+
+&lt;p&gt;Quando invece ci troviamo con un operatore come quello del modulo, non stiamo più “giocando” con tutti i numeri come siamo abituati a fare ma entriamo in un campo un po’ strano dove invertire le operazioni non è più tanto semplice. Volete un esempio?&lt;/p&gt;
+
+&lt;p&gt;Proviamo a fare, senza usare il modulo \( 13 * 5 \). Quanto fa? Banale, fa 65. Ora, se io volessi trovare quel numero che, preso 65, lo moltiplico e mi torna due è semplice, è \( \frac{1}{5} \), difatti \( 65*\frac{1}{5} = 15\). Possiamo quindi dire che l’inverso di 5 è \( \frac{1}{5}\).&lt;/p&gt;
+
+&lt;p&gt;Bene, proviamo ora a rifare tutto questo discorso con l’operatore modulo di mezzo. Prendiamo come valore del modulo 23 (numero scelto a caso).
+\[ 13 * 5 \ mod\ 23 = 19\]
+A questo punto dobbiamo provare ad invertire l’operazione, cioè trovare un numero tale che 
+\[ 19 * 14 \ mod\ 23 = 13 \]
+Quel valore che cerchiamo è 14. Quindi, l’inverso di \( 14 \ mod\ 23 = 19 \). Come potete vedere non è banalissimo trovare gli inversi e quindi invertire operazioni così semplici come anche una semplice moltiplicazione… pensate poi se lavoriamo con numeri moooolto mooooooolto grandi.&lt;/p&gt;
+
+&lt;p&gt;Se sono riuscito quindi a convincervi che questo operatore modulo complica abbastanza le cose da rendere complesse alcune operazioni, possiamo proseguire…&lt;/p&gt;
+
+&lt;h2 id=&quot;cosa-fare-con-la-chiave-condivisa&quot;&gt;Cosa fare con la chiave condivisa&lt;/h2&gt;
+&lt;p&gt;A questo punto, abbiamo Alice e Bob che si trovano quindi con una stessa chiave che possono usare per cifrare qualsiasi messaggio con i metodi più classici che potete immaginarvi. Beh, c’è da dire che quelli usati oggi tanto classici non sono e hanno dei nomi un po’ strani, tipo AES-256 (Advanced Encryption Standard con 256 bit come lunghezza della chiave) ma si trattano, più o meno, di metodi che mischiano le lettere del vostro messaggio (più correttamente mischiano i bit che compongono le varie lettere in un formato digitale) e ne restituiscono una serie incomprensibile se non si conosce la chiave usata che permette di rimettere a posto il tutto.&lt;/p&gt;
+
+&lt;h1 id=&quot;la-crittografia-asimmetrica&quot;&gt;La crittografia asimmetrica&lt;/h1&gt;
+&lt;p&gt;Ci sono degli algoritmi e dei protocolli che non richiedono di avere una chiave scambiata in precedenza per garantire ad un mittente di spedire un messaggio cifrato ed ad un ricevente di decifrarlo correttamente. Lo so, è strana come cosa, a me sembrava magia oscura quando me l’hanno raccontata la prima volta, in realtà non è così complicata la cosa anche se, quando è stato trovato il famoso algoritmo asimmetrico RSA nel 1977 da Ronald Rivest, Adi Shamir e Leonard Adleman, la cosa non era poi così tanto scontata.&lt;/p&gt;
+
+&lt;p&gt;Nel prossimo post ve ne parlerò in maniera più dettagliata.&lt;/p&gt;
+
+&lt;div id=&quot;glossario&quot;&gt;
+
+&lt;h2&gt;Glossario&lt;/h2&gt;
+&lt;ul&gt;
+ &lt;li&gt;
+ 	&lt;b&gt;Algoritmo&lt;/b&gt;: è una serie di istruzioni svolte per risolvere un problema. Un algoritmo che tutti conoscono è quello per effettuare moltiplicazioni in colonna di numeri a più cifre, quel modo di moltiplicare le singole cifre, addizionare i vari risultati intermedi e trovare il risultato finale è un chiaro esempio di cosa è un algoritmo. Una serie di passi che porta ad un risultato.
+ &lt;/li&gt;
+ &lt;li&gt;
+ 	&lt;b&gt;Chiave&lt;/b&gt;: è una parola (solitamente si parla di sequanza di bit) che viene usata per cifrare e decifrare qualcosa. A volte viene erroneamente chiamata &lt;i&gt;password&lt;/i&gt;
+ &lt;/li&gt;
+ &lt;li&gt;
+ 	&lt;b&gt;Operatore&lt;/b&gt;: l'operatore dell'addizione è il +, l'operatore della sottrazione è il -... Insomma, l'operatore è quell'oggetto che ci indica l'operazione da fare
+ &lt;/li&gt;
+ &lt;li&gt;
+ 	&lt;b&gt;Protocollo&lt;/b&gt;: In informatica un protocollo di comunicazione è un insieme di regole formalmente descritte, definite al fine di favorire la comunicazione tra una o più entità. (Wikipedia)
+ &lt;/li&gt;
+ &lt;li&gt;
+ 	&lt;b&gt;Generatore&lt;/b&gt;: qui la cosa si fa difficile da spiegare in poche righe, vi rimando alla [pagina Wikipedia](https://it.wikipedia.org/wiki/Generatore_(teoria_dei_numeri)).
+ &lt;/li&gt;
+&lt;/ul&gt;
+
+ &lt;/div&gt;</content><category term="crittografia" /><category term="RSA" /><summary type="html">Introduzione per non tecnici alla crittografia moderna - Scambiarsi una chiave</summary></entry><entry><title type="html">Come aggiungere a WooCommerce articoli con variazione via codice (programmatically)</title><link href="https://apagiaro.it/variable-product-programmatically/" rel="alternate" type="text/html" title="Come aggiungere a WooCommerce articoli con variazione via codice (programmatically)" /><published>2017-06-27T00:00:00+02:00</published><updated>2017-06-27T00:00:00+02:00</updated><id>https://apagiaro.it/variable-product-programmatically</id><content type="html" xml:base="https://apagiaro.it/variable-product-programmatically/">&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/woocommerce.png&quot; style=&quot;float:left; margin: 15px;&quot; /&gt;Woocommerce è il più famoso plugin di Wordpress per la realizzazione di siti eCommerce. I suoi punti di forza sono tantissimi tra i quali la personalizzazione estrame dei prodotti. Il problema che però spesso si incontra è come caricare in maniera efficiente le decine e decine di prodotti senza perderci le giornate intere?&lt;/p&gt;
+
+&lt;p&gt;Quello che cercherò di fare io ora, è arrivare ad una soluzione per aggiungere prodotti con variazioni, via codice, andando quindi a velocizzare la fare di inserimento.
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;cosa-sono-i-prodotti-con-variazione&quot;&gt;Cosa sono i prodotti con variazione&lt;/h1&gt;
+&lt;p&gt;I prodotti con variazione sono quelli oggetti che hanno varie opzioni personalizzabili dall’utente durante la fase di acquisto e il cui prezzo viene modificato in base a queste scelte. Un classico esempio è una tipografia online che vende un volantino che può essere:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A4, A5 o in A6&lt;/li&gt;
+  &lt;li&gt;Con 1 colore, 2 colori o 4 colori&lt;/li&gt;
+  &lt;li&gt;Su Carta lucida o carta opaca&lt;/li&gt;
+  &lt;li&gt;Con grammatura 100, 150 o 200gr&lt;/li&gt;
+  &lt;li&gt;Solo fronte o Fronte/Retro&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;WooCommerce ci permette di aggiungere per ogni possibile scelta dell’utente un prezzo, ad esempio posso specificare che&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A4, 1 Colore, Lucida, 100gr, Fronte = 10€&lt;/li&gt;
+  &lt;li&gt;A4, 2 colori, Opaca, 100gr, F/R = 12€&lt;/li&gt;
+  &lt;li&gt;… ecc ecc&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Il problema, come quelli più bravi di voi in combinatoria avranno già visto, è che con anche quelle semplici opzioni definite prima, abbiamo da specificare 108 possibili scelte dell’utente con conseguente impiego di tempo per il caricamente del prodotto. L’idea è quindi quella di trovare un modo più efficiente per fare tutto&lt;/p&gt;
+
+&lt;p&gt;L’intuizione è quella di creare una funzione in un qualche linguaggio che, date le scelte ed un file CSV (cioè l’esportazione di un file Excel che ci passerà il cliente), ci generi del codice che aggiunge al DB i prodotti comprensivi di variazioni e prezzi.&lt;/p&gt;
+
+&lt;h1 id=&quot;il-database&quot;&gt;Il database&lt;/h1&gt;
+&lt;p&gt;Qui inizia il bello, abbiamo vari modi, uno brutale (leggasi SQL puro), l’altro più raffinato che prevede l’impiego delle API di Wordpress. Andiamo a vedere questo secondo approccio perchè più sicuro e veloce.&lt;/p&gt;
+
+&lt;p&gt;Una rapida ricerca online ci porta a capire quali sono le API che ci interessano in questa fase:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;wp_insert_post()&lt;/code&gt; - Insert or update a post. &lt;a href=&quot;https://developer.wordpress.org/reference/functions/wp_insert_post/&quot;&gt;doc&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;update_post_meta()&lt;/code&gt; - Update post meta field based on post ID. &lt;a href=&quot;https://developer.wordpress.org/reference/functions/update_post_meta/&quot;&gt;doc&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;wp_set_object_terms()&lt;/code&gt; - Create Term and Taxonomy Relationships. &lt;a href=&quot;https://developer.wordpress.org/reference/functions/wp_set_object_terms/&quot;&gt;doc&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;update_post_meta()&lt;/code&gt; - Update post meta field based on post ID. &lt;a href=&quot;https://developer.wordpress.org/reference/functions/update_post_meta/&quot;&gt;doc&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Per prima cosa dobbiamo inserire il nostro post nella relativa tabella usando la funzione di Wordpress &lt;code class=&quot;highlighter-rouge&quot;&gt;wp_insert_post&lt;/code&gt; e tenendoci poi in memoria il relativo &lt;code class=&quot;highlighter-rouge&quot;&gt;post_id&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$product_title = &quot;Titolo del prodotto&quot;;
+$product_description = &quot;Descrizione del prodotto&quot;;
+$post = array(
+        'post_author'  =&amp;gt; 1,
+        'post_content' =&amp;gt; $product_description,
+        'post_status'  =&amp;gt; 'publish',
+        'post_title'   =&amp;gt; $product_title,
+        'post_parent'  =&amp;gt; '',
+        'post_type'    =&amp;gt; 'product'
+    );
+$post_id = wp_insert_post($post); 
+if(!$post_id){
+	return false; // Si è verificato un errore
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Andiamo quindi ad aggiungere altre proprietà del prodotto (generico, senza variazioni), con la funzione &lt;code class=&quot;highlighter-rouge&quot;&gt;update_post_meta&lt;/code&gt; e con la funzione &lt;code class=&quot;highlighter-rouge&quot;&gt;wp_set_object_terms&lt;/code&gt; che modifica le tabelle &lt;code class=&quot;highlighter-rouge&quot;&gt;wp_terms&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;wp_term_relationships&lt;/code&gt; e &lt;code class=&quot;highlighter-rouge&quot;&gt;wp_term_taxonomy&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$product_categories = array(&quot;Volantini&quot;, &quot;Piccolo Formato&quot;);
+update_post_meta( $post_id,'_visibility','visible');
+wp_set_object_terms( $post_id, $product_categories, 'product_cat');
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Altre proprietà, i cui nomi sono abbastanza esplicativi, che possiamo andare ad impostare in questa maniera sono le seguenti:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;_wc_review_count&lt;/li&gt;
+  &lt;li&gt;_wc_rating_count&lt;/li&gt;
+  &lt;li&gt;_wc_average_rating&lt;/li&gt;
+  &lt;li&gt;_edit_last&lt;/li&gt;
+  &lt;li&gt;_edit_lock&lt;/li&gt;
+  &lt;li&gt;_sku&lt;/li&gt;
+  &lt;li&gt;_regular_price&lt;/li&gt;
+  &lt;li&gt;_sale_price&lt;/li&gt;
+  &lt;li&gt;_sale_price_dates_from&lt;/li&gt;
+  &lt;li&gt;_sale_price_dates_to&lt;/li&gt;
+  &lt;li&gt;total_sales&lt;/li&gt;
+  &lt;li&gt;_tax_status&lt;/li&gt;
+  &lt;li&gt;_tax_class&lt;/li&gt;
+  &lt;li&gt;_manage_stock&lt;/li&gt;
+  &lt;li&gt;_backorders&lt;/li&gt;
+  &lt;li&gt;_sold_individually&lt;/li&gt;
+  &lt;li&gt;_weight&lt;/li&gt;
+  &lt;li&gt;_length&lt;/li&gt;
+  &lt;li&gt;_width&lt;/li&gt;
+  &lt;li&gt;_height&lt;/li&gt;
+  &lt;li&gt;_upsell_ids&lt;/li&gt;
+  &lt;li&gt;_crosssell_ids&lt;/li&gt;
+  &lt;li&gt;_purchase_note&lt;/li&gt;
+  &lt;li&gt;_default_attributes&lt;/li&gt;
+  &lt;li&gt;_virtual&lt;/li&gt;
+  &lt;li&gt;_downloadable&lt;/li&gt;
+  &lt;li&gt;_product_image_gallery&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A questo punto, nella tabella &lt;code class=&quot;highlighter-rouge&quot;&gt;wp_posts&lt;/code&gt; abbiamo il nostro prodotto, a cui dobbiamo ancora aggiungere tutte le varie variazioni.&lt;/p&gt;
+
+&lt;h1 id=&quot;attributi&quot;&gt;Attributi&lt;/h1&gt;
+&lt;p class=&quot;notice&quot;&gt;&lt;strong&gt;Attenzione!&lt;/strong&gt; Prima di procedere devi creare gli attributi che andrai ad utilizzare (Dimensione, Colore, Taglia…).&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/attr.png&quot; alt=&quot;addAttributesMenu&quot; /&gt; Lo slug deve essere quello usato poi nel file JSON di riferimento, nel caso in fondo all’articolo quindi “Dimensione” e “Colore”.&lt;/p&gt;
+
+&lt;p&gt;Per inserire gli attributi dei vari prodotti è un po’ complessa la cosa. O li inseriamo a mano nei vari prodotti e poi andiamo quindi a creare le variazioni nel database con gli attributi già creati, o dobbiamo andare a modificare il record con &lt;code class=&quot;highlighter-rouge&quot;&gt;meta_key = _product_attributes&lt;/code&gt; dentro la tabelle &lt;code class=&quot;highlighter-rouge&quot;&gt;wp_postmeta&lt;/code&gt; che somiglia a questo (che dopo un po’ di ricerche ho scoperto essere una serializzazione PHP):&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;a:2:{
+	s:10:&quot;dimensione&quot;;
+	a:6:{
+		s:4:&quot;name&quot;;
+		s:10:&quot;Dimensione&quot;;
+		s:5:&quot;value&quot;;
+		s:16:&quot;Grande | Piccolo&quot;;
+		s:8:&quot;position&quot;;
+		i:0;
+		s:10:&quot;is_visible&quot;;
+		i:1;
+		s:12:&quot;is_variation&quot;;
+		i:0;
+		s:11:&quot;is_taxonomy&quot;;
+		i:0;
+		}
+	s:6:&quot;colore&quot;;
+	a:6:{
+		s:4:&quot;name&quot;;
+		s:6:&quot;Colore&quot;;
+		s:5:&quot;value&quot;;
+		s:19:&quot;Rosso | Blu | Verde&quot;;
+		s:8:&quot;position&quot;;
+		i:1;
+		s:10:&quot;is_visible&quot;;
+		i:1;
+		s:12:&quot;is_variation&quot;;
+		i:0;
+		s:11:&quot;is_taxonomy&quot;;
+		i:0;
+		}
+	}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Usiamo quindi:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;unserialize('a:2:{s:10:&quot;dimensione&quot;;a:6:{s:4:&quot;name&quot;;s:10:&quot;Dimensione&quot;;s:5:&quot;value&quot;;s:16:&quot;Grande | Piccolo&quot;;s:8:&quot;position&quot;;i:0;s:10:&quot;is_visible&quot;;i:1;s:12:&quot;is_variation&quot;;i:0;s:11:&quot;is_taxonomy&quot;;i:0;}s:6:&quot;colore&quot;;a:6:{s:4:&quot;name&quot;;s:6:&quot;Colore&quot;;s:5:&quot;value&quot;;s:19:&quot;Rosso | Blu | Verde&quot;;s:8:&quot;position&quot;;i:1;s:10:&quot;is_visible&quot;;i:1;s:12:&quot;is_variation&quot;;i:0;s:11:&quot;is_taxonomy&quot;;i:0;}}');
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;e vediamo che quello che dobbiamo salvare nel database viene da un array fatto nel seguente modo:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;array(2) {
+  [&quot;dimensione&quot;]=&amp;gt;
+  array(6) {
+    [&quot;name&quot;]=&amp;gt;
+    string(10) &quot;Dimensione&quot;
+    [&quot;value&quot;]=&amp;gt;
+    string(16) &quot;Grande | Piccolo&quot;
+    [&quot;position&quot;]=&amp;gt;
+    int(0)
+    [&quot;is_visible&quot;]=&amp;gt;
+    int(1)
+    [&quot;is_variation&quot;]=&amp;gt;
+    int(0)
+    [&quot;is_taxonomy&quot;]=&amp;gt;
+    int(0)
+  }
+  [&quot;colore&quot;]=&amp;gt;
+  array(6) {
+    [&quot;name&quot;]=&amp;gt;
+    string(6) &quot;Colore&quot;
+    [&quot;value&quot;]=&amp;gt;
+    string(19) &quot;Rosso | Blu | Verde&quot;
+    [&quot;position&quot;]=&amp;gt;
+    int(1)
+    [&quot;is_visible&quot;]=&amp;gt;
+    int(1)
+    [&quot;is_variation&quot;]=&amp;gt;
+    int(0)
+    [&quot;is_taxonomy&quot;]=&amp;gt;
+    int(0)
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Possiamo quindi creare un array simile con gli attributi che ci servono, usare la funzione &lt;code class=&quot;highlighter-rouge&quot;&gt;serialize()&lt;/code&gt; e inserire il risultato nella tabella &lt;code class=&quot;highlighter-rouge&quot;&gt;wp_postmeta&lt;/code&gt; con&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;update_post_meta($post_id, &quot;_product_attributes&quot;, serialize($attributes_array))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Un modo più carino è stato creato da &lt;a href=&quot;http://ryanknights.co.uk/insert-woocommerce-products-variations-programmatically/&quot;&gt;ryanknights&lt;/a&gt;. Prendendo quindi le informazioni dal file JSON e unendo il tutto ecco la funzione &lt;code class=&quot;highlighter-rouge&quot;&gt;insert_product_attributes()&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;insert_product_attributes&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$post_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$available_attributes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$variations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;foreach&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$available_attributes&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$attribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Go through each attribute
+&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;   
+        &lt;span class=&quot;nv&quot;&gt;$values&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Set up an array to store the current attributes values.
+&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;foreach&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$variations&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$variation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Loop each variation in the file
+&lt;/span&gt;        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;nv&quot;&gt;$attribute_keys&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;array_keys&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$variation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'attributes'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Get the keys for the current variations attributes
+&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;foreach&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$attribute_keys&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Loop through each key
+&lt;/span&gt;            &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$key&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$attribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// If this attributes key is the top level attribute add the value to the $values array
+&lt;/span&gt;                &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+                    &lt;span class=&quot;nv&quot;&gt;$values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$variation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'attributes'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$key&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+                &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+            &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;// Essentially we want to end up with something like this for each attribute:
+&lt;/span&gt;        &lt;span class=&quot;c1&quot;&gt;// $values would contain: array('small', 'medium', 'medium', 'large');
+&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;$values&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;array_unique&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Filter out duplicate values
+&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// Store the values to the attribute on the new post, for example without variables:
+&lt;/span&gt;        &lt;span class=&quot;c1&quot;&gt;// wp_set_object_terms(23, array('small', 'medium', 'large'), 'pa_size');
+&lt;/span&gt;        &lt;span class=&quot;nx&quot;&gt;wp_set_object_terms&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$post_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'pa_'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$attribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;nv&quot;&gt;$product_attributes_data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Setup array to hold our product attributes data
+&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;foreach&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$available_attributes&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$attribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Loop round each attribute
+&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;$product_attributes_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'pa_'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$attribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Set this attributes array to a key to using the prefix 'pa'
+&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;'name'&lt;/span&gt;         &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'pa_'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$attribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;'value'&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;'is_visible'&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;'is_variation'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;'is_taxonomy'&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'1'&lt;/span&gt;
+
+        &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;nx&quot;&gt;update_post_meta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$post_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'_product_attributes'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$product_attributes_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Attach the above array to the new posts meta data key '_product_attributes'
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;aggiungiamo-le-variazioni&quot;&gt;Aggiungiamo le variazioni&lt;/h1&gt;
+&lt;p&gt;Arrivati a questo punto abbiamo quindi un &lt;code class=&quot;highlighter-rouge&quot;&gt;$post_id&lt;/code&gt; corrispondente al prodotto in questione. E una array delle variazioni, magari qualcosa del genere:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[
+    {
+        &quot;attributes&quot;: {
+            &quot;Dimensione&quot;  : &quot;Grande&quot;,
+            &quot;Colore&quot; : &quot;Rosso&quot;
+        },
+        &quot;price&quot; : &quot;8.00&quot;
+    },
+    {
+        &quot;attributes&quot;: {
+            &quot;Dimensione&quot;  : &quot;Piccolo&quot;,
+            &quot;Colore&quot; : &quot;Verde&quot;
+        },
+        &quot;price&quot; : &quot;10.00&quot;
+    }
+    [...]
+]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;A questo punto non ci resta che inserire le variazioni effettivamente. Le variazioni non sono altro che post con tipo &lt;code class=&quot;highlighter-rouge&quot;&gt;product_variation&lt;/code&gt; e &lt;code class=&quot;highlighter-rouge&quot;&gt;post_parent&lt;/code&gt; il prodotto inserito prima, per capirci &lt;code class=&quot;highlighter-rouge&quot;&gt;$post_id&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;insert_product_variations&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$post_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$variations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  
+&lt;span class=&quot;cm&quot;&gt;/* Developed by http://ryanknights.co.uk/insert-woocommerce-products-variations-programmatically/ */&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;foreach&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$variations&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$variation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nv&quot;&gt;$variation_post&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Setup the post data for the variation
+&lt;/span&gt;            &lt;span class=&quot;s1&quot;&gt;'post_title'&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'Variation #'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;' of '&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$variations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;' for product#'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$post_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;'post_name'&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'product-'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$post_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'-variation-'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;'post_status'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'publish'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;'post_parent'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$post_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;'post_type'&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'product_variation'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+            &lt;span class=&quot;s1&quot;&gt;'guid'&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;home_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'/?product_variation=product-'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$post_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'-variation-'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$index&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+        &lt;span class=&quot;nv&quot;&gt;$variation_post_id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;wp_insert_post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$variation_post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Insert the variation
+&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;foreach&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$variation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'attributes'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$attribute&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Loop through the variations attributes
+&lt;/span&gt;        &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;   
+            &lt;span class=&quot;nv&quot;&gt;$attribute_term&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;get_term_by&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'name'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$value&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'pa_'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$attribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// We need to insert the slug not the name into the variation post meta
+&lt;/span&gt;
+            &lt;span class=&quot;nx&quot;&gt;update_post_meta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$variation_post_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'attribute_pa_'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$attribute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$attribute_term&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;slug&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+          &lt;span class=&quot;c1&quot;&gt;// Again without variables: update_post_meta(25, 'attribute_pa_size', 'small')
+&lt;/span&gt;        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;nx&quot;&gt;update_post_meta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$variation_post_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'_price'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$variation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'price'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+        &lt;span class=&quot;nx&quot;&gt;update_post_meta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$variation_post_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'_regular_price'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$variation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'price'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;come-far-funzionare-il-tutto&quot;&gt;Come far funzionare il tutto&lt;/h1&gt;
+&lt;p&gt;Arrivati a questo punto non ci resta che mettere insieme tutti i pezzi. Il problema ora è che abbiamo usato delle funzioni di Wordpress che dovranno essere eseguite, chiaramente, all’interno del framework di Wordpress. La cosa più semplice da fare è quella di creare un plugin che, una volta installato, esegua tutte queste funzioni e ci aggiorni il database.&lt;/p&gt;
+
+&lt;h2 id=&quot;creare-un-plugin&quot;&gt;Creare un plugin&lt;/h2&gt;
+&lt;p&gt;Andiamo a creare un nuovo file PHP, &lt;code class=&quot;highlighter-rouge&quot;&gt;myplugin.php&lt;/code&gt;, che, una volta attivato, eseguirà il nostro codice:&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+   &lt;span class=&quot;cm&quot;&gt;/*
+   Plugin Name: WooCommerce Variable Product Test
+   Plugin URI: http://wordpress.org
+   Description: My Plugin
+   Version: 1.0
+   Author: Me
+   Author URI: http://wordpress.org
+   License: GPL2
+   */&lt;/span&gt;
+
+   &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;onActivation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(){&lt;/span&gt;
+     &lt;span class=&quot;c1&quot;&gt;// Inseriamo qui tutto il nostro codice che deve essere eseguito
+&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+   &lt;span class=&quot;nx&quot;&gt;register_activation_hook&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;__FILE__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'onActivation'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;That’s all!
+Nice coding!&lt;/p&gt;
+
+&lt;p&gt;Complete plugin ready to run: &lt;a href=&quot;https://apagiaro.it/assets/plugin.zip&quot;&gt;download it&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;references&quot;&gt;References&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&quot;http://ryanknights.co.uk/insert-woocommerce-products-variations-programmatically/&quot;&gt;ryanknights.co.uk&lt;/a&gt;&lt;/p&gt;</content><category term="Wordpress" /><category term="WooCommerce" /><category term="Hack" /><category term="Reverse Engineering" /><summary type="html">Una guida su come velocizzare l'inserimento dei prodotti su WooCommerce, con l'aiuto del PHP e delle API Wordpress</summary></entry><entry><title type="html">Raccolta di giochi multiplayer online (senza installazione)</title><link href="https://apagiaro.it/giochi-multiplayer-online/" rel="alternate" type="text/html" title="Raccolta di giochi multiplayer online (senza installazione)" /><published>2017-06-24T00:00:00+02:00</published><updated>2017-06-24T00:00:00+02:00</updated><id>https://apagiaro.it/giochi-multiplayer-online</id><content type="html" xml:base="https://apagiaro.it/giochi-multiplayer-online/">&lt;h1 id=&quot;lichess&quot;&gt;&lt;a href=&quot;http://en.lichess.org/&quot;&gt;Lichess&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/lichess.png&quot; alt=&quot;LiChess.org&quot; /&gt;
+Il più classico dei giochi: una partita a scacchi. Basta connettersi, creare una partita e mandare il link all’amico. Scacco matto!&lt;/p&gt;
+
+&lt;h1 id=&quot;battaglia-navale&quot;&gt;&lt;a href=&quot;http://it.battleship-game.org/&quot;&gt;Battaglia Navale&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/battleship.png&quot; alt=&quot;Battleship&quot; /&gt;
+Anche qui un gioco piuttosto classico. Connettiti al sito, seleziona avversario “familiar”, mandagli il link generatato e inizia la battaglia!&lt;/p&gt;
+
+&lt;h1 id=&quot;forza-quattro&quot;&gt;&lt;a href=&quot;https://www.playc4.com&quot;&gt;Forza Quattro&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/four.png&quot; alt=&quot;Playc4.com&quot; /&gt;
+Un sito un po’ più spartano dei precedenti ma con la stessa logica. Una volta aperto il sito, copiate il link dalla barra degli indirizzi, mandatelo ad un amico e iniziate la vostra sfida. Occhio alle diagonali!&lt;/p&gt;
+
+&lt;h1 id=&quot;curvytron&quot;&gt;&lt;a href=&quot;http://www.curvytron.com&quot;&gt;Curvytron&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/curvytron.png&quot; alt=&quot;curvytron.com&quot; /&gt;
+Un gioco che richiama il film “Tron”. Crea una stanza, fai entrare i tuoi amici ed inizia a giocare. Non tagliare le linee degli avversari per non perdere e taglia la loro strada prima che siano loro a tagliare la tua!&lt;/p&gt;
+
+&lt;p class=&quot;notice&quot;&gt;Se avete un ping eccessivamente alto e vi trovate nella stessa stanza, potete anche avviare il vostro server Curvytron in NodeJS. Se avete capito cosa ho detto potete scaricare tutto &lt;a href=&quot;https://github.com/Curvytron/curvytron&quot;&gt;da qui&lt;/a&gt; altrimenti fate come se non vi avessi detto nulla! :)&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Avete altri giochi da segnalare? Lasciate il link nei commenti!&lt;/strong&gt;&lt;/p&gt;</content><category term="giochi" /><category term="javascript" /><category term="multiplayer" /><summary type="html">Per giocare con i tuoi amici una partita veloce, senza dover installare niente sul pc.</summary></entry><entry><title type="html">Coding Challange</title><link href="https://apagiaro.it/codeChallange/" rel="alternate" type="text/html" title="Coding Challange" /><published>2017-06-24T00:00:00+02:00</published><updated>2017-06-24T00:00:00+02:00</updated><id>https://apagiaro.it/codeChallange</id><content type="html" xml:base="https://apagiaro.it/codeChallange/">&lt;p&gt;Ho trovato su Youtube &lt;a href=&quot;https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw&quot;&gt;questo&lt;/a&gt; simpatico tipo che fa dei video sulla programmazione grafica ad eventi in Javascript davvero interessanti. Eccone un’esempio:&lt;/p&gt;
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/AaGK-fj-BAM&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;Nel suo canale ne trovate a decine di video così. Buona visione!&lt;/p&gt;</content><category term="javascript" /><category term="snake" /><summary type="html">Per informatici annoiati...</summary></entry><entry><title type="html">Guida alla costruzione di un ripetitore WiFi fai-da-te</title><link href="https://apagiaro.it/ripetitoreWifiDIY/" rel="alternate" type="text/html" title="Guida alla costruzione di un ripetitore WiFi fai-da-te" /><published>2017-04-20T00:00:00+02:00</published><updated>2017-04-20T00:00:00+02:00</updated><id>https://apagiaro.it/ripetitoreWifiDIY</id><content type="html" xml:base="https://apagiaro.it/ripetitoreWifiDIY/">&lt;p&gt;Vediamo oggi come realizzare un ripetitore WiFi a bassissimo costo, con un poco di ingegno e manualità.&lt;/p&gt;
+
+&lt;h1 id=&quot;componenti-e-circuito&quot;&gt;Componenti e circuito&lt;/h1&gt;
+&lt;p&gt;Per questo progetto useremo&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://it.aliexpress.com/item/ESP8266-Serial-WIFI-Wireless-Module-Wireless-Transceiver-The-Internet-of-Things/32220713885.html?ws_ab_test=searchweb0_0,searchweb201602_2_10152_10065_10151_10068_10084_10083_10080_10082_10081_10177_10110_10136_10137_10111_10060_10138_10112_10113_10155_10062_10114_10156_10154_10056_10055_10054_10059_10099_10078_10079_10103_10073_10102_10096_10070_10148_10123_10147_10052_10053_10124_10142_10107_10050_10143_10051,searchweb201603_9,afswitch_1,ppcSwitch_4&amp;amp;btsid=aa9e5f6f-a5a8-43c3-9be0-2db34901e1ee&amp;amp;algo_expid=48192ddc-1ccd-4e63-9ec6-121a3f900737-0&amp;amp;algo_pvid=48192ddc-1ccd-4e63-9ec6-121a3f900737&quot;&gt;Modulo WiFi ESP-01&lt;/a&gt;, con microcontrollore ESP8266 - 1,70€&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.amazon.it/s/ref=nb_sb_noss_2?__mk_it_IT=ÅMÅŽÕÑ&amp;amp;url=search-alias%3Daps&amp;amp;field-keywords=scheda+millefori&quot;&gt;Scheda millefori&lt;/a&gt;, 1€ al negozio di elettronica sotto casa&lt;/li&gt;
+  &lt;li&gt;Altri componenti minori (1,5€)
+    &lt;ul&gt;
+      &lt;li&gt;Un condensatore&lt;/li&gt;
+      &lt;li&gt;1 Resistenza 3.3KOhm&lt;/li&gt;
+      &lt;li&gt;1 Resistenza 5.6KOhm&lt;/li&gt;
+      &lt;li&gt;10 Pin Header&lt;/li&gt;
+      &lt;li&gt;1 LM317T&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.ebay.it/itm/6Pin-USB-2-0-to-TTL-UART-Module-Serial-Converter-CP2102-STC-Replace-FT232-/122146759977?hash=item1c7083a529:g:uVoAAOSwPCVX47b1&quot;&gt;Connettore USB-SerialPin&lt;/a&gt;, 3€ su eBay (vi servirà solo all’inizio, potete farvela prestare)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;costruiamo-il-circuito&quot;&gt;Costruiamo il circuito&lt;/h1&gt;
+&lt;p&gt;Per iniziare dobbiamo costruire il circuito per far funzionare il tutto. Lo schema è il seguente (è lo stesso usato nel &lt;a href=&quot;https://apagiaro.it/meshweather/&quot;&gt;progetto della rete mesh&lt;/a&gt;):
+&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/usage-scheme.png&quot; alt=&quot;Usage Scheme&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Per come disporre questi pochi componenti lascio il tutto alla vostra fantasia. Questo circuito alimenterà il nostro modulo ESP-01 con una batteria da 9V o, eventualmente, una &lt;a href=&quot;http://www.ebay.it/itm/122195969727?_trksid=p2060353.m2749.l2649&amp;amp;ssPageName=STRK%3AMEBIDX%3AIT&quot;&gt;serie di batteria AA&lt;/a&gt;. Inoltre, quello che non si capisce dallo schema, sono i collegamenti dei pin del modulo che sono i seguenti:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Pin&lt;/th&gt;
+      &lt;th&gt;Attacco&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;VCC&lt;/td&gt;
+      &lt;td&gt;3.3V&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;RST&lt;/td&gt;
+      &lt;td&gt;non collegato&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;CH_PD&lt;/td&gt;
+      &lt;td&gt;3.3V&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;TXD&lt;/td&gt;
+      &lt;td&gt;non collegato&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;RXD&lt;/td&gt;
+      &lt;td&gt;non collegato&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;GPIO&lt;/td&gt;
+      &lt;td&gt;3.3V&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;GPIO2&lt;/td&gt;
+      &lt;td&gt;non collegato&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;GND&lt;/td&gt;
+      &lt;td&gt;GND&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/pinesp.jpg&quot; alt=&quot;esp Pin&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;software&quot;&gt;Software&lt;/h1&gt;
+&lt;p&gt;Per quanto riguarda il software qui la questione si fa più insidiosa perchè tocca smanettarci un po’ di più. La libreria che ho usato è &lt;a href=&quot;https://github.com/martin-ger/esp_wifi_repeater&quot;&gt;eps_wifi_repeater&lt;/a&gt;, disponibile su GitHub.&lt;/p&gt;
+
+&lt;p&gt;Per compilare e flashare il tutto trovate la guida direttamente sulla repo, noi ci limiteremo a flashare il tutto prestando attenzione al fatto che stiamo usando un ESP-01.&lt;/p&gt;
+
+&lt;p&gt;La prima cosa da fare sarà installare esptool, un programma che ci permette di flashare il nostro cosino con un semplice comando. 
+Per scaricare esptool scrivete quindi:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/themadinventor/esptool.git
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;oppure potete procedere all’installazione tramite &lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip install --upgrade esptool
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Connettiamo il nostro ESP-01 al nostro pc utilizzando il &lt;a href=&quot;http://www.ebay.it/itm/6Pin-USB-2-0-to-TTL-UART-Module-Serial-Converter-CP2102-STC-Replace-FT232-/122146759977?hash=item1c7083a529:g:uVoAAOSwPCVX47b1&quot;&gt;connettore seriale-usb&lt;/a&gt; con questa connessione di pin:
+&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/devSerial.png&quot; alt=&quot;debuggerMode pin&quot; /&gt;
+A questo punto scarichiamo la libreria per il wifi-repeater&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/martin-ger/esp_wifi_repeater.git
+cd esp_wifi_repeater
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;e flashamola direttamente sull’ESP-01 con il seguente comando:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;esptool --port /dev/ttyUSB0 write_flash -fs 8m 0x00000 firmware/0x00000.bin 0x10000 firmware/0x10000.bin
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Per qualche motivo su alcuni moduli non funziona, in tal caso flashamo la versione compilata con le SDK precedenti, eseguendo il comando&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;esptool --port /dev/ttyUSB0 write_flash -fs 8m 0x00000 firmware_sdk_1.5.4/0x00000.bin 0x40000 firmware_sdk_1.5.4/0x40000.bin
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h1 id=&quot;lets-start&quot;&gt;Let’s start&lt;/h1&gt;
+&lt;p&gt;A questo punto abbiamo finito, attacchiamo l’ESP-01 al circuito, alimentato tramite la nostra batteria. Accendiamo il pc, connettiamoci alla rete myAP e, con connettendoci tramite telnet andiamo a settare i nostri parametri.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;telnet 192.168.4.1 7777
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Si aprirà una console del chip, inseriamo i seguenti comand1&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;set ap_open 0
+set ssid NOME_DEL_TUO_WIFI_ATTUALE
+set password PASSWORD_DEL_TUO_WIFI_ATTUALE
+set ap_ssid NOME_NUOVA_RETE
+set ap_password PASSWORD_NUOVA_RETE
+save
+show config
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;A questo punto abbiamo il nostro ripetitore. Certo, non sarà velocissimo, ma è veloce quel tanto che basta per una navigazione ordinaria senza dover fare streaming o cose grandi trasferimenti di file.&lt;/p&gt;</content><category term="ESP8266" /><category term="Elettronica" /><category term="Arduino" /><summary type="html">Con una spesa di pochi euro...</summary></entry><entry><title type="html">Reveal.js, guida all’utilizzo</title><link href="https://apagiaro.it/revealjs/" rel="alternate" type="text/html" title="Reveal.js, guida all'utilizzo" /><published>2017-04-14T00:00:00+02:00</published><updated>2017-04-14T00:00:00+02:00</updated><id>https://apagiaro.it/revealjs</id><content type="html" xml:base="https://apagiaro.it/revealjs/">&lt;p&gt;L’altro giorno, cercando un modo di creare una presentazione per il &lt;a href=&quot;https://apagiaro.it/meshweather&quot;&gt;mio ultimo progetto&lt;/a&gt; mi sono imbattuto un framework completo e di semplice utilizzo. Un esempio di cosa si può fare con questo gioiellino in soli 5 minuti è questo:&lt;/p&gt;
+&lt;iframe src=&quot;http://apagiaro.it/mesh&quot; height=&quot;450px&quot; width=&quot;700px&quot;&gt;&lt;/iframe&gt;
+
+&lt;h2 id=&quot;lets-start&quot;&gt;Let’s start&lt;/h2&gt;
+&lt;p&gt;Per iniziare ci basterà scaricare il codice del framework dalla &lt;a href=&quot;https://github.com/hakimel/reveal.js&quot;&gt;sua pagina GitHub&lt;/a&gt;. A questo punto possiamo iniziare subito modificando la pagina &lt;code class=&quot;highlighter-rouge&quot;&gt;index.html&lt;/code&gt; o creando la nostra nuova pagina fatta che dovrà includere nell’&lt;code class=&quot;highlighter-rouge&quot;&gt;head&lt;/code&gt; le seguenti dichiarazioni:&lt;/p&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;css/reveal.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;css/theme/moon.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;e in fondo alla pagina, prima della chiusura del &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;/body&amp;gt;&lt;/code&gt;, bisognerà aggiungere del codice Javascript per il caricamento del framework:&lt;/p&gt;
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;lib/js/head.min.js&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/script&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;js/reveal.js&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/script&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;c1&quot;&gt;// More info https://github.com/hakimel/reveal.js#configuration&lt;/span&gt;
+	&lt;span class=&quot;nx&quot;&gt;Reveal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+		&lt;span class=&quot;na&quot;&gt;history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+
+		&lt;span class=&quot;c1&quot;&gt;// More info https://github.com/hakimel/reveal.js#dependencies&lt;/span&gt;
+		&lt;span class=&quot;na&quot;&gt;dependencies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'plugin/markdown/marked.js'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'plugin/markdown/markdown.js'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'plugin/notes/notes.js'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'plugin/highlight/highlight.js'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;callback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;hljs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;initHighlightingOnLoad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/script&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;dove le dependencies possono essere modificate a vostro piacimento. Le configazioni applicabili sono tantissime e avremo modo più avanti di parlarne.&lt;/p&gt;
+
+&lt;h3 id=&quot;creare-le-slides&quot;&gt;Creare le slides&lt;/h3&gt;
+&lt;p&gt;Fatto questo non dobbiamo far altro che iniziare a scrivere la nostra presentazione. Ogni slide non è altro che una pagina HTML racchiusa tra i tag &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;section&amp;gt;&lt;/code&gt;. Tutte le &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;section&amp;gt;&lt;/code&gt; vanno aggiunte tra i seguenti div&lt;/p&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;reveal&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;slides&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+	...
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;La particolarità di questo framework è la possibilità di aggiungere sia uno scorrimento orizzontale, utilizzato, di solito, per rappresentare il cambio di macroargomento, sia uno scorrimento verticale che è più simile ad uno scorrimento classico di slides. Per aggiungere quindi uno scorrimento verticale basterà aggiungere &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;section&amp;gt;&lt;/code&gt; annidate. Un codice come&lt;/p&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
+		Slide 1.1
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
+		Slide 1.2
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
+		Slide 2.1
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
+		Slide 2.2
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;produrrà il seguente risultato:&lt;/p&gt;
+&lt;iframe src=&quot;https://apagiaro.it/mesh/esempio1.html&quot; height=&quot;450px&quot; width=&quot;700px&quot;&gt;&lt;/iframe&gt;
+
+&lt;h3 id=&quot;frammenti&quot;&gt;Frammenti&lt;/h3&gt;
+&lt;p&gt;Per far apparire i punti di un’elenco uno alla volta alla pressione del tasto avanti o mostrare una didascalia dopo un’immagine è una cosa che si può fare senza fatica. Basta aggiungere, all’oggetto che vogliamo mostrare dopo, la classe &lt;code class=&quot;highlighter-rouge&quot;&gt;fragment&lt;/code&gt;. Un esempio è il seguente codice:&lt;/p&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&amp;gt;&lt;/span&gt;
+		&lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fragment&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; Punto 1 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+		&lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fragment&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; Punto 2 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+		&lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fragment&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; Punto 3 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
+	Applicare diversi stili ai fragment...
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&amp;gt;&lt;/span&gt;
+		&lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fragment grow&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; class=&quot;fragment grow&quot; &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+		&lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fragment shrink&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; class=&quot;fragment shrink&quot; &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+		&lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fragment fade-out&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; class=&quot;fragment fade-out&quot; &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+		&lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fragment fade-up highlight-red&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; class=&quot;fragment fade-out highlight-red&quot; &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;che produce il seguente risultato&lt;/p&gt;
+&lt;iframe src=&quot;https://apagiaro.it/mesh/esempio2.html&quot; height=&quot;450px&quot; width=&quot;700px&quot;&gt;&lt;/iframe&gt;
+
+&lt;h2 id=&quot;temi&quot;&gt;Temi&lt;/h2&gt;
+&lt;p&gt;Questo framework contiene anche numerosi temi che possono essere applicati semplicemente cambiato il css importanto nell’header della pagina. A &lt;a href=&quot;https://apagiaro.it/mesh/theme_example.html&quot;&gt;questa pagina&lt;/a&gt; potete trovare un’anteprima dei temi disponibili nella repository del framework su GitHub.&lt;/p&gt;</content><category term="javascript" /><category term="HTML5" /><summary type="html">Un framework per le presentazioni in HTML</summary></entry></feed>
