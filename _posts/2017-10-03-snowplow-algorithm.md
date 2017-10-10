@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "How to create sorted run for merge-sort larger than M (memory size) using SnowPlow Algorithm"
-date:   2017-08-26
+date:   2017-10-03
 excerpt: "A simple algorithm to create runs larger than memory size"
 tag:
 - algorithm
