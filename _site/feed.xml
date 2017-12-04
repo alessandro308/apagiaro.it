@@ -1,4 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="http://127.0.0.1:4000/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="http://127.0.0.1:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://127.0.0.1:4000/" rel="alternate" type="text/html" /><updated>2017-11-23T12:46:36+01:00</updated><id>http://127.0.0.1:4000/</id><title type="html">Alessandro Pagiaro</title><subtitle>Studente di Informatica presso l'Università di Pisa. Scout a tempo perso.</subtitle><entry><title type="html">Come salvare le password nel database e creare un login</title><link href="http://127.0.0.1:4000/store-password-safe/" rel="alternate" type="text/html" title="Come salvare le password nel database e creare un login" /><published>2017-10-03T00:00:00+02:00</published><updated>2017-10-03T00:00:00+02:00</updated><id>http://127.0.0.1:4000/store-password-safe</id><content type="html" xml:base="http://127.0.0.1:4000/store-password-safe/">&lt;p&gt;Si sa, l’utente medio usa una password unica per tutti i vari siti a cui si iscrive. Ma quanti di questi si chiedono come sono salvate le loro password all’interno di questi siti? Lo scopo di questo articolo è quindi di fare una breve panoramica sulle tecniche utilizzate per salvare gli utenti e la password associata nei database sui vari siti e analizzarne le criticità.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="https://apagiaro.it/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="https://apagiaro.it/feed.xml" rel="self" type="application/atom+xml" /><link href="https://apagiaro.it/" rel="alternate" type="text/html" /><updated>2017-12-04T15:09:11+01:00</updated><id>https://apagiaro.it/</id><title type="html">Alessandro Pagiaro</title><subtitle>Studente di Informatica presso l'Università di Pisa. Scout a tempo perso.</subtitle><entry><title type="html">How download MacOS Sierra and downgrade to it</title><link href="https://apagiaro.it/how-downgrade-to-sierra/" rel="alternate" type="text/html" title="How download MacOS Sierra and downgrade to it" /><published>2017-12-02T00:00:00+01:00</published><updated>2017-12-02T00:00:00+01:00</updated><id>https://apagiaro.it/how-downgrade-to-sierra</id><content type="html" xml:base="https://apagiaro.it/how-downgrade-to-sierra/">&lt;h1 id=&quot;short-version&quot;&gt;Short Version&lt;/h1&gt;
+&lt;p&gt;If you, as me, think that High Sierra introduces more bugs than useful feature and want to downgrade to Sierra, execute this commands on Terminal:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install mas
+mas install 1127487414
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;After that, you have the Sierra image ready to be used to create your bootable device and you can perform your downgrade. Finally!&lt;/p&gt;
+
+&lt;h1 id=&quot;long-version&quot;&gt;Long Version&lt;/h1&gt;
+&lt;p&gt;In the past, if you would download some previous OS that you already downloaded, you could simply donwload it from Mac App Store Purchased tab.
+The problem appears after Sierra, when Apple said  “macOS Sierra or later doesn’t appear in the Purchased tab” of Mac App Store (&lt;a href=&quot;https://support.apple.com/en-us/HT201272&quot;&gt;here the document&lt;/a&gt;) (thank you, Apple). So, I search some method to retrieve Sierra and reinstall it because High Sierra is very bad, why?&lt;/p&gt;
+
+&lt;p&gt;Try to see console log error…
+I was developing a MacOS app and that, after update, has stopped working and this log appears in the log. And not just on my app…&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/month13.png&quot; alt=&quot;Month 13 is out of bound&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Of course, this error (maybe a warning?) is not the only reason to downgrade, in my experience, the resume from stop state is slowly, and some other problems has appears (you can simply Google “High Sierra problems” to find a very long posts about them).&lt;/p&gt;
+
+&lt;p&gt;So, after downloaded the Sierra image (see upper paragraph), follow &lt;a href=&quot;https://www.imore.com/how-downgrade-macos&quot;&gt;this steps&lt;/a&gt; and enjoy your resurrected good Mac!&lt;/p&gt;
+
+&lt;h2 id=&quot;why-dont-downgrade&quot;&gt;Why don’t downgrade&lt;/h2&gt;
+&lt;p&gt;Of course, High Sierra, introduced some security improvement (also if recent problem, read &lt;a href=&quot;https://www.macworld.co.uk/how-to/mac-software/how-stop-someone-getting-root-access-your-mac-3668317/&quot;&gt;root access&lt;/a&gt; make think the opposite). Oh, I’m forgetting, in order to fix the root access, Apple has introduced &lt;a href=&quot;http://mashable.com/2017/11/30/apple-security-fix-bug/&quot;&gt;new bugs, yeah!!&lt;/a&gt;. I’ve just downgraded.&lt;/p&gt;</content><category term="english" /><category term="problem" /><category term="MacOS" /><summary type="html">Make your computer great again...</summary></entry><entry><title type="html">Come salvare le password nel database e creare un login</title><link href="https://apagiaro.it/store-password-safe/" rel="alternate" type="text/html" title="Come salvare le password nel database e creare un login" /><published>2017-10-03T00:00:00+02:00</published><updated>2017-10-03T00:00:00+02:00</updated><id>https://apagiaro.it/store-password-safe</id><content type="html" xml:base="https://apagiaro.it/store-password-safe/">&lt;p&gt;Si sa, l’utente medio usa una password unica per tutti i vari siti a cui si iscrive. Ma quanti di questi si chiedono come sono salvate le loro password all’interno di questi siti? Lo scopo di questo articolo è quindi di fare una breve panoramica sulle tecniche utilizzate per salvare gli utenti e la password associata nei database sui vari siti e analizzarne le criticità.&lt;/p&gt;
 
 &lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
 &lt;p&gt;Prima di iniziare ad approfondire l’argomento ci occorre conoscere il concetto di funzione hash. Questa particolare funzione la useremo infatti in alcuni dei metodi per incrementare la sicurezza del salvataggio della password.&lt;/p&gt;
@@ -125,7 +149,7 @@ L’utente al momento della registrazione invia la password, lato client (così 
 &lt;p&gt;Nel caso di una violazione del database le password risulteranno al sicuro perchè, pur conoscendo la password di un utente, non siamo in grado di determinare se altri utente hanno la stessa password (se non andando a ricalcolare tutti gli hash).&lt;/p&gt;
 
 &lt;h2 id=&quot;precisazioni-finali&quot;&gt;Precisazioni finali&lt;/h2&gt;
-&lt;p&gt;Tanto per chiarezza, nessun dato possiamo ritenerlo al sicuro se è online, ma possiamo rendere la vita difficile a chi tenta di rubarlo. Conoscere l’hash non ci porta a nessun risultato utile poichè trovare una stringa che generi quell’hash vuol dire provare tutte le possibili stringhe, cioè taaaantissimi tentativi, e usare l’hash come password non porterà a nessun risultato in quanto il server si aspetta una password e quindi tratterà l’hash come tale, producendo di fatto, per il confronto nel database, l’hash dell’hash, che è un nuovo hash totalmente differente dal precedente.&lt;/p&gt;</content><category term="security" /><category term="database" /><summary type="html">E come non salvarle...</summary></entry><entry><title type="html">How to create sorted run for merge-sort larger than M (memory size) using SnowPlow Algorithm</title><link href="http://127.0.0.1:4000/snowplow-algorithm/" rel="alternate" type="text/html" title="How to create sorted run for merge-sort larger than M (memory size) using SnowPlow Algorithm" /><published>2017-10-03T00:00:00+02:00</published><updated>2017-10-03T00:00:00+02:00</updated><id>http://127.0.0.1:4000/snowplow-algorithm</id><content type="html" xml:base="http://127.0.0.1:4000/snowplow-algorithm/">&lt;p&gt;If we design an algoritmh and we stop thinking about CPU time and focus our attention on main bottleneck of “computer speed”, we have to fucus our attention on IO access in (main) memory. Moreover this introduce new problem, how to optimize access in memory?&lt;/p&gt;
+&lt;p&gt;Tanto per chiarezza, nessun dato possiamo ritenerlo al sicuro se è online, ma possiamo rendere la vita difficile a chi tenta di rubarlo. Conoscere l’hash non ci porta a nessun risultato utile poichè trovare una stringa che generi quell’hash vuol dire provare tutte le possibili stringhe, cioè taaaantissimi tentativi, e usare l’hash come password non porterà a nessun risultato in quanto il server si aspetta una password e quindi tratterà l’hash come tale, producendo di fatto, per il confronto nel database, l’hash dell’hash, che è un nuovo hash totalmente differente dal precedente.&lt;/p&gt;</content><category term="security" /><category term="database" /><summary type="html">E come non salvarle...</summary></entry><entry><title type="html">How to create sorted run for merge-sort larger than M (memory size) using SnowPlow Algorithm</title><link href="https://apagiaro.it/snowplow-algorithm/" rel="alternate" type="text/html" title="How to create sorted run for merge-sort larger than M (memory size) using SnowPlow Algorithm" /><published>2017-10-03T00:00:00+02:00</published><updated>2017-10-03T00:00:00+02:00</updated><id>https://apagiaro.it/snowplow-algorithm</id><content type="html" xml:base="https://apagiaro.it/snowplow-algorithm/">&lt;p&gt;If we design an algoritmh and we stop thinking about CPU time and focus our attention on main bottleneck of “computer speed”, we have to fucus our attention on IO access in (main) memory. Moreover this introduce new problem, how to optimize access in memory?&lt;/p&gt;
 
 &lt;p&gt;If I design a mergesort algorithm, I’ll find useful to build a &lt;em&gt;k-way mergesort&lt;/em&gt; where the complexity decrease when the run size increas [1]. So it’s useful to find a way to create a sorted run as long as we can.&lt;/p&gt;
 
@@ -160,7 +184,7 @@ L’utente al momento della registrazione invia la password, lato client (così 
 &lt;h1 id=&quot;example&quot;&gt;Example&lt;/h1&gt;
 
 &lt;p&gt;Here I provide a small example to show how this algorithm works.
-&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/snowplow.jpg&quot; alt=&quot;SnowPlow Algorithm Example&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/snowplow.jpg&quot; alt=&quot;SnowPlow Algorithm Example&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;So the sorted runs are:&lt;/p&gt;
 &lt;ul&gt;
@@ -174,7 +198,7 @@ L’utente al momento della registrazione invia la password, lato client (così 
 &lt;p&gt;[1] The magic of Algorithm, lecture notes of Paolo Ferragina&lt;/p&gt;
 
 &lt;p&gt;[2] Donald E. Knuth. The Art of Computer Programming: volume 3. Addison-Wesley, 2nd
-Edition, 1998.&lt;/p&gt;</content><category term="algorithm" /><category term="english" /><summary type="html">A simple algorithm to create runs larger than memory size</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma, parte 3</title><link href="http://127.0.0.1:4000/intro-crittografia-3/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma, parte 3 " /><published>2017-08-26T00:00:00+02:00</published><updated>2017-08-26T00:00:00+02:00</updated><id>http://127.0.0.1:4000/intro-crittografia-3</id><content type="html" xml:base="http://127.0.0.1:4000/intro-crittografia-3/">&lt;p&gt;Dopo aver visto nella &lt;a href=&quot;http://127.0.0.1:4000/intro-crittografia&quot;&gt;prima parte&lt;/a&gt; come scambiarsi una chiave senza doverla comunicare in chiaro, abbiamo visto nella &lt;a href=&quot;http://127.0.0.1:4000/intro-crittografia-2&quot;&gt;seconda parte&lt;/a&gt; come è possibile scambiarsi messaggi cifrati senza neanche doversi scambiare una chiave, tramite l’uso dell’RSA.&lt;/p&gt;
+Edition, 1998.&lt;/p&gt;</content><category term="algorithm" /><category term="english" /><summary type="html">A simple algorithm to create runs larger than memory size</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma, parte 3</title><link href="https://apagiaro.it/intro-crittografia-3/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma, parte 3 " /><published>2017-08-26T00:00:00+02:00</published><updated>2017-08-26T00:00:00+02:00</updated><id>https://apagiaro.it/intro-crittografia-3</id><content type="html" xml:base="https://apagiaro.it/intro-crittografia-3/">&lt;p&gt;Dopo aver visto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia&quot;&gt;prima parte&lt;/a&gt; come scambiarsi una chiave senza doverla comunicare in chiaro, abbiamo visto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia-2&quot;&gt;seconda parte&lt;/a&gt; come è possibile scambiarsi messaggi cifrati senza neanche doversi scambiare una chiave, tramite l’uso dell’RSA.&lt;/p&gt;
 
 &lt;p&gt;Lo scopo di oggi è vedere come sfruttare l’RSA, o qualsiasi altro algoritmo di cifratura asimmetrico, per verificare l’identità di un mittente come se lui lo avesse firmato.&lt;/p&gt;
 
@@ -229,7 +253,7 @@ sha256(&quot;ciao a tutte&quot;) = 41a0afdbed24669aad1da115f0e8577277a41ec351ac6
 
 &lt;p&gt;Un eventuale ricevente non deve far nient’altro che prendere la &lt;em&gt;chiave pubblica&lt;/em&gt; di Bob, e applicarla al secondo componente spedito. Se il procedimento è andato a buon fine il risultato sarà \( &amp;lt;m, h(m)&amp;gt; \). Basterà quindi calcolare l’hash di &lt;em&gt;m&lt;/em&gt; e confrontarlo con il risultato della decifratura.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/facebook.png&quot; alt=&quot;facebook certificato&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/facebook.png&quot; alt=&quot;facebook certificato&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;il-problema-della-verifica-della-chiave-pubblica&quot;&gt;Il problema della verifica della chiave pubblica&lt;/h1&gt;
 &lt;p&gt;Si introduce, in tutto questo ragionamento, un problema che, quando abbiamo introdotto i cifrari asimmetrici, avevamo ignorato.&lt;/p&gt;
@@ -242,9 +266,9 @@ sha256(&quot;ciao a tutte&quot;) = 41a0afdbed24669aad1da115f0e8577277a41ec351ac6
 
 &lt;p&gt;A questo punto si torna alla domanda con cui avevamo aperto questa serie di articoli sulla crittografia, &lt;strong&gt;chi certifica la Certification Authority&lt;/strong&gt;?&lt;/p&gt;
 
-&lt;p&gt;Beh, in tal caso diciamo che si autocertificano, o meglio, per capirlo bisogna capire in che scenario si utilizzano. Quando navighiamo noi usiamo un browser che si connetterà in maniera cifrata a vari server verificando l’identità di ognuno di questi leggendo la &lt;em&gt;chiave pubblica&lt;/em&gt; dichiarata (la questione è un po’ più complicata ma cerchiamo di lasciarla più semplice possibile). A questo punto, si connette alla &lt;em&gt;certification authority&lt;/em&gt; per controllare la validità. Questa connessione che effettua avviene con il metodo di cifratura asimmetrica visto nella &lt;a href=&quot;http://127.0.0.1:4000/intro-crittografia-2&quot;&gt;seconda parte&lt;/a&gt; e, la chiave pubblica della &lt;em&gt;c. a.&lt;/em&gt;, il browser la conosce perchè ce l’ha salvata nel suo database locale. E chi l’ha inserita in quel database? Diciamo che il programmatore potrebbe aver inserito le principale &lt;em&gt;c.a.&lt;/em&gt; e quando scaricate il browser ve le ritrovate già lì pronte, e poi a cascata tutte le altre.&lt;/p&gt;
+&lt;p&gt;Beh, in tal caso diciamo che si autocertificano, o meglio, per capirlo bisogna capire in che scenario si utilizzano. Quando navighiamo noi usiamo un browser che si connetterà in maniera cifrata a vari server verificando l’identità di ognuno di questi leggendo la &lt;em&gt;chiave pubblica&lt;/em&gt; dichiarata (la questione è un po’ più complicata ma cerchiamo di lasciarla più semplice possibile). A questo punto, si connette alla &lt;em&gt;certification authority&lt;/em&gt; per controllare la validità. Questa connessione che effettua avviene con il metodo di cifratura asimmetrica visto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia-2&quot;&gt;seconda parte&lt;/a&gt; e, la chiave pubblica della &lt;em&gt;c. a.&lt;/em&gt;, il browser la conosce perchè ce l’ha salvata nel suo database locale. E chi l’ha inserita in quel database? Diciamo che il programmatore potrebbe aver inserito le principale &lt;em&gt;c.a.&lt;/em&gt; e quando scaricate il browser ve le ritrovate già lì pronte, e poi a cascata tutte le altre.&lt;/p&gt;
 
-&lt;p&gt;Per vedere tutte queste cose, sui siti che visitate, basta cliccare sul lucchetto posto, solitamente, alla sinistra dell’url nella barra degli indirizzo. Vi dovreste ritrovare una schermata simile a quella mostrata nell’immagine qui sopra con tutti i dati di cui abbiamo parlato oggi che ora, spero, sarete in grado di capire un po’ meglio.&lt;/p&gt;</content><category term="crittografia" /><category term="RSA" /><category term="firma digitale" /><summary type="html">La firma digitale</summary></entry><entry><title type="html">Man-in-the-middle per tutti con Bettercap</title><link href="http://127.0.0.1:4000/bettercap-guida-ita/" rel="alternate" type="text/html" title="Man-in-the-middle per tutti con Bettercap" /><published>2017-08-24T00:00:00+02:00</published><updated>2017-08-24T00:00:00+02:00</updated><id>http://127.0.0.1:4000/bettercap-guida-ita</id><content type="html" xml:base="http://127.0.0.1:4000/bettercap-guida-ita/">&lt;p&gt;Una delle cose che ci si immagina, quando si pensa alla sicurezza informatica, è l’intercettare e modificare il traffico internet di un computer &lt;em&gt;target&lt;/em&gt; per fare quello che ci occorre.&lt;/p&gt;
+&lt;p&gt;Per vedere tutte queste cose, sui siti che visitate, basta cliccare sul lucchetto posto, solitamente, alla sinistra dell’url nella barra degli indirizzo. Vi dovreste ritrovare una schermata simile a quella mostrata nell’immagine qui sopra con tutti i dati di cui abbiamo parlato oggi che ora, spero, sarete in grado di capire un po’ meglio.&lt;/p&gt;</content><category term="crittografia" /><category term="RSA" /><category term="firma digitale" /><summary type="html">La firma digitale</summary></entry><entry><title type="html">Man-in-the-middle per tutti con Bettercap</title><link href="https://apagiaro.it/bettercap-guida-ita/" rel="alternate" type="text/html" title="Man-in-the-middle per tutti con Bettercap" /><published>2017-08-24T00:00:00+02:00</published><updated>2017-08-24T00:00:00+02:00</updated><id>https://apagiaro.it/bettercap-guida-ita</id><content type="html" xml:base="https://apagiaro.it/bettercap-guida-ita/">&lt;p&gt;Una delle cose che ci si immagina, quando si pensa alla sicurezza informatica, è l’intercettare e modificare il traffico internet di un computer &lt;em&gt;target&lt;/em&gt; per fare quello che ci occorre.&lt;/p&gt;
 
 &lt;div class=&quot;notice&quot;&gt;
 &lt;h3&gt;Attenzione!!!&lt;/h3&gt;
@@ -389,9 +413,9 @@ Con altissima probabilità verrete reindirizzati alla pagina cifrata, tutta colp
 
 &lt;p&gt;dove -T IP (opzionale) rappresenta l’IP di cui volete intercettare il traffico, &lt;em&gt;interfaccia&lt;/em&gt; è il nome dell’interfaccia su cui attivate il tutto, ad esempio la mia interfaccia wifi è en1, puoi scoprire la tua con un &lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Per il resto la &lt;a href=&quot;https://www.bettercap.org/index.html&quot;&gt;documentazione&lt;/a&gt; ufficiale è molto chiara, quindi potete andare direttamente lì per leggere le mille opzioni previste e usarle.&lt;/p&gt;</content><category term="crittografia" /><category term="MITM" /><category term="sicurezza" /><category term="bettercap" /><summary type="html">Due/tre cosine spiegate su Bettercap</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma, parte 2</title><link href="http://127.0.0.1:4000/intro-crittografia-2/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma, parte 2" /><published>2017-08-22T00:00:00+02:00</published><updated>2017-08-22T00:00:00+02:00</updated><id>http://127.0.0.1:4000/intro-crittografia-2</id><content type="html" xml:base="http://127.0.0.1:4000/intro-crittografia-2/">&lt;p&gt;Come avevamo già visto nella &lt;a href=&quot;http://127.0.0.1:4000/intro-crittografia&quot;&gt;prima parte&lt;/a&gt;, uno dei problemi principale di quando dobbiamo cifrare qualcosa è il comunicare la chiave di decifrazione al destinatario in quanto non possiamo cifrarla in alcun modo. A risolvere questo problema ci pensano gli algoritmi di crittografia asimmetrica.&lt;/p&gt;
+&lt;p&gt;Per il resto la &lt;a href=&quot;https://www.bettercap.org/index.html&quot;&gt;documentazione&lt;/a&gt; ufficiale è molto chiara, quindi potete andare direttamente lì per leggere le mille opzioni previste e usarle.&lt;/p&gt;</content><category term="crittografia" /><category term="MITM" /><category term="sicurezza" /><category term="bettercap" /><summary type="html">Due/tre cosine spiegate su Bettercap</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma, parte 2</title><link href="https://apagiaro.it/intro-crittografia-2/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma, parte 2" /><published>2017-08-22T00:00:00+02:00</published><updated>2017-08-22T00:00:00+02:00</updated><id>https://apagiaro.it/intro-crittografia-2</id><content type="html" xml:base="https://apagiaro.it/intro-crittografia-2/">&lt;p&gt;Come avevamo già visto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia&quot;&gt;prima parte&lt;/a&gt;, uno dei problemi principale di quando dobbiamo cifrare qualcosa è il comunicare la chiave di decifrazione al destinatario in quanto non possiamo cifrarla in alcun modo. A risolvere questo problema ci pensano gli algoritmi di crittografia asimmetrica.&lt;/p&gt;
 
-&lt;p&gt;Avete presente quel discorso fatto nella &lt;a href=&quot;http://127.0.0.1:4000/intro-crittografia&quot;&gt;prima parte&lt;/a&gt; in cui si diceva che trovare un inverso di un numero &lt;i&gt;n&lt;/i&gt; quando c’è di mezzo l’operatore &lt;em&gt;modulo&lt;/em&gt; non è poi così tanto banale? Ecco, è proprio ancora questa cosa che venne in aiuto a Ronald Rivest, Adi Shamir e Leonard Adleman nel 1977.&lt;/p&gt;
+&lt;p&gt;Avete presente quel discorso fatto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia&quot;&gt;prima parte&lt;/a&gt; in cui si diceva che trovare un inverso di un numero &lt;i&gt;n&lt;/i&gt; quando c’è di mezzo l’operatore &lt;em&gt;modulo&lt;/em&gt; non è poi così tanto banale? Ecco, è proprio ancora questa cosa che venne in aiuto a Ronald Rivest, Adi Shamir e Leonard Adleman nel 1977.&lt;/p&gt;
 
 &lt;h2 id=&quot;come-avremmo-fatto-100-anni-fa&quot;&gt;Come avremmo fatto 100 anni fa..&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&quot;http://www.intecosas.com/immagini/catalogo/materiali_consumo/lucchetti_CISA/lucchetto_ottone.jpg&quot; alt=&quot;lucchetti&quot; /&gt;
@@ -469,7 +493,7 @@ essendo &lt;em&gt;d&lt;/em&gt;, l’inverso di &lt;em&gt;e&lt;/em&gt;.&lt;/li&gt
 
 &lt;p&gt;Non voglio ora annoiarvi con la dimostrazione del perchè questa cosa funziona, ci sono vari teoremi dietro che sfruttano le proprietà dei numero in un campo modulare. Trovate una buona spiegazione su &lt;a href=&quot;https://it.wikipedia.org/wiki/RSA&quot;&gt;Wikipedia&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Nel prossimo post vediamo come sfrutturare questa cosa per firmare dei documenti e avere la certezza che il firmatario sia effettivamente chi dice di essere (cioè validare la firma).&lt;/p&gt;</content><category term="crittografia" /><category term="RSA" /><summary type="html">La crittografia asimmetrica</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma</title><link href="http://127.0.0.1:4000/intro-crittografia/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma" /><published>2017-08-21T00:00:00+02:00</published><updated>2017-08-21T00:00:00+02:00</updated><id>http://127.0.0.1:4000/intro-crittografia</id><content type="html" xml:base="http://127.0.0.1:4000/intro-crittografia/">&lt;p&gt;Da sempre l’uomo cerca modi per nascondere i propri messaggi. Erodoto narra che nell’antica Persia i messaggi venivano scritti sulla testa degli schiavi, si attendeva che i capelli crescessero e venivano mandati come messaggeri. 
+&lt;p&gt;Nel prossimo post vediamo come sfrutturare questa cosa per firmare dei documenti e avere la certezza che il firmatario sia effettivamente chi dice di essere (cioè validare la firma).&lt;/p&gt;</content><category term="crittografia" /><category term="RSA" /><summary type="html">La crittografia asimmetrica</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma</title><link href="https://apagiaro.it/intro-crittografia/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma" /><published>2017-08-21T00:00:00+02:00</published><updated>2017-08-21T00:00:00+02:00</updated><id>https://apagiaro.it/intro-crittografia</id><content type="html" xml:base="https://apagiaro.it/intro-crittografia/">&lt;p&gt;Da sempre l’uomo cerca modi per nascondere i propri messaggi. Erodoto narra che nell’antica Persia i messaggi venivano scritti sulla testa degli schiavi, si attendeva che i capelli crescessero e venivano mandati come messaggeri. 
 Ad oggi, con l’introduzione dei computer siamo in grado chiaramente di usare metodi più veloci e sofisticati che spesso risultano come un’enorme magia agli occhi dei meno tecnici. Lo scopo di questa pagina è quindi quella di fornire l’idea di base delle nuove tecniche senza entrare nel dettaglio, un po’ come un mago che rivela i suoi trucchi, fornendo in caso riferimenti più specifici e tecnici per approfondire. Troverete in fondo alla pagina un piccolo glossario con i termini che noi informatici amiamo usare ma che spesso non sono chiari a chi non è dell’ambiente.&lt;/p&gt;
 
 &lt;p&gt;Iniziamo subito nel dire che esistono due tipi di &lt;a href=&quot;#glossario&quot;&gt;algoritmi&lt;/a&gt; crittografici, quelli simmetrici e quelli asimmetrici.
@@ -561,7 +585,7 @@ Quel valore che cerchiamo è 14. Quindi, l’inverso di \( 14 \ mod\ 23 = 19 \).
  &lt;/li&gt;
 &lt;/ul&gt;
 
- &lt;/div&gt;</content><category term="crittografia" /><category term="RSA" /><summary type="html">Introduzione per non tecnici alla crittografia moderna - Scambiarsi una chiave</summary></entry><entry><title type="html">Come aggiungere a WooCommerce articoli con variazione via codice (programmatically)</title><link href="http://127.0.0.1:4000/variable-product-programmatically/" rel="alternate" type="text/html" title="Come aggiungere a WooCommerce articoli con variazione via codice (programmatically)" /><published>2017-06-27T00:00:00+02:00</published><updated>2017-06-27T00:00:00+02:00</updated><id>http://127.0.0.1:4000/variable-product-programmatically</id><content type="html" xml:base="http://127.0.0.1:4000/variable-product-programmatically/">&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/woocommerce.png&quot; style=&quot;float:left; margin: 15px;&quot; /&gt;Woocommerce è il più famoso plugin di Wordpress per la realizzazione di siti eCommerce. I suoi punti di forza sono tantissimi tra i quali la personalizzazione estrame dei prodotti. Il problema che però spesso si incontra è come caricare in maniera efficiente le decine e decine di prodotti senza perderci le giornate intere?&lt;/p&gt;
+ &lt;/div&gt;</content><category term="crittografia" /><category term="RSA" /><summary type="html">Introduzione per non tecnici alla crittografia moderna - Scambiarsi una chiave</summary></entry><entry><title type="html">Come aggiungere a WooCommerce articoli con variazione via codice (programmatically)</title><link href="https://apagiaro.it/variable-product-programmatically/" rel="alternate" type="text/html" title="Come aggiungere a WooCommerce articoli con variazione via codice (programmatically)" /><published>2017-06-27T00:00:00+02:00</published><updated>2017-06-27T00:00:00+02:00</updated><id>https://apagiaro.it/variable-product-programmatically</id><content type="html" xml:base="https://apagiaro.it/variable-product-programmatically/">&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/woocommerce.png&quot; style=&quot;float:left; margin: 15px;&quot; /&gt;Woocommerce è il più famoso plugin di Wordpress per la realizzazione di siti eCommerce. I suoi punti di forza sono tantissimi tra i quali la personalizzazione estrame dei prodotti. Il problema che però spesso si incontra è come caricare in maniera efficiente le decine e decine di prodotti senza perderci le giornate intere?&lt;/p&gt;
 
 &lt;p&gt;Quello che cercherò di fare io ora, è arrivare ad una soluzione per aggiungere prodotti con variazioni, via codice, andando quindi a velocizzare la fare di inserimento.
 &lt;br /&gt;&lt;/p&gt;
@@ -661,7 +685,7 @@ wp_set_object_terms( $post_id, $product_categories, 'product_cat');
 &lt;p&gt;A questo punto, nella tabella &lt;code class=&quot;highlighter-rouge&quot;&gt;wp_posts&lt;/code&gt; abbiamo il nostro prodotto, a cui dobbiamo ancora aggiungere tutte le varie variazioni.&lt;/p&gt;
 
 &lt;h1 id=&quot;attributi&quot;&gt;Attributi&lt;/h1&gt;
-&lt;p class=&quot;notice&quot;&gt;&lt;strong&gt;Attenzione!&lt;/strong&gt; Prima di procedere devi creare gli attributi che andrai ad utilizzare (Dimensione, Colore, Taglia…).&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/attr.png&quot; alt=&quot;addAttributesMenu&quot; /&gt; Lo slug deve essere quello usato poi nel file JSON di riferimento, nel caso in fondo all’articolo quindi “Dimensione” e “Colore”.&lt;/p&gt;
+&lt;p class=&quot;notice&quot;&gt;&lt;strong&gt;Attenzione!&lt;/strong&gt; Prima di procedere devi creare gli attributi che andrai ad utilizzare (Dimensione, Colore, Taglia…).&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/attr.png&quot; alt=&quot;addAttributesMenu&quot; /&gt; Lo slug deve essere quello usato poi nel file JSON di riferimento, nel caso in fondo all’articolo quindi “Dimensione” e “Colore”.&lt;/p&gt;
 
 &lt;p&gt;Per inserire gli attributi dei vari prodotti è un po’ complessa la cosa. O li inseriamo a mano nei vari prodotti e poi andiamo quindi a creare le variazioni nel database con gli attributi già creati, o dobbiamo andare a modificare il record con &lt;code class=&quot;highlighter-rouge&quot;&gt;meta_key = _product_attributes&lt;/code&gt; dentro la tabelle &lt;code class=&quot;highlighter-rouge&quot;&gt;wp_postmeta&lt;/code&gt; che somiglia a questo (che dopo un po’ di ricerche ho scoperto essere una serializzazione PHP):&lt;/p&gt;
 
@@ -887,145 +911,28 @@ wp_set_object_terms( $post_id, $product_categories, 'product_cat');
 &lt;p&gt;That’s all!
 Nice coding!&lt;/p&gt;
 
-&lt;p&gt;Complete plugin ready to run: &lt;a href=&quot;http://127.0.0.1:4000/assets/plugin.zip&quot;&gt;download it&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Complete plugin ready to run: &lt;a href=&quot;https://apagiaro.it/assets/plugin.zip&quot;&gt;download it&lt;/a&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;references&quot;&gt;References&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&quot;http://ryanknights.co.uk/insert-woocommerce-products-variations-programmatically/&quot;&gt;ryanknights.co.uk&lt;/a&gt;&lt;/p&gt;</content><category term="Wordpress" /><category term="WooCommerce" /><category term="Hack" /><category term="Reverse Engineering" /><summary type="html">Una guida su come velocizzare l'inserimento dei prodotti su WooCommerce, con l'aiuto del PHP e delle API Wordpress</summary></entry><entry><title type="html">Raccolta di giochi multiplayer online (senza installazione)</title><link href="http://127.0.0.1:4000/giochi-multiplayer-online/" rel="alternate" type="text/html" title="Raccolta di giochi multiplayer online (senza installazione)" /><published>2017-06-24T00:00:00+02:00</published><updated>2017-06-24T00:00:00+02:00</updated><id>http://127.0.0.1:4000/giochi-multiplayer-online</id><content type="html" xml:base="http://127.0.0.1:4000/giochi-multiplayer-online/">&lt;h1 id=&quot;lichess&quot;&gt;&lt;a href=&quot;http://en.lichess.org/&quot;&gt;Lichess&lt;/a&gt;&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/lichess.png&quot; alt=&quot;LiChess.org&quot; /&gt;
+&lt;p&gt;&lt;a href=&quot;http://ryanknights.co.uk/insert-woocommerce-products-variations-programmatically/&quot;&gt;ryanknights.co.uk&lt;/a&gt;&lt;/p&gt;</content><category term="Wordpress" /><category term="WooCommerce" /><category term="Hack" /><category term="Reverse Engineering" /><summary type="html">Una guida su come velocizzare l'inserimento dei prodotti su WooCommerce, con l'aiuto del PHP e delle API Wordpress</summary></entry><entry><title type="html">Raccolta di giochi multiplayer online (senza installazione)</title><link href="https://apagiaro.it/giochi-multiplayer-online/" rel="alternate" type="text/html" title="Raccolta di giochi multiplayer online (senza installazione)" /><published>2017-06-24T00:00:00+02:00</published><updated>2017-06-24T00:00:00+02:00</updated><id>https://apagiaro.it/giochi-multiplayer-online</id><content type="html" xml:base="https://apagiaro.it/giochi-multiplayer-online/">&lt;h1 id=&quot;lichess&quot;&gt;&lt;a href=&quot;http://en.lichess.org/&quot;&gt;Lichess&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/lichess.png&quot; alt=&quot;LiChess.org&quot; /&gt;
 Il più classico dei giochi: una partita a scacchi. Basta connettersi, creare una partita e mandare il link all’amico. Scacco matto!&lt;/p&gt;
 
 &lt;h1 id=&quot;battaglia-navale&quot;&gt;&lt;a href=&quot;http://it.battleship-game.org/&quot;&gt;Battaglia Navale&lt;/a&gt;&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/battleship.png&quot; alt=&quot;Battleship&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/battleship.png&quot; alt=&quot;Battleship&quot; /&gt;
 Anche qui un gioco piuttosto classico. Connettiti al sito, seleziona avversario “familiar”, mandagli il link generatato e inizia la battaglia!&lt;/p&gt;
 
 &lt;h1 id=&quot;forza-quattro&quot;&gt;&lt;a href=&quot;https://www.playc4.com&quot;&gt;Forza Quattro&lt;/a&gt;&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/four.png&quot; alt=&quot;Playc4.com&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/four.png&quot; alt=&quot;Playc4.com&quot; /&gt;
 Un sito un po’ più spartano dei precedenti ma con la stessa logica. Una volta aperto il sito, copiate il link dalla barra degli indirizzi, mandatelo ad un amico e iniziate la vostra sfida. Occhio alle diagonali!&lt;/p&gt;
 
 &lt;h1 id=&quot;curvytron&quot;&gt;&lt;a href=&quot;http://www.curvytron.com&quot;&gt;Curvytron&lt;/a&gt;&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/curvytron.png&quot; alt=&quot;curvytron.com&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/curvytron.png&quot; alt=&quot;curvytron.com&quot; /&gt;
 Un gioco che richiama il film “Tron”. Crea una stanza, fai entrare i tuoi amici ed inizia a giocare. Non tagliare le linee degli avversari per non perdere e taglia la loro strada prima che siano loro a tagliare la tua!&lt;/p&gt;
 
 &lt;p class=&quot;notice&quot;&gt;Se avete un ping eccessivamente alto e vi trovate nella stessa stanza, potete anche avviare il vostro server Curvytron in NodeJS. Se avete capito cosa ho detto potete scaricare tutto &lt;a href=&quot;https://github.com/Curvytron/curvytron&quot;&gt;da qui&lt;/a&gt; altrimenti fate come se non vi avessi detto nulla! :)&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Avete altri giochi da segnalare? Lasciate il link nei commenti!&lt;/strong&gt;&lt;/p&gt;</content><category term="giochi" /><category term="javascript" /><category term="multiplayer" /><summary type="html">Per giocare con i tuoi amici una partita veloce, senza dover installare niente sul pc.</summary></entry><entry><title type="html">Coding Challange</title><link href="http://127.0.0.1:4000/codeChallange/" rel="alternate" type="text/html" title="Coding Challange" /><published>2017-06-24T00:00:00+02:00</published><updated>2017-06-24T00:00:00+02:00</updated><id>http://127.0.0.1:4000/codeChallange</id><content type="html" xml:base="http://127.0.0.1:4000/codeChallange/">&lt;p&gt;Ho trovato su Youtube &lt;a href=&quot;https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw&quot;&gt;questo&lt;/a&gt; simpatico tipo che fa dei video sulla programmazione grafica ad eventi in Javascript davvero interessanti. Eccone un’esempio:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Avete altri giochi da segnalare? Lasciate il link nei commenti!&lt;/strong&gt;&lt;/p&gt;</content><category term="giochi" /><category term="javascript" /><category term="multiplayer" /><summary type="html">Per giocare con i tuoi amici una partita veloce, senza dover installare niente sul pc.</summary></entry><entry><title type="html">Coding Challange</title><link href="https://apagiaro.it/codeChallange/" rel="alternate" type="text/html" title="Coding Challange" /><published>2017-06-24T00:00:00+02:00</published><updated>2017-06-24T00:00:00+02:00</updated><id>https://apagiaro.it/codeChallange</id><content type="html" xml:base="https://apagiaro.it/codeChallange/">&lt;p&gt;Ho trovato su Youtube &lt;a href=&quot;https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw&quot;&gt;questo&lt;/a&gt; simpatico tipo che fa dei video sulla programmazione grafica ad eventi in Javascript davvero interessanti. Eccone un’esempio:&lt;/p&gt;
 &lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/AaGK-fj-BAM&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
 
-&lt;p&gt;Nel suo canale ne trovate a decine di video così. Buona visione!&lt;/p&gt;</content><category term="javascript" /><category term="snake" /><summary type="html">Per informatici annoiati...</summary></entry><entry><title type="html">Guida alla costruzione di un ripetitore WiFi fai-da-te</title><link href="http://127.0.0.1:4000/ripetitoreWifiDIY/" rel="alternate" type="text/html" title="Guida alla costruzione di un ripetitore WiFi fai-da-te" /><published>2017-04-20T00:00:00+02:00</published><updated>2017-04-20T00:00:00+02:00</updated><id>http://127.0.0.1:4000/ripetitoreWifiDIY</id><content type="html" xml:base="http://127.0.0.1:4000/ripetitoreWifiDIY/">&lt;p&gt;Vediamo oggi come realizzare un ripetitore WiFi a bassissimo costo, con un poco di ingegno e manualità.&lt;/p&gt;
-
-&lt;h1 id=&quot;componenti-e-circuito&quot;&gt;Componenti e circuito&lt;/h1&gt;
-&lt;p&gt;Per questo progetto useremo&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://it.aliexpress.com/item/ESP8266-Serial-WIFI-Wireless-Module-Wireless-Transceiver-The-Internet-of-Things/32220713885.html?ws_ab_test=searchweb0_0,searchweb201602_2_10152_10065_10151_10068_10084_10083_10080_10082_10081_10177_10110_10136_10137_10111_10060_10138_10112_10113_10155_10062_10114_10156_10154_10056_10055_10054_10059_10099_10078_10079_10103_10073_10102_10096_10070_10148_10123_10147_10052_10053_10124_10142_10107_10050_10143_10051,searchweb201603_9,afswitch_1,ppcSwitch_4&amp;amp;btsid=aa9e5f6f-a5a8-43c3-9be0-2db34901e1ee&amp;amp;algo_expid=48192ddc-1ccd-4e63-9ec6-121a3f900737-0&amp;amp;algo_pvid=48192ddc-1ccd-4e63-9ec6-121a3f900737&quot;&gt;Modulo WiFi ESP-01&lt;/a&gt;, con microcontrollore ESP8266 - 1,70€&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.amazon.it/s/ref=nb_sb_noss_2?__mk_it_IT=ÅMÅŽÕÑ&amp;amp;url=search-alias%3Daps&amp;amp;field-keywords=scheda+millefori&quot;&gt;Scheda millefori&lt;/a&gt;, 1€ al negozio di elettronica sotto casa&lt;/li&gt;
-  &lt;li&gt;Altri componenti minori (1,5€)
-    &lt;ul&gt;
-      &lt;li&gt;Un condensatore&lt;/li&gt;
-      &lt;li&gt;1 Resistenza 3.3KOhm&lt;/li&gt;
-      &lt;li&gt;1 Resistenza 5.6KOhm&lt;/li&gt;
-      &lt;li&gt;10 Pin Header&lt;/li&gt;
-      &lt;li&gt;1 LM317T&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;http://www.ebay.it/itm/6Pin-USB-2-0-to-TTL-UART-Module-Serial-Converter-CP2102-STC-Replace-FT232-/122146759977?hash=item1c7083a529:g:uVoAAOSwPCVX47b1&quot;&gt;Connettore USB-SerialPin&lt;/a&gt;, 3€ su eBay (vi servirà solo all’inizio, potete farvela prestare)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;costruiamo-il-circuito&quot;&gt;Costruiamo il circuito&lt;/h1&gt;
-&lt;p&gt;Per iniziare dobbiamo costruire il circuito per far funzionare il tutto. Lo schema è il seguente (è lo stesso usato nel &lt;a href=&quot;http://127.0.0.1:4000/meshweather/&quot;&gt;progetto della rete mesh&lt;/a&gt;):
-&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/usage-scheme.png&quot; alt=&quot;Usage Scheme&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Per come disporre questi pochi componenti lascio il tutto alla vostra fantasia. Questo circuito alimenterà il nostro modulo ESP-01 con una batteria da 9V o, eventualmente, una &lt;a href=&quot;http://www.ebay.it/itm/122195969727?_trksid=p2060353.m2749.l2649&amp;amp;ssPageName=STRK%3AMEBIDX%3AIT&quot;&gt;serie di batteria AA&lt;/a&gt;. Inoltre, quello che non si capisce dallo schema, sono i collegamenti dei pin del modulo che sono i seguenti:&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;Pin&lt;/th&gt;
-      &lt;th&gt;Attacco&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;VCC&lt;/td&gt;
-      &lt;td&gt;3.3V&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;RST&lt;/td&gt;
-      &lt;td&gt;non collegato&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;CH_PD&lt;/td&gt;
-      &lt;td&gt;3.3V&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;TXD&lt;/td&gt;
-      &lt;td&gt;non collegato&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;RXD&lt;/td&gt;
-      &lt;td&gt;non collegato&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;GPIO&lt;/td&gt;
-      &lt;td&gt;3.3V&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;GPIO2&lt;/td&gt;
-      &lt;td&gt;non collegato&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;GND&lt;/td&gt;
-      &lt;td&gt;GND&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/pinesp.jpg&quot; alt=&quot;esp Pin&quot; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;software&quot;&gt;Software&lt;/h1&gt;
-&lt;p&gt;Per quanto riguarda il software qui la questione si fa più insidiosa perchè tocca smanettarci un po’ di più. La libreria che ho usato è &lt;a href=&quot;https://github.com/martin-ger/esp_wifi_repeater&quot;&gt;eps_wifi_repeater&lt;/a&gt;, disponibile su GitHub.&lt;/p&gt;
-
-&lt;p&gt;Per compilare e flashare il tutto trovate la guida direttamente sulla repo, noi ci limiteremo a flashare il tutto prestando attenzione al fatto che stiamo usando un ESP-01.&lt;/p&gt;
-
-&lt;p&gt;La prima cosa da fare sarà installare esptool, un programma che ci permette di flashare il nostro cosino con un semplice comando. 
-Per scaricare esptool scrivete quindi:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/themadinventor/esptool.git
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;oppure potete procedere all’installazione tramite &lt;code class=&quot;highlighter-rouge&quot;&gt;pip&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip install --upgrade esptool
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Connettiamo il nostro ESP-01 al nostro pc utilizzando il &lt;a href=&quot;http://www.ebay.it/itm/6Pin-USB-2-0-to-TTL-UART-Module-Serial-Converter-CP2102-STC-Replace-FT232-/122146759977?hash=item1c7083a529:g:uVoAAOSwPCVX47b1&quot;&gt;connettore seriale-usb&lt;/a&gt; con questa connessione di pin:
-&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/devSerial.png&quot; alt=&quot;debuggerMode pin&quot; /&gt;
-A questo punto scarichiamo la libreria per il wifi-repeater&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/martin-ger/esp_wifi_repeater.git
-cd esp_wifi_repeater
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;e flashamola direttamente sull’ESP-01 con il seguente comando:&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;esptool --port /dev/ttyUSB0 write_flash -fs 8m 0x00000 firmware/0x00000.bin 0x10000 firmware/0x10000.bin
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Per qualche motivo su alcuni moduli non funziona, in tal caso flashamo la versione compilata con le SDK precedenti, eseguendo il comando&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;esptool --port /dev/ttyUSB0 write_flash -fs 8m 0x00000 firmware_sdk_1.5.4/0x00000.bin 0x40000 firmware_sdk_1.5.4/0x40000.bin
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;h1 id=&quot;lets-start&quot;&gt;Let’s start&lt;/h1&gt;
-&lt;p&gt;A questo punto abbiamo finito, attacchiamo l’ESP-01 al circuito, alimentato tramite la nostra batteria. Accendiamo il pc, connettiamoci alla rete myAP e, con connettendoci tramite telnet andiamo a settare i nostri parametri.&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;telnet 192.168.4.1 7777
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Si aprirà una console del chip, inseriamo i seguenti comand1&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;set ap_open 0
-set ssid NOME_DEL_TUO_WIFI_ATTUALE
-set password PASSWORD_DEL_TUO_WIFI_ATTUALE
-set ap_ssid NOME_NUOVA_RETE
-set ap_password PASSWORD_NUOVA_RETE
-save
-show config
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;A questo punto abbiamo il nostro ripetitore. Certo, non sarà velocissimo, ma è veloce quel tanto che basta per una navigazione ordinaria senza dover fare streaming o cose grandi trasferimenti di file.&lt;/p&gt;</content><category term="ESP8266" /><category term="Elettronica" /><category term="Arduino" /><summary type="html">Con una spesa di pochi euro...</summary></entry></feed>
+&lt;p&gt;Nel suo canale ne trovate a decine di video così. Buona visione!&lt;/p&gt;</content><category term="javascript" /><category term="snake" /><summary type="html">Per informatici annoiati...</summary></entry></feed>
