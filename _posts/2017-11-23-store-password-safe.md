@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Come salvare le password nel database in maniera sicura"
-date:   2017-10-03
+date:   2017-11-23
 excerpt: "E come non salvarle..."
 tag:
 - security
