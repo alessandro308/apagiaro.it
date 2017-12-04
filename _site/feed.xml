@@ -1,4 +1,131 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="https://apagiaro.it/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="https://apagiaro.it/feed.xml" rel="self" type="application/atom+xml" /><link href="https://apagiaro.it/" rel="alternate" type="text/html" /><updated>2017-10-09T18:34:15+02:00</updated><id>https://apagiaro.it/</id><title type="html">Alessandro Pagiaro</title><subtitle>Studente di Informatica presso l'Università di Pisa. Scout a tempo perso.</subtitle><entry><title type="html">How to create sorted run for merge-sort larger than M (memory size) using SnowPlow Algorithm</title><link href="https://apagiaro.it/snowplow-algorithm/" rel="alternate" type="text/html" title="How to create sorted run for merge-sort larger than M (memory size) using SnowPlow Algorithm" /><published>2017-08-26T00:00:00+02:00</published><updated>2017-08-26T00:00:00+02:00</updated><id>https://apagiaro.it/snowplow-algorithm</id><content type="html" xml:base="https://apagiaro.it/snowplow-algorithm/">&lt;p&gt;If we design an algoritmh and we stop thinking about CPU time and focus our attention on main bottleneck of “computer speed”, we have to fucus our attention on IO access in (main) memory. Moreover this introduce new problem, how to optimize access in memory?&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="http://127.0.0.1:4000/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="http://127.0.0.1:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://127.0.0.1:4000/" rel="alternate" type="text/html" /><updated>2017-11-23T12:46:36+01:00</updated><id>http://127.0.0.1:4000/</id><title type="html">Alessandro Pagiaro</title><subtitle>Studente di Informatica presso l'Università di Pisa. Scout a tempo perso.</subtitle><entry><title type="html">Come salvare le password nel database e creare un login</title><link href="http://127.0.0.1:4000/store-password-safe/" rel="alternate" type="text/html" title="Come salvare le password nel database e creare un login" /><published>2017-10-03T00:00:00+02:00</published><updated>2017-10-03T00:00:00+02:00</updated><id>http://127.0.0.1:4000/store-password-safe</id><content type="html" xml:base="http://127.0.0.1:4000/store-password-safe/">&lt;p&gt;Si sa, l’utente medio usa una password unica per tutti i vari siti a cui si iscrive. Ma quanti di questi si chiedono come sono salvate le loro password all’interno di questi siti? Lo scopo di questo articolo è quindi di fare una breve panoramica sulle tecniche utilizzate per salvare gli utenti e la password associata nei database sui vari siti e analizzarne le criticità.&lt;/p&gt;
+
+&lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
+&lt;p&gt;Prima di iniziare ad approfondire l’argomento ci occorre conoscere il concetto di funzione hash. Questa particolare funzione la useremo infatti in alcuni dei metodi per incrementare la sicurezza del salvataggio della password.&lt;/p&gt;
+
+&lt;p&gt;Una funzione hash è una funzione che prende in input una qualsiasi sequenza di bit {0,1}, e ne restituisce una sequenza di lunghezza limitata.&lt;/p&gt;
+
+&lt;p&gt;Richiediamo, per un nostro utilizzo informatico per questo scopo, che la funzione hash sia crittograficamente sicura, cioè che&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Sia resistente alla preimmagine&lt;/strong&gt;: sia computazionalmente intrattabile (cioè ci si impiega troppo tempo) la ricerca di una stringa in input che dia un hash uguale a un dato hash&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Sia resistente alla seconda preimmagine&lt;/strong&gt;: sia computazionalmente intrattabile la ricerca di una stringa in input che dia un hash uguale a quello di una data stringa&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Sia resistente alle collisioni&lt;/strong&gt;:  sia computazionalmente intrattabile la ricerca di una coppia di stringhe in input che diano lo stesso hash&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Una delle più famose funzioni hash è la SHA-256, che, preso in input una sequenza di bit, restituisce in output una sequenza di 256 bit.&lt;/p&gt;
+
+&lt;h4 id=&quot;esempio&quot;&gt;Esempio&lt;/h4&gt;
+&lt;p&gt;SHA-256(“Buongiorno a tutti!”) = a676a97982d936d0e5c0754e7f6498545e866af8a7ba5e1423e9d508a0936249&lt;br /&gt;
+SHA-256(“Buongiorno a tutte!”) = 93506259360027cc82a29c1b7a2e5aca46df86047d2bbedc297c4754c57560e1&lt;/p&gt;
+
+&lt;p&gt;Bene, siamo pronti per iniziare!&lt;/p&gt;
+
+&lt;h1 id=&quot;metodo-1&quot;&gt;Metodo 1&lt;/h1&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+.tg  {border-collapse:collapse;border-spacing:0;border-color:#aaa; width: 300px;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#aaa;color:#333;background-color:#fff;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#aaa;color:#fff;background-color:#f38630;}
+.tg .tg-j2zy{background-color:#FCFBE3;vertical-align:top}
+.tg .tg-016x{color:#ffffff;vertical-align:top}
+.tg .tg-yw4l{vertical-align:top}
+&lt;/style&gt;
+
+&lt;center&gt;
+&lt;table class=&quot;tg&quot;&gt;
+  &lt;tr&gt;
+    &lt;th class=&quot;tg-016x&quot;&gt;ID&lt;/th&gt;
+    &lt;th class=&quot;tg-016x&quot;&gt;user&lt;/th&gt;
+    &lt;th class=&quot;tg-016x&quot;&gt;password&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;001&lt;/td&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;pippo&lt;/td&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;pluto&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;tg-yw4l&quot;&gt;002&lt;/td&gt;
+    &lt;td class=&quot;tg-yw4l&quot;&gt;topolino&lt;/td&gt;
+    &lt;td class=&quot;tg-yw4l&quot;&gt;quiquoqua&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;...&lt;/td&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;...&lt;/td&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;...&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;/center&gt;
+&lt;p&gt;Il primo metodo che ci può venire in mente è semplice, prendo lo username e la password dell’utente e lo inserisco nel database. Beh, un’idea più stupida vi viene in mente? Il problema nasce dal fatto che in questo modo ho inviato in chiaro la password dal client (il computer che l’utente usa per registrarsi) al server (okok, potrei usare https ma non sempre questo succede) e ho salvato tutto in chiaro nel database… e se il database viene violato? Password gratis e facili per tutti! E visto che l’utente avrà spesso la stessa password per più servizi, buona fortuna!&lt;/p&gt;
+
+&lt;h1 id=&quot;metodo-2&quot;&gt;Metodo 2&lt;/h1&gt;
+&lt;center&gt;
+&lt;table class=&quot;tg&quot;&gt;
+  &lt;tr&gt;
+    &lt;th class=&quot;tg-016x&quot;&gt;ID&lt;/th&gt;
+    &lt;th class=&quot;tg-016x&quot;&gt;user&lt;/th&gt;
+    &lt;th class=&quot;tg-016x&quot;&gt;password&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;001&lt;/td&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;pippo&lt;/td&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;bf52f397be39d08126685c32b75f44405c8b9b0876c719dea456a40780b10e0c&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;tg-yw4l&quot;&gt;002&lt;/td&gt;
+    &lt;td class=&quot;tg-yw4l&quot;&gt;topolino&lt;/td&gt;
+    &lt;td class=&quot;tg-yw4l&quot;&gt;73dc28b2cd5edc4bc25e095c0770c11f467ac0eb33ac26566c941cdb8b087592&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;...&lt;/td&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;...&lt;/td&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;...&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;/center&gt;
+&lt;p&gt;Il secondo metodo prevede l’utilizzo della funzione hash. 
+L’utente al momento della registrazione invia la password, lato client (così anche in caso di Man-in-the-middle la password rimane al sicuro) viene calcolato l’hash, viene inviato l’hash al server che lo salva nel database.&lt;/p&gt;
+
+&lt;p&gt;Poichè la funzione hash è resistente alla preimmagine, e per sua natura non è invertibile, conoscendo il solo risultato hash, non sono in grado di risalire alla password e quindi il mio database, in caso di violazione, tiene al sicuro le password in chiaro dei miei utenti. Sbagliato!&lt;/p&gt;
+
+&lt;p&gt;È vero che la funzione hash è resistente alla preimmagine, è resistente alla seconda preimmagine, ma, se due utenti usano la stessa password, &lt;a href=&quot;http://www.corriere.it/tecnologia/cyber-cultura/15_gennaio_21/password-cambiare-suggerimenti-008ea4d0-a15b-11e4-8f86-063e3fa7313b.shtml&quot;&gt;cosa non così fuori dal mondo&lt;/a&gt;, il loro hash risulterà uguale e quindi, violando il database e conoscendo la password di un utente, posso anche conoscere tutti gli altri utenti che usano la medesima password.&lt;/p&gt;
+
+&lt;h1 id=&quot;metodo-3&quot;&gt;Metodo 3&lt;/h1&gt;
+&lt;p&gt;Ed ecco quindi arrivati al metodo che di fatto dovrebbe essere usato oggi. La password salvata tramite hash con il salt.&lt;/p&gt;
+&lt;center&gt;
+	&lt;table class=&quot;tg&quot;&gt;
+  &lt;tr&gt;
+    &lt;th class=&quot;tg-016x&quot;&gt;ID&lt;/th&gt;
+    &lt;th class=&quot;tg-016x&quot;&gt;user&lt;/th&gt;
+    &lt;th class=&quot;tg-016x&quot;&gt;password&lt;/th&gt;
+    &lt;th class=&quot;tg-yw4l&quot;&gt;Salt&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;001&lt;/td&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;pippo&lt;/td&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;cfb6cdfda55efb2a6d5d5d8870d2477241f97c6804a53a627645b1a66e9c2562&lt;/td&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;21323&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;tg-yw4l&quot;&gt;002&lt;/td&gt;
+    &lt;td class=&quot;tg-yw4l&quot;&gt;topolino&lt;/td&gt;
+    &lt;td class=&quot;tg-yw4l&quot;&gt;b4017d36d62a259f4619d3a2588cc1d431de53b9b0d899ebfdde9886806598c1&lt;/td&gt;
+    &lt;td class=&quot;tg-yw4l&quot;&gt;65542&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;...&lt;/td&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;...&lt;/td&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;...&lt;/td&gt;
+    &lt;td class=&quot;tg-j2zy&quot;&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;/center&gt;
+
+&lt;p&gt;L’utente, al momento della registrazione inserisce la password. A tale password viene concatenato un numero generato casualmente (chiamato &lt;em&gt;salt&lt;/em&gt;, dall’inglese chicco di sale) e viene fatto l’hash della password+&lt;em&gt;salt&lt;/em&gt;. A questo punto viene inviata al server la coppia &amp;lt;hash(password+salt), salt&amp;gt; e salvata tale coppia nel database. L’utente, al momento del login, invia la password, il server la concatenerà con il &lt;em&gt;salt&lt;/em&gt;, ne calcolerà l’hash e se il risultato coincide con quanto salvato nel database darà l’ok per l’autenticazione. Complicando un po’ il protocollo di login si può anche fare che il &lt;em&gt;salt&lt;/em&gt; viene rimandato al client che spedirà solamente l’hash finale al server, sempre per evitare intercettazioni di traffico che comunque, con l’avvento dell’https sono diventate più complesse da effettuare.&lt;/p&gt;
+
+&lt;p&gt;Nel caso di una violazione del database le password risulteranno al sicuro perchè, pur conoscendo la password di un utente, non siamo in grado di determinare se altri utente hanno la stessa password (se non andando a ricalcolare tutti gli hash).&lt;/p&gt;
+
+&lt;h2 id=&quot;precisazioni-finali&quot;&gt;Precisazioni finali&lt;/h2&gt;
+&lt;p&gt;Tanto per chiarezza, nessun dato possiamo ritenerlo al sicuro se è online, ma possiamo rendere la vita difficile a chi tenta di rubarlo. Conoscere l’hash non ci porta a nessun risultato utile poichè trovare una stringa che generi quell’hash vuol dire provare tutte le possibili stringhe, cioè taaaantissimi tentativi, e usare l’hash come password non porterà a nessun risultato in quanto il server si aspetta una password e quindi tratterà l’hash come tale, producendo di fatto, per il confronto nel database, l’hash dell’hash, che è un nuovo hash totalmente differente dal precedente.&lt;/p&gt;</content><category term="security" /><category term="database" /><summary type="html">E come non salvarle...</summary></entry><entry><title type="html">How to create sorted run for merge-sort larger than M (memory size) using SnowPlow Algorithm</title><link href="http://127.0.0.1:4000/snowplow-algorithm/" rel="alternate" type="text/html" title="How to create sorted run for merge-sort larger than M (memory size) using SnowPlow Algorithm" /><published>2017-10-03T00:00:00+02:00</published><updated>2017-10-03T00:00:00+02:00</updated><id>http://127.0.0.1:4000/snowplow-algorithm</id><content type="html" xml:base="http://127.0.0.1:4000/snowplow-algorithm/">&lt;p&gt;If we design an algoritmh and we stop thinking about CPU time and focus our attention on main bottleneck of “computer speed”, we have to fucus our attention on IO access in (main) memory. Moreover this introduce new problem, how to optimize access in memory?&lt;/p&gt;
 
 &lt;p&gt;If I design a mergesort algorithm, I’ll find useful to build a &lt;em&gt;k-way mergesort&lt;/em&gt; where the complexity decrease when the run size increas [1]. So it’s useful to find a way to create a sorted run as long as we can.&lt;/p&gt;
 
@@ -33,7 +160,7 @@
 &lt;h1 id=&quot;example&quot;&gt;Example&lt;/h1&gt;
 
 &lt;p&gt;Here I provide a small example to show how this algorithm works.
-&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/snowplow.jpg&quot; alt=&quot;SnowPlow Algorithm Example&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/snowplow.jpg&quot; alt=&quot;SnowPlow Algorithm Example&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;So the sorted runs are:&lt;/p&gt;
 &lt;ul&gt;
@@ -47,7 +174,7 @@
 &lt;p&gt;[1] The magic of Algorithm, lecture notes of Paolo Ferragina&lt;/p&gt;
 
 &lt;p&gt;[2] Donald E. Knuth. The Art of Computer Programming: volume 3. Addison-Wesley, 2nd
-Edition, 1998.&lt;/p&gt;</content><category term="algorithm" /><category term="english" /><summary type="html">A simple algorithm to create runs larger than memory size</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma, parte 3</title><link href="https://apagiaro.it/intro-crittografia-3/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma, parte 3 " /><published>2017-08-26T00:00:00+02:00</published><updated>2017-08-26T00:00:00+02:00</updated><id>https://apagiaro.it/intro-crittografia-3</id><content type="html" xml:base="https://apagiaro.it/intro-crittografia-3/">&lt;p&gt;Dopo aver visto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia&quot;&gt;prima parte&lt;/a&gt; come scambiarsi una chiave senza doverla comunicare in chiaro, abbiamo visto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia-2&quot;&gt;seconda parte&lt;/a&gt; come è possibile scambiarsi messaggi cifrati senza neanche doversi scambiare una chiave, tramite l’uso dell’RSA.&lt;/p&gt;
+Edition, 1998.&lt;/p&gt;</content><category term="algorithm" /><category term="english" /><summary type="html">A simple algorithm to create runs larger than memory size</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma, parte 3</title><link href="http://127.0.0.1:4000/intro-crittografia-3/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma, parte 3 " /><published>2017-08-26T00:00:00+02:00</published><updated>2017-08-26T00:00:00+02:00</updated><id>http://127.0.0.1:4000/intro-crittografia-3</id><content type="html" xml:base="http://127.0.0.1:4000/intro-crittografia-3/">&lt;p&gt;Dopo aver visto nella &lt;a href=&quot;http://127.0.0.1:4000/intro-crittografia&quot;&gt;prima parte&lt;/a&gt; come scambiarsi una chiave senza doverla comunicare in chiaro, abbiamo visto nella &lt;a href=&quot;http://127.0.0.1:4000/intro-crittografia-2&quot;&gt;seconda parte&lt;/a&gt; come è possibile scambiarsi messaggi cifrati senza neanche doversi scambiare una chiave, tramite l’uso dell’RSA.&lt;/p&gt;
 
 &lt;p&gt;Lo scopo di oggi è vedere come sfruttare l’RSA, o qualsiasi altro algoritmo di cifratura asimmetrico, per verificare l’identità di un mittente come se lui lo avesse firmato.&lt;/p&gt;
 
@@ -102,7 +229,7 @@ sha256(&quot;ciao a tutte&quot;) = 41a0afdbed24669aad1da115f0e8577277a41ec351ac6
 
 &lt;p&gt;Un eventuale ricevente non deve far nient’altro che prendere la &lt;em&gt;chiave pubblica&lt;/em&gt; di Bob, e applicarla al secondo componente spedito. Se il procedimento è andato a buon fine il risultato sarà \( &amp;lt;m, h(m)&amp;gt; \). Basterà quindi calcolare l’hash di &lt;em&gt;m&lt;/em&gt; e confrontarlo con il risultato della decifratura.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/facebook.png&quot; alt=&quot;facebook certificato&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/facebook.png&quot; alt=&quot;facebook certificato&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;il-problema-della-verifica-della-chiave-pubblica&quot;&gt;Il problema della verifica della chiave pubblica&lt;/h1&gt;
 &lt;p&gt;Si introduce, in tutto questo ragionamento, un problema che, quando abbiamo introdotto i cifrari asimmetrici, avevamo ignorato.&lt;/p&gt;
@@ -115,9 +242,9 @@ sha256(&quot;ciao a tutte&quot;) = 41a0afdbed24669aad1da115f0e8577277a41ec351ac6
 
 &lt;p&gt;A questo punto si torna alla domanda con cui avevamo aperto questa serie di articoli sulla crittografia, &lt;strong&gt;chi certifica la Certification Authority&lt;/strong&gt;?&lt;/p&gt;
 
-&lt;p&gt;Beh, in tal caso diciamo che si autocertificano, o meglio, per capirlo bisogna capire in che scenario si utilizzano. Quando navighiamo noi usiamo un browser che si connetterà in maniera cifrata a vari server verificando l’identità di ognuno di questi leggendo la &lt;em&gt;chiave pubblica&lt;/em&gt; dichiarata (la questione è un po’ più complicata ma cerchiamo di lasciarla più semplice possibile). A questo punto, si connette alla &lt;em&gt;certification authority&lt;/em&gt; per controllare la validità. Questa connessione che effettua avviene con il metodo di cifratura asimmetrica visto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia-2&quot;&gt;seconda parte&lt;/a&gt; e, la chiave pubblica della &lt;em&gt;c. a.&lt;/em&gt;, il browser la conosce perchè ce l’ha salvata nel suo database locale. E chi l’ha inserita in quel database? Diciamo che il programmatore potrebbe aver inserito le principale &lt;em&gt;c.a.&lt;/em&gt; e quando scaricate il browser ve le ritrovate già lì pronte, e poi a cascata tutte le altre.&lt;/p&gt;
+&lt;p&gt;Beh, in tal caso diciamo che si autocertificano, o meglio, per capirlo bisogna capire in che scenario si utilizzano. Quando navighiamo noi usiamo un browser che si connetterà in maniera cifrata a vari server verificando l’identità di ognuno di questi leggendo la &lt;em&gt;chiave pubblica&lt;/em&gt; dichiarata (la questione è un po’ più complicata ma cerchiamo di lasciarla più semplice possibile). A questo punto, si connette alla &lt;em&gt;certification authority&lt;/em&gt; per controllare la validità. Questa connessione che effettua avviene con il metodo di cifratura asimmetrica visto nella &lt;a href=&quot;http://127.0.0.1:4000/intro-crittografia-2&quot;&gt;seconda parte&lt;/a&gt; e, la chiave pubblica della &lt;em&gt;c. a.&lt;/em&gt;, il browser la conosce perchè ce l’ha salvata nel suo database locale. E chi l’ha inserita in quel database? Diciamo che il programmatore potrebbe aver inserito le principale &lt;em&gt;c.a.&lt;/em&gt; e quando scaricate il browser ve le ritrovate già lì pronte, e poi a cascata tutte le altre.&lt;/p&gt;
 
-&lt;p&gt;Per vedere tutte queste cose, sui siti che visitate, basta cliccare sul lucchetto posto, solitamente, alla sinistra dell’url nella barra degli indirizzo. Vi dovreste ritrovare una schermata simile a quella mostrata nell’immagine qui sopra con tutti i dati di cui abbiamo parlato oggi che ora, spero, sarete in grado di capire un po’ meglio.&lt;/p&gt;</content><category term="crittografia" /><category term="RSA" /><category term="firma digitale" /><summary type="html">La firma digitale</summary></entry><entry><title type="html">Man-in-the-middle per tutti con Bettercap</title><link href="https://apagiaro.it/bettercap-guida-ita/" rel="alternate" type="text/html" title="Man-in-the-middle per tutti con Bettercap" /><published>2017-08-24T00:00:00+02:00</published><updated>2017-08-24T00:00:00+02:00</updated><id>https://apagiaro.it/bettercap-guida-ita</id><content type="html" xml:base="https://apagiaro.it/bettercap-guida-ita/">&lt;p&gt;Una delle cose che ci si immagina, quando si pensa alla sicurezza informatica, è l’intercettare e modificare il traffico internet di un computer &lt;em&gt;target&lt;/em&gt; per fare quello che ci occorre.&lt;/p&gt;
+&lt;p&gt;Per vedere tutte queste cose, sui siti che visitate, basta cliccare sul lucchetto posto, solitamente, alla sinistra dell’url nella barra degli indirizzo. Vi dovreste ritrovare una schermata simile a quella mostrata nell’immagine qui sopra con tutti i dati di cui abbiamo parlato oggi che ora, spero, sarete in grado di capire un po’ meglio.&lt;/p&gt;</content><category term="crittografia" /><category term="RSA" /><category term="firma digitale" /><summary type="html">La firma digitale</summary></entry><entry><title type="html">Man-in-the-middle per tutti con Bettercap</title><link href="http://127.0.0.1:4000/bettercap-guida-ita/" rel="alternate" type="text/html" title="Man-in-the-middle per tutti con Bettercap" /><published>2017-08-24T00:00:00+02:00</published><updated>2017-08-24T00:00:00+02:00</updated><id>http://127.0.0.1:4000/bettercap-guida-ita</id><content type="html" xml:base="http://127.0.0.1:4000/bettercap-guida-ita/">&lt;p&gt;Una delle cose che ci si immagina, quando si pensa alla sicurezza informatica, è l’intercettare e modificare il traffico internet di un computer &lt;em&gt;target&lt;/em&gt; per fare quello che ci occorre.&lt;/p&gt;
 
 &lt;div class=&quot;notice&quot;&gt;
 &lt;h3&gt;Attenzione!!!&lt;/h3&gt;
@@ -262,9 +389,9 @@ Con altissima probabilità verrete reindirizzati alla pagina cifrata, tutta colp
 
 &lt;p&gt;dove -T IP (opzionale) rappresenta l’IP di cui volete intercettare il traffico, &lt;em&gt;interfaccia&lt;/em&gt; è il nome dell’interfaccia su cui attivate il tutto, ad esempio la mia interfaccia wifi è en1, puoi scoprire la tua con un &lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Per il resto la &lt;a href=&quot;https://www.bettercap.org/index.html&quot;&gt;documentazione&lt;/a&gt; ufficiale è molto chiara, quindi potete andare direttamente lì per leggere le mille opzioni previste e usarle.&lt;/p&gt;</content><category term="crittografia" /><category term="MITM" /><category term="sicurezza" /><category term="bettercap" /><summary type="html">Due/tre cosine spiegate su Bettercap</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma, parte 2</title><link href="https://apagiaro.it/intro-crittografia-2/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma, parte 2" /><published>2017-08-22T00:00:00+02:00</published><updated>2017-08-22T00:00:00+02:00</updated><id>https://apagiaro.it/intro-crittografia-2</id><content type="html" xml:base="https://apagiaro.it/intro-crittografia-2/">&lt;p&gt;Come avevamo già visto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia&quot;&gt;prima parte&lt;/a&gt;, uno dei problemi principale di quando dobbiamo cifrare qualcosa è il comunicare la chiave di decifrazione al destinatario in quanto non possiamo cifrarla in alcun modo. A risolvere questo problema ci pensano gli algoritmi di crittografia asimmetrica.&lt;/p&gt;
+&lt;p&gt;Per il resto la &lt;a href=&quot;https://www.bettercap.org/index.html&quot;&gt;documentazione&lt;/a&gt; ufficiale è molto chiara, quindi potete andare direttamente lì per leggere le mille opzioni previste e usarle.&lt;/p&gt;</content><category term="crittografia" /><category term="MITM" /><category term="sicurezza" /><category term="bettercap" /><summary type="html">Due/tre cosine spiegate su Bettercap</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma, parte 2</title><link href="http://127.0.0.1:4000/intro-crittografia-2/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma, parte 2" /><published>2017-08-22T00:00:00+02:00</published><updated>2017-08-22T00:00:00+02:00</updated><id>http://127.0.0.1:4000/intro-crittografia-2</id><content type="html" xml:base="http://127.0.0.1:4000/intro-crittografia-2/">&lt;p&gt;Come avevamo già visto nella &lt;a href=&quot;http://127.0.0.1:4000/intro-crittografia&quot;&gt;prima parte&lt;/a&gt;, uno dei problemi principale di quando dobbiamo cifrare qualcosa è il comunicare la chiave di decifrazione al destinatario in quanto non possiamo cifrarla in alcun modo. A risolvere questo problema ci pensano gli algoritmi di crittografia asimmetrica.&lt;/p&gt;
 
-&lt;p&gt;Avete presente quel discorso fatto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia&quot;&gt;prima parte&lt;/a&gt; in cui si diceva che trovare un inverso di un numero &lt;i&gt;n&lt;/i&gt; quando c’è di mezzo l’operatore &lt;em&gt;modulo&lt;/em&gt; non è poi così tanto banale? Ecco, è proprio ancora questa cosa che venne in aiuto a Ronald Rivest, Adi Shamir e Leonard Adleman nel 1977.&lt;/p&gt;
+&lt;p&gt;Avete presente quel discorso fatto nella &lt;a href=&quot;http://127.0.0.1:4000/intro-crittografia&quot;&gt;prima parte&lt;/a&gt; in cui si diceva che trovare un inverso di un numero &lt;i&gt;n&lt;/i&gt; quando c’è di mezzo l’operatore &lt;em&gt;modulo&lt;/em&gt; non è poi così tanto banale? Ecco, è proprio ancora questa cosa che venne in aiuto a Ronald Rivest, Adi Shamir e Leonard Adleman nel 1977.&lt;/p&gt;
 
 &lt;h2 id=&quot;come-avremmo-fatto-100-anni-fa&quot;&gt;Come avremmo fatto 100 anni fa..&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&quot;http://www.intecosas.com/immagini/catalogo/materiali_consumo/lucchetti_CISA/lucchetto_ottone.jpg&quot; alt=&quot;lucchetti&quot; /&gt;
@@ -342,7 +469,7 @@ essendo &lt;em&gt;d&lt;/em&gt;, l’inverso di &lt;em&gt;e&lt;/em&gt;.&lt;/li&gt
 
 &lt;p&gt;Non voglio ora annoiarvi con la dimostrazione del perchè questa cosa funziona, ci sono vari teoremi dietro che sfruttano le proprietà dei numero in un campo modulare. Trovate una buona spiegazione su &lt;a href=&quot;https://it.wikipedia.org/wiki/RSA&quot;&gt;Wikipedia&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Nel prossimo post vediamo come sfrutturare questa cosa per firmare dei documenti e avere la certezza che il firmatario sia effettivamente chi dice di essere (cioè validare la firma).&lt;/p&gt;</content><category term="crittografia" /><category term="RSA" /><summary type="html">La crittografia asimmetrica</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma</title><link href="https://apagiaro.it/intro-crittografia/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma" /><published>2017-08-21T00:00:00+02:00</published><updated>2017-08-21T00:00:00+02:00</updated><id>https://apagiaro.it/intro-crittografia</id><content type="html" xml:base="https://apagiaro.it/intro-crittografia/">&lt;p&gt;Da sempre l’uomo cerca modi per nascondere i propri messaggi. Erodoto narra che nell’antica Persia i messaggi venivano scritti sulla testa degli schiavi, si attendeva che i capelli crescessero e venivano mandati come messaggeri. 
+&lt;p&gt;Nel prossimo post vediamo come sfrutturare questa cosa per firmare dei documenti e avere la certezza che il firmatario sia effettivamente chi dice di essere (cioè validare la firma).&lt;/p&gt;</content><category term="crittografia" /><category term="RSA" /><summary type="html">La crittografia asimmetrica</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma</title><link href="http://127.0.0.1:4000/intro-crittografia/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma" /><published>2017-08-21T00:00:00+02:00</published><updated>2017-08-21T00:00:00+02:00</updated><id>http://127.0.0.1:4000/intro-crittografia</id><content type="html" xml:base="http://127.0.0.1:4000/intro-crittografia/">&lt;p&gt;Da sempre l’uomo cerca modi per nascondere i propri messaggi. Erodoto narra che nell’antica Persia i messaggi venivano scritti sulla testa degli schiavi, si attendeva che i capelli crescessero e venivano mandati come messaggeri. 
 Ad oggi, con l’introduzione dei computer siamo in grado chiaramente di usare metodi più veloci e sofisticati che spesso risultano come un’enorme magia agli occhi dei meno tecnici. Lo scopo di questa pagina è quindi quella di fornire l’idea di base delle nuove tecniche senza entrare nel dettaglio, un po’ come un mago che rivela i suoi trucchi, fornendo in caso riferimenti più specifici e tecnici per approfondire. Troverete in fondo alla pagina un piccolo glossario con i termini che noi informatici amiamo usare ma che spesso non sono chiari a chi non è dell’ambiente.&lt;/p&gt;
 
 &lt;p&gt;Iniziamo subito nel dire che esistono due tipi di &lt;a href=&quot;#glossario&quot;&gt;algoritmi&lt;/a&gt; crittografici, quelli simmetrici e quelli asimmetrici.
@@ -434,7 +561,7 @@ Quel valore che cerchiamo è 14. Quindi, l’inverso di \( 14 \ mod\ 23 = 19 \).
  &lt;/li&gt;
 &lt;/ul&gt;
 
- &lt;/div&gt;</content><category term="crittografia" /><category term="RSA" /><summary type="html">Introduzione per non tecnici alla crittografia moderna - Scambiarsi una chiave</summary></entry><entry><title type="html">Come aggiungere a WooCommerce articoli con variazione via codice (programmatically)</title><link href="https://apagiaro.it/variable-product-programmatically/" rel="alternate" type="text/html" title="Come aggiungere a WooCommerce articoli con variazione via codice (programmatically)" /><published>2017-06-27T00:00:00+02:00</published><updated>2017-06-27T00:00:00+02:00</updated><id>https://apagiaro.it/variable-product-programmatically</id><content type="html" xml:base="https://apagiaro.it/variable-product-programmatically/">&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/woocommerce.png&quot; style=&quot;float:left; margin: 15px;&quot; /&gt;Woocommerce è il più famoso plugin di Wordpress per la realizzazione di siti eCommerce. I suoi punti di forza sono tantissimi tra i quali la personalizzazione estrame dei prodotti. Il problema che però spesso si incontra è come caricare in maniera efficiente le decine e decine di prodotti senza perderci le giornate intere?&lt;/p&gt;
+ &lt;/div&gt;</content><category term="crittografia" /><category term="RSA" /><summary type="html">Introduzione per non tecnici alla crittografia moderna - Scambiarsi una chiave</summary></entry><entry><title type="html">Come aggiungere a WooCommerce articoli con variazione via codice (programmatically)</title><link href="http://127.0.0.1:4000/variable-product-programmatically/" rel="alternate" type="text/html" title="Come aggiungere a WooCommerce articoli con variazione via codice (programmatically)" /><published>2017-06-27T00:00:00+02:00</published><updated>2017-06-27T00:00:00+02:00</updated><id>http://127.0.0.1:4000/variable-product-programmatically</id><content type="html" xml:base="http://127.0.0.1:4000/variable-product-programmatically/">&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/woocommerce.png&quot; style=&quot;float:left; margin: 15px;&quot; /&gt;Woocommerce è il più famoso plugin di Wordpress per la realizzazione di siti eCommerce. I suoi punti di forza sono tantissimi tra i quali la personalizzazione estrame dei prodotti. Il problema che però spesso si incontra è come caricare in maniera efficiente le decine e decine di prodotti senza perderci le giornate intere?&lt;/p&gt;
 
 &lt;p&gt;Quello che cercherò di fare io ora, è arrivare ad una soluzione per aggiungere prodotti con variazioni, via codice, andando quindi a velocizzare la fare di inserimento.
 &lt;br /&gt;&lt;/p&gt;
@@ -534,7 +661,7 @@ wp_set_object_terms( $post_id, $product_categories, 'product_cat');
 &lt;p&gt;A questo punto, nella tabella &lt;code class=&quot;highlighter-rouge&quot;&gt;wp_posts&lt;/code&gt; abbiamo il nostro prodotto, a cui dobbiamo ancora aggiungere tutte le varie variazioni.&lt;/p&gt;
 
 &lt;h1 id=&quot;attributi&quot;&gt;Attributi&lt;/h1&gt;
-&lt;p class=&quot;notice&quot;&gt;&lt;strong&gt;Attenzione!&lt;/strong&gt; Prima di procedere devi creare gli attributi che andrai ad utilizzare (Dimensione, Colore, Taglia…).&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/attr.png&quot; alt=&quot;addAttributesMenu&quot; /&gt; Lo slug deve essere quello usato poi nel file JSON di riferimento, nel caso in fondo all’articolo quindi “Dimensione” e “Colore”.&lt;/p&gt;
+&lt;p class=&quot;notice&quot;&gt;&lt;strong&gt;Attenzione!&lt;/strong&gt; Prima di procedere devi creare gli attributi che andrai ad utilizzare (Dimensione, Colore, Taglia…).&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/attr.png&quot; alt=&quot;addAttributesMenu&quot; /&gt; Lo slug deve essere quello usato poi nel file JSON di riferimento, nel caso in fondo all’articolo quindi “Dimensione” e “Colore”.&lt;/p&gt;
 
 &lt;p&gt;Per inserire gli attributi dei vari prodotti è un po’ complessa la cosa. O li inseriamo a mano nei vari prodotti e poi andiamo quindi a creare le variazioni nel database con gli attributi già creati, o dobbiamo andare a modificare il record con &lt;code class=&quot;highlighter-rouge&quot;&gt;meta_key = _product_attributes&lt;/code&gt; dentro la tabelle &lt;code class=&quot;highlighter-rouge&quot;&gt;wp_postmeta&lt;/code&gt; che somiglia a questo (che dopo un po’ di ricerche ho scoperto essere una serializzazione PHP):&lt;/p&gt;
 
@@ -760,31 +887,31 @@ wp_set_object_terms( $post_id, $product_categories, 'product_cat');
 &lt;p&gt;That’s all!
 Nice coding!&lt;/p&gt;
 
-&lt;p&gt;Complete plugin ready to run: &lt;a href=&quot;https://apagiaro.it/assets/plugin.zip&quot;&gt;download it&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Complete plugin ready to run: &lt;a href=&quot;http://127.0.0.1:4000/assets/plugin.zip&quot;&gt;download it&lt;/a&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;references&quot;&gt;References&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&quot;http://ryanknights.co.uk/insert-woocommerce-products-variations-programmatically/&quot;&gt;ryanknights.co.uk&lt;/a&gt;&lt;/p&gt;</content><category term="Wordpress" /><category term="WooCommerce" /><category term="Hack" /><category term="Reverse Engineering" /><summary type="html">Una guida su come velocizzare l'inserimento dei prodotti su WooCommerce, con l'aiuto del PHP e delle API Wordpress</summary></entry><entry><title type="html">Raccolta di giochi multiplayer online (senza installazione)</title><link href="https://apagiaro.it/giochi-multiplayer-online/" rel="alternate" type="text/html" title="Raccolta di giochi multiplayer online (senza installazione)" /><published>2017-06-24T00:00:00+02:00</published><updated>2017-06-24T00:00:00+02:00</updated><id>https://apagiaro.it/giochi-multiplayer-online</id><content type="html" xml:base="https://apagiaro.it/giochi-multiplayer-online/">&lt;h1 id=&quot;lichess&quot;&gt;&lt;a href=&quot;http://en.lichess.org/&quot;&gt;Lichess&lt;/a&gt;&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/lichess.png&quot; alt=&quot;LiChess.org&quot; /&gt;
+&lt;p&gt;&lt;a href=&quot;http://ryanknights.co.uk/insert-woocommerce-products-variations-programmatically/&quot;&gt;ryanknights.co.uk&lt;/a&gt;&lt;/p&gt;</content><category term="Wordpress" /><category term="WooCommerce" /><category term="Hack" /><category term="Reverse Engineering" /><summary type="html">Una guida su come velocizzare l'inserimento dei prodotti su WooCommerce, con l'aiuto del PHP e delle API Wordpress</summary></entry><entry><title type="html">Raccolta di giochi multiplayer online (senza installazione)</title><link href="http://127.0.0.1:4000/giochi-multiplayer-online/" rel="alternate" type="text/html" title="Raccolta di giochi multiplayer online (senza installazione)" /><published>2017-06-24T00:00:00+02:00</published><updated>2017-06-24T00:00:00+02:00</updated><id>http://127.0.0.1:4000/giochi-multiplayer-online</id><content type="html" xml:base="http://127.0.0.1:4000/giochi-multiplayer-online/">&lt;h1 id=&quot;lichess&quot;&gt;&lt;a href=&quot;http://en.lichess.org/&quot;&gt;Lichess&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/lichess.png&quot; alt=&quot;LiChess.org&quot; /&gt;
 Il più classico dei giochi: una partita a scacchi. Basta connettersi, creare una partita e mandare il link all’amico. Scacco matto!&lt;/p&gt;
 
 &lt;h1 id=&quot;battaglia-navale&quot;&gt;&lt;a href=&quot;http://it.battleship-game.org/&quot;&gt;Battaglia Navale&lt;/a&gt;&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/battleship.png&quot; alt=&quot;Battleship&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/battleship.png&quot; alt=&quot;Battleship&quot; /&gt;
 Anche qui un gioco piuttosto classico. Connettiti al sito, seleziona avversario “familiar”, mandagli il link generatato e inizia la battaglia!&lt;/p&gt;
 
 &lt;h1 id=&quot;forza-quattro&quot;&gt;&lt;a href=&quot;https://www.playc4.com&quot;&gt;Forza Quattro&lt;/a&gt;&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/four.png&quot; alt=&quot;Playc4.com&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/four.png&quot; alt=&quot;Playc4.com&quot; /&gt;
 Un sito un po’ più spartano dei precedenti ma con la stessa logica. Una volta aperto il sito, copiate il link dalla barra degli indirizzi, mandatelo ad un amico e iniziate la vostra sfida. Occhio alle diagonali!&lt;/p&gt;
 
 &lt;h1 id=&quot;curvytron&quot;&gt;&lt;a href=&quot;http://www.curvytron.com&quot;&gt;Curvytron&lt;/a&gt;&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/curvytron.png&quot; alt=&quot;curvytron.com&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/curvytron.png&quot; alt=&quot;curvytron.com&quot; /&gt;
 Un gioco che richiama il film “Tron”. Crea una stanza, fai entrare i tuoi amici ed inizia a giocare. Non tagliare le linee degli avversari per non perdere e taglia la loro strada prima che siano loro a tagliare la tua!&lt;/p&gt;
 
 &lt;p class=&quot;notice&quot;&gt;Se avete un ping eccessivamente alto e vi trovate nella stessa stanza, potete anche avviare il vostro server Curvytron in NodeJS. Se avete capito cosa ho detto potete scaricare tutto &lt;a href=&quot;https://github.com/Curvytron/curvytron&quot;&gt;da qui&lt;/a&gt; altrimenti fate come se non vi avessi detto nulla! :)&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Avete altri giochi da segnalare? Lasciate il link nei commenti!&lt;/strong&gt;&lt;/p&gt;</content><category term="giochi" /><category term="javascript" /><category term="multiplayer" /><summary type="html">Per giocare con i tuoi amici una partita veloce, senza dover installare niente sul pc.</summary></entry><entry><title type="html">Coding Challange</title><link href="https://apagiaro.it/codeChallange/" rel="alternate" type="text/html" title="Coding Challange" /><published>2017-06-24T00:00:00+02:00</published><updated>2017-06-24T00:00:00+02:00</updated><id>https://apagiaro.it/codeChallange</id><content type="html" xml:base="https://apagiaro.it/codeChallange/">&lt;p&gt;Ho trovato su Youtube &lt;a href=&quot;https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw&quot;&gt;questo&lt;/a&gt; simpatico tipo che fa dei video sulla programmazione grafica ad eventi in Javascript davvero interessanti. Eccone un’esempio:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Avete altri giochi da segnalare? Lasciate il link nei commenti!&lt;/strong&gt;&lt;/p&gt;</content><category term="giochi" /><category term="javascript" /><category term="multiplayer" /><summary type="html">Per giocare con i tuoi amici una partita veloce, senza dover installare niente sul pc.</summary></entry><entry><title type="html">Coding Challange</title><link href="http://127.0.0.1:4000/codeChallange/" rel="alternate" type="text/html" title="Coding Challange" /><published>2017-06-24T00:00:00+02:00</published><updated>2017-06-24T00:00:00+02:00</updated><id>http://127.0.0.1:4000/codeChallange</id><content type="html" xml:base="http://127.0.0.1:4000/codeChallange/">&lt;p&gt;Ho trovato su Youtube &lt;a href=&quot;https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw&quot;&gt;questo&lt;/a&gt; simpatico tipo che fa dei video sulla programmazione grafica ad eventi in Javascript davvero interessanti. Eccone un’esempio:&lt;/p&gt;
 &lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/AaGK-fj-BAM&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
 
-&lt;p&gt;Nel suo canale ne trovate a decine di video così. Buona visione!&lt;/p&gt;</content><category term="javascript" /><category term="snake" /><summary type="html">Per informatici annoiati...</summary></entry><entry><title type="html">Guida alla costruzione di un ripetitore WiFi fai-da-te</title><link href="https://apagiaro.it/ripetitoreWifiDIY/" rel="alternate" type="text/html" title="Guida alla costruzione di un ripetitore WiFi fai-da-te" /><published>2017-04-20T00:00:00+02:00</published><updated>2017-04-20T00:00:00+02:00</updated><id>https://apagiaro.it/ripetitoreWifiDIY</id><content type="html" xml:base="https://apagiaro.it/ripetitoreWifiDIY/">&lt;p&gt;Vediamo oggi come realizzare un ripetitore WiFi a bassissimo costo, con un poco di ingegno e manualità.&lt;/p&gt;
+&lt;p&gt;Nel suo canale ne trovate a decine di video così. Buona visione!&lt;/p&gt;</content><category term="javascript" /><category term="snake" /><summary type="html">Per informatici annoiati...</summary></entry><entry><title type="html">Guida alla costruzione di un ripetitore WiFi fai-da-te</title><link href="http://127.0.0.1:4000/ripetitoreWifiDIY/" rel="alternate" type="text/html" title="Guida alla costruzione di un ripetitore WiFi fai-da-te" /><published>2017-04-20T00:00:00+02:00</published><updated>2017-04-20T00:00:00+02:00</updated><id>http://127.0.0.1:4000/ripetitoreWifiDIY</id><content type="html" xml:base="http://127.0.0.1:4000/ripetitoreWifiDIY/">&lt;p&gt;Vediamo oggi come realizzare un ripetitore WiFi a bassissimo costo, con un poco di ingegno e manualità.&lt;/p&gt;
 
 &lt;h1 id=&quot;componenti-e-circuito&quot;&gt;Componenti e circuito&lt;/h1&gt;
 &lt;p&gt;Per questo progetto useremo&lt;/p&gt;
@@ -805,8 +932,8 @@ Un gioco che richiama il film “Tron”. Crea una stanza, fai entrare i tuoi am
 &lt;/ul&gt;
 
 &lt;h1 id=&quot;costruiamo-il-circuito&quot;&gt;Costruiamo il circuito&lt;/h1&gt;
-&lt;p&gt;Per iniziare dobbiamo costruire il circuito per far funzionare il tutto. Lo schema è il seguente (è lo stesso usato nel &lt;a href=&quot;https://apagiaro.it/meshweather/&quot;&gt;progetto della rete mesh&lt;/a&gt;):
-&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/usage-scheme.png&quot; alt=&quot;Usage Scheme&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Per iniziare dobbiamo costruire il circuito per far funzionare il tutto. Lo schema è il seguente (è lo stesso usato nel &lt;a href=&quot;http://127.0.0.1:4000/meshweather/&quot;&gt;progetto della rete mesh&lt;/a&gt;):
+&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/usage-scheme.png&quot; alt=&quot;Usage Scheme&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Per come disporre questi pochi componenti lascio il tutto alla vostra fantasia. Questo circuito alimenterà il nostro modulo ESP-01 con una batteria da 9V o, eventualmente, una &lt;a href=&quot;http://www.ebay.it/itm/122195969727?_trksid=p2060353.m2749.l2649&amp;amp;ssPageName=STRK%3AMEBIDX%3AIT&quot;&gt;serie di batteria AA&lt;/a&gt;. Inoltre, quello che non si capisce dallo schema, sono i collegamenti dei pin del modulo che sono i seguenti:&lt;/p&gt;
 
@@ -853,7 +980,7 @@ Un gioco che richiama il film “Tron”. Crea una stanza, fai entrare i tuoi am
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/pinesp.jpg&quot; alt=&quot;esp Pin&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/pinesp.jpg&quot; alt=&quot;esp Pin&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;software&quot;&gt;Software&lt;/h1&gt;
 &lt;p&gt;Per quanto riguarda il software qui la questione si fa più insidiosa perchè tocca smanettarci un po’ di più. La libreria che ho usato è &lt;a href=&quot;https://github.com/martin-ger/esp_wifi_repeater&quot;&gt;eps_wifi_repeater&lt;/a&gt;, disponibile su GitHub.&lt;/p&gt;
@@ -871,7 +998,7 @@ Per scaricare esptool scrivete quindi:&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;p&gt;Connettiamo il nostro ESP-01 al nostro pc utilizzando il &lt;a href=&quot;http://www.ebay.it/itm/6Pin-USB-2-0-to-TTL-UART-Module-Serial-Converter-CP2102-STC-Replace-FT232-/122146759977?hash=item1c7083a529:g:uVoAAOSwPCVX47b1&quot;&gt;connettore seriale-usb&lt;/a&gt; con questa connessione di pin:
-&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/devSerial.png&quot; alt=&quot;debuggerMode pin&quot; /&gt;
+&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/devSerial.png&quot; alt=&quot;debuggerMode pin&quot; /&gt;
 A questo punto scarichiamo la libreria per il wifi-repeater&lt;/p&gt;
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/martin-ger/esp_wifi_repeater.git
 cd esp_wifi_repeater
@@ -901,90 +1028,4 @@ save
 show config
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;A questo punto abbiamo il nostro ripetitore. Certo, non sarà velocissimo, ma è veloce quel tanto che basta per una navigazione ordinaria senza dover fare streaming o cose grandi trasferimenti di file.&lt;/p&gt;</content><category term="ESP8266" /><category term="Elettronica" /><category term="Arduino" /><summary type="html">Con una spesa di pochi euro...</summary></entry><entry><title type="html">Reveal.js, guida all’utilizzo</title><link href="https://apagiaro.it/revealjs/" rel="alternate" type="text/html" title="Reveal.js, guida all'utilizzo" /><published>2017-04-14T00:00:00+02:00</published><updated>2017-04-14T00:00:00+02:00</updated><id>https://apagiaro.it/revealjs</id><content type="html" xml:base="https://apagiaro.it/revealjs/">&lt;p&gt;L’altro giorno, cercando un modo di creare una presentazione per il &lt;a href=&quot;https://apagiaro.it/meshweather&quot;&gt;mio ultimo progetto&lt;/a&gt; mi sono imbattuto un framework completo e di semplice utilizzo. Un esempio di cosa si può fare con questo gioiellino in soli 5 minuti è questo:&lt;/p&gt;
-&lt;iframe src=&quot;http://apagiaro.it/mesh&quot; height=&quot;450px&quot; width=&quot;700px&quot;&gt;&lt;/iframe&gt;
-
-&lt;h2 id=&quot;lets-start&quot;&gt;Let’s start&lt;/h2&gt;
-&lt;p&gt;Per iniziare ci basterà scaricare il codice del framework dalla &lt;a href=&quot;https://github.com/hakimel/reveal.js&quot;&gt;sua pagina GitHub&lt;/a&gt;. A questo punto possiamo iniziare subito modificando la pagina &lt;code class=&quot;highlighter-rouge&quot;&gt;index.html&lt;/code&gt; o creando la nostra nuova pagina fatta che dovrà includere nell’&lt;code class=&quot;highlighter-rouge&quot;&gt;head&lt;/code&gt; le seguenti dichiarazioni:&lt;/p&gt;
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;css/reveal.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;css/theme/moon.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;e in fondo alla pagina, prima della chiusura del &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;/body&amp;gt;&lt;/code&gt;, bisognerà aggiungere del codice Javascript per il caricamento del framework:&lt;/p&gt;
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;lib/js/head.min.js&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/script&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
-&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;js/reveal.js&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/script&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
-&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;script&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;c1&quot;&gt;// More info https://github.com/hakimel/reveal.js#configuration&lt;/span&gt;
-	&lt;span class=&quot;nx&quot;&gt;Reveal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;initialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
-		&lt;span class=&quot;na&quot;&gt;history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-
-		&lt;span class=&quot;c1&quot;&gt;// More info https://github.com/hakimel/reveal.js#dependencies&lt;/span&gt;
-		&lt;span class=&quot;na&quot;&gt;dependencies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-			&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'plugin/markdown/marked.js'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-			&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'plugin/markdown/markdown.js'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-			&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'plugin/notes/notes.js'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
-			&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'plugin/highlight/highlight.js'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;callback&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;hljs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;initHighlightingOnLoad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-		&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/script&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;&amp;gt;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;dove le dependencies possono essere modificate a vostro piacimento. Le configazioni applicabili sono tantissime e avremo modo più avanti di parlarne.&lt;/p&gt;
-
-&lt;h3 id=&quot;creare-le-slides&quot;&gt;Creare le slides&lt;/h3&gt;
-&lt;p&gt;Fatto questo non dobbiamo far altro che iniziare a scrivere la nostra presentazione. Ogni slide non è altro che una pagina HTML racchiusa tra i tag &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;section&amp;gt;&lt;/code&gt;. Tutte le &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;section&amp;gt;&lt;/code&gt; vanno aggiunte tra i seguenti div&lt;/p&gt;
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;reveal&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;slides&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-	...
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;La particolarità di questo framework è la possibilità di aggiungere sia uno scorrimento orizzontale, utilizzato, di solito, per rappresentare il cambio di macroargomento, sia uno scorrimento verticale che è più simile ad uno scorrimento classico di slides. Per aggiungere quindi uno scorrimento verticale basterà aggiungere &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;section&amp;gt;&lt;/code&gt; annidate. Un codice come&lt;/p&gt;
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
-		Slide 1.1
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
-		Slide 1.2
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
-		Slide 2.1
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
-		Slide 2.2
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;produrrà il seguente risultato:&lt;/p&gt;
-&lt;iframe src=&quot;https://apagiaro.it/mesh/esempio1.html&quot; height=&quot;450px&quot; width=&quot;700px&quot;&gt;&lt;/iframe&gt;
-
-&lt;h3 id=&quot;frammenti&quot;&gt;Frammenti&lt;/h3&gt;
-&lt;p&gt;Per far apparire i punti di un’elenco uno alla volta alla pressione del tasto avanti o mostrare una didascalia dopo un’immagine è una cosa che si può fare senza fatica. Basta aggiungere, all’oggetto che vogliamo mostrare dopo, la classe &lt;code class=&quot;highlighter-rouge&quot;&gt;fragment&lt;/code&gt;. Un esempio è il seguente codice:&lt;/p&gt;
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&amp;gt;&lt;/span&gt;
-		&lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fragment&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; Punto 1 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-		&lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fragment&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; Punto 2 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-		&lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fragment&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; Punto 3 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;section&amp;gt;&lt;/span&gt;
-	Applicare diversi stili ai fragment...
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&amp;gt;&lt;/span&gt;
-		&lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fragment grow&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; class=&quot;fragment grow&quot; &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-		&lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fragment shrink&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; class=&quot;fragment shrink&quot; &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-		&lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fragment fade-out&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; class=&quot;fragment fade-out&quot; &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-		&lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fragment fade-up highlight-red&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt; class=&quot;fragment fade-out highlight-red&quot; &lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/section&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;che produce il seguente risultato&lt;/p&gt;
-&lt;iframe src=&quot;https://apagiaro.it/mesh/esempio2.html&quot; height=&quot;450px&quot; width=&quot;700px&quot;&gt;&lt;/iframe&gt;
-
-&lt;h2 id=&quot;temi&quot;&gt;Temi&lt;/h2&gt;
-&lt;p&gt;Questo framework contiene anche numerosi temi che possono essere applicati semplicemente cambiato il css importanto nell’header della pagina. A &lt;a href=&quot;https://apagiaro.it/mesh/theme_example.html&quot;&gt;questa pagina&lt;/a&gt; potete trovare un’anteprima dei temi disponibili nella repository del framework su GitHub.&lt;/p&gt;</content><category term="javascript" /><category term="HTML5" /><summary type="html">Un framework per le presentazioni in HTML</summary></entry></feed>
+&lt;p&gt;A questo punto abbiamo il nostro ripetitore. Certo, non sarà velocissimo, ma è veloce quel tanto che basta per una navigazione ordinaria senza dover fare streaming o cose grandi trasferimenti di file.&lt;/p&gt;</content><category term="ESP8266" /><category term="Elettronica" /><category term="Arduino" /><summary type="html">Con una spesa di pochi euro...</summary></entry></feed>
