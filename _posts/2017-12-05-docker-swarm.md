@@ -9,7 +9,7 @@ tag:
 feature: https://communities.bmc.com/servlet/JiveServlet/showImage/102-46538-4-232915/Docker+Swarm+v2.png
 comments: true
 ---
-_This are a personal notes about Docker Swarm, derivated by Documentation._
+_Those are a personal notes about Docker Swarm, derivated by Documentation. After those there is an example._
 
 ![Docker Swarm Logo](https://communities.bmc.com/servlet/JiveServlet/showImage/102-46538-4-232915/Docker+Swarm+v2.png)
 
