@@ -9,7 +9,7 @@ tag:
 feature: https://communities.bmc.com/servlet/JiveServlet/showImage/102-46538-4-232915/Docker+Swarm+v2.png
 comments: true
 ---
-_Those are a personal notes about Docker Swarm, derivated by Documentation. After those there is an example._
+_Those are a personal notes about Docker Swarm, derivated by Documentation. After theory part there is an example. Enjoy!_
 
 ![Docker Swarm Logo](https://communities.bmc.com/servlet/JiveServlet/showImage/102-46538-4-232915/Docker+Swarm+v2.png)
 
@@ -197,10 +197,10 @@ When you add a secret to the swarm, Docker sends the secret to the swarm manager
 The location of the mount point within the container defaults to `/run/secrets/<secret_name` (Linux containers) or `C:\ProgramData\Docker\secrets` (Windows containers). 
 
 # Let's play!!!
-Let's try Docker Swarm. We are going to create a single, usual container on Docker Engine, with Apache Webserver (`httpd` Docker image), and try to saturate it with `slowhttptest` tool. After that, we are going to create a Docker Swarm Service and try to see if the network is able to resist to `slowhttptest` with same amount of request.
+Let's try Docker Swarm. We are going to create a single, usual container on Docker Engine, with Apache Webserver (`httpd` Docker image), and try to saturate it with `Apache Benchmark` tool. After that, we are going to create a Docker Swarm Service and try to see if the network is able to resist to `Apache Benchmark` with same amount of request.
 
 ### Docker standard container
-We deploy us service, starting a container with the following command:
+We deploy a service, starting a container with the following command:
 ```
 docker run --rm -it --name web -p 8080:80 -v web:/usr/local/apache2/htdocs/ httpd:latest
 ```
@@ -234,12 +234,49 @@ Completed 18000 requests
 Completed 21000 requests
 Completed 24000 requests
 Completed 27000 requests
-apr_pollset_poll: The timeout specified has expired (70007)
-Total of 29452 requests completed
+Completed 30000 requests
+Finished 30000 requests
 
-real  1m35.783s
-user  0m0.017s
-sys 0m0.017s
+
+Server Software:        Apache/2.4.29
+Server Hostname:        localhost
+Server Port:            8080
+
+Document Path:          /
+Document Length:        45 bytes
+
+Concurrency Level:      10000
+Time taken for tests:   29.145 seconds
+Complete requests:      30000
+Failed requests:        0
+Total transferred:      8670000 bytes
+HTML transferred:       1350000 bytes
+Requests per second:    1029.33 [#/sec] (mean)
+Time per request:       9715.051 [ms] (mean)
+Time per request:       0.972 [ms] (mean, across all concurrent requests)
+Transfer rate:          290.50 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0  383 777.2      4    7211
+Processing:    10 2902 3996.6   1128   28368
+Waiting:        8 2892 3998.3   1112   28368
+Total:         20 3285 4185.7   1489   28507
+
+Percentage of the requests served within a certain time (ms)
+  50%   1489
+  66%   3424
+  75%   5770
+  80%   7258
+  90%   8403
+  95%  10389
+  98%  15460
+  99%  16660
+ 100%  28507 (longest request)
+
+real  0m29.801s
+user  0m0.018s
+sys 0m0.014s
 ```
 
 Now try to build a distributed service that execute this webserver with 6 tasks and see how many times does it needed to complete 30000 connections.
@@ -301,7 +338,8 @@ You can perform this operation typing
 ```
 for i in `seq 1 4`; 
 do 
-  docker-machine ssh worker$i docker swarm join --token ... <MANAGER-IP>:<PORT`;
+  docker-machine ssh worker$i docker swarm join --token <TOKEN>
+   <MANAGER-IP>:<PORT`;
 done
 ```
 Now we have the swarm created.
@@ -325,16 +363,15 @@ Now you can see the service progress with
 ```
 $ docker service ps web
 ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE           ERROR               PORTS
-vsyi9ywzy1xc        web.1               httpd:latest        worker1             Running             Running 3 minutes ago                       
-cbs958bkwx3f        web.2               httpd:latest        worker2             Running             Running 2 minutes ago                       
-thalirehjpfa        web.3               httpd:latest        worker3             Running             Running 3 minutes ago                       
-shrtupjr4bjy        web.4               httpd:latest        worker4             Running             Running 2 minutes ago                       
+vsyi9ywzy1xc        web.1               httpd:latest        worker1             Running             Running 3 minutes ago
+cbs958bkwx3f        web.2               httpd:latest        worker2             Running             Running 2 minutes ago
+thalirehjpfa        web.3               httpd:latest        worker3             Running             Running 3 minutes ago
+shrtupjr4bjy        web.4               httpd:latest        worker4             Running             Running 2 minutes ago
 ttz7c79ogk8r        web.5               httpd:latest        manager1            Running             Running 3 minutes ago   
 ```
 
 Now reperform the Benchmark and see the result:
 ```
-docker@manager1:~$ time docker run --net=host --rm jordi/ab ab -c 10000 -n 30000 -r http://localhost:80/
 This is ApacheBench, Version 2.3 <$Revision: 1796539 $>
 Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
 Licensed to The Apache Software Foundation, http://www.apache.org/
@@ -342,10 +379,64 @@ Licensed to The Apache Software Foundation, http://www.apache.org/
 Benchmarking localhost (be patient)
 Completed 3000 requests
 Completed 6000 requests
-apr_pollset_poll: The timeout specified has expired (70007)
-Total of 8124 requests completed
-Command exited with non-zero status 119
-real  0m 40.90s
+Completed 9000 requests
+Completed 12000 requests
+Completed 15000 requests
+Completed 18000 requests
+Completed 21000 requests
+Completed 24000 requests
+Completed 27000 requests
+Completed 30000 requests
+Finished 30000 requests
+
+
+Server Software:        
+Server Hostname:        localhost
+Server Port:            80
+
+Document Path:          /
+Document Length:        0 bytes
+
+Concurrency Level:      10000
+Time taken for tests:   1.325 seconds
+Complete requests:      30000
+Failed requests:        60000
+   (Connect: 0, Receive: 40000, Length: 0, Exceptions: 20000)
+Total transferred:      0 bytes
+HTML transferred:       0 bytes
+Requests per second:    22645.85 [#/sec] (mean)
+Time per request:       441.582 [ms] (mean)
+Time per request:       0.044 [ms] (mean, across all concurrent requests)
+Transfer rate:          0.00 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.0      0       0
+Processing:     0  221 231.0    261     542
+Waiting:        0    0   0.0      0       0
+Total:          0  221 231.0    261     542
+
+Percentage of the requests served within a certain time (ms)
+  50%    261
+  66%    392
+  75%    469
+  80%    513
+  90%    533
+  95%    538
+  98%    541
+  99%    541
+ 100%    542 (longest request)
+real  0m 1.55s
 user  0m 0.01s
 sys 0m 0.00s
+```
+
+### Some other stuff
+By default, the manager is also a worker. To avoid this, write:
+```
+docker node update --availability drain manager1
+```
+To delete a `docker-machine` created, just write:
+```
+docker-machine rm <NAME_LIST> (e.g. manager1 worker1 worker2)
 ```
