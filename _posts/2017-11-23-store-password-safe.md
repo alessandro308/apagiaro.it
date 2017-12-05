@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Come salvare le password nel database e creare un login"
-date:   2017-10-03
+title:  "Come salvare le password nel database per creare un login sicuro"
+date:   2017-11-23
 excerpt: "E come non salvarle..."
 tag:
 - security
