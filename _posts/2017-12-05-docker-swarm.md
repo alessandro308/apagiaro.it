@@ -35,7 +35,7 @@ Pro
 You can modify a service's configuration without the need to manually restart the service. Docker will update the swarm to fit new configuration.
 
 ### Node
-A node is an instace of Docker engine. You can run one or more nodes on a single physical computer (`docker-machine`), but tipically each node runs on a different computer.
+A node is an instace of Docker engine. You can run one or more nodes on a single physical computer (`docker-machine`), but tipically each node runs on a different machines.
 
 ### Load balancing
 The swarm manager uses ingress load balancing to expose the services you want to make available externally to the swarm.
@@ -196,7 +196,7 @@ A _secret_ is a blob of data (such a password, SSH private key, SSl certificate.
 When you add a secret to the swarm, Docker sends the secret to the swarm manager over a mutual TLS connecton.
 The location of the mount point within the container defaults to `/run/secrets/<secret_name` (Linux containers) or `C:\ProgramData\Docker\secrets` (Windows containers). 
 
-# Let's play!!!
+<h1 style="color:blue">Let's play!!!</h1>
 Let's try Docker Swarm. We are going to create a single, usual container on Docker Engine, with Apache Webserver (`httpd` Docker image), and try to saturate it with `Apache Benchmark` tool. After that, we are going to create a Docker Swarm Service and try to see if the network is able to resist to `Apache Benchmark` with same amount of request.
 
 ### Docker standard container
