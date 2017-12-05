@@ -6,12 +6,12 @@ excerpt: "A Docker-native clustering system."
 tag:
 - english
 - docker
-feature: http://blog.arungupta.me/wp-content/uploads/2015/11/docker-swarm-logo.png
+feature: https://communities.bmc.com/servlet/JiveServlet/showImage/102-46538-4-232915/Docker+Swarm+v2.png
 comments: true
 ---
 _This are a personal notes about Docker Swarm, derivated by Documentation._
 
-![Docker Swarm Logo](http://blog.arungupta.me/wp-content/uploads/2015/11/docker-swarm-logo.png)
+![Docker Swarm Logo](https://communities.bmc.com/servlet/JiveServlet/showImage/102-46538-4-232915/Docker+Swarm+v2.png)
 
 Docker Swarm is a Docker-native clustering system. It turns a pool of Docker hosts into a single, virtual host.
 
