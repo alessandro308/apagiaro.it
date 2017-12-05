@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "An introduction to Docker Swarm"
+title:  "An introduction to Docker Swarm, with example"
 date:   2017-12-5
 excerpt: "A Docker-native clustering system."
 tag:
@@ -196,4 +196,156 @@ A _secret_ is a blob of data (such a password, SSH private key, SSl certificate.
 When you add a secret to the swarm, Docker sends the secret to the swarm manager over a mutual TLS connecton.
 The location of the mount point within the container defaults to `/run/secrets/<secret_name` (Linux containers) or `C:\ProgramData\Docker\secrets` (Windows containers). 
 
+# Let's play!!!
+Let's try Docker Swarm. We are going to create a single, usual container on Docker Engine, with Apache Webserver (`httpd` Docker image), and try to saturate it with `slowhttptest` tool. After that, we are going to create a Docker Swarm Service and try to see if the network is able to resist to `slowhttptest` with same amount of request.
 
+### Docker standard container
+We deploy us service, starting a container with the following command:
+```
+docker run --rm -it --name web -p 8080:80 -v web:/usr/local/apache2/htdocs/ httpd:latest
+```
+(Some problems may occur on MacOS while trying to mount a volume in this way. Try to insert absolute path to `web` directory instead of relative path).
+
+Now check that all works going on `http://localhost:8080` with your favourite browser.
+You should see something like this
+[It works!]({{ site.url }}/assets/img/post-image/works.png)
+
+Now try to make the webserver unavaiable using `ab` (Apache Benchmark).
+You can run `ab` with... Docker container! Let's write:
+```
+time docker run --net=host --rm jordi/ab ab -c 10000 -n 30000 -r http://localhost:8080/
+```
+to measure time needed to complete 30000 connections to webserver, with 10000 connections performed simultaneously
+and without closing the socket in the case of erro (`-r` flag).
+
+My output is
+```
+This is ApacheBench, Version 2.3 <$Revision: 1796539 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+Completed 3000 requests
+Completed 6000 requests
+Completed 9000 requests
+Completed 12000 requests
+Completed 15000 requests
+Completed 18000 requests
+Completed 21000 requests
+Completed 24000 requests
+Completed 27000 requests
+apr_pollset_poll: The timeout specified has expired (70007)
+Total of 29452 requests completed
+
+real  1m35.783s
+user  0m0.017s
+sys 0m0.017s
+```
+
+Now try to build a distributed service that execute this webserver with 6 tasks and see how many times does it needed to complete 30000 connections.
+
+### Docker Swarm Mode
+##### Create 4 Nodes
+To create 4 nodes on the same machine, we are going to use `docker-machine` with the following command:
+```docker-machine create --driver virtualbox worker1```
+And do this for four times, or:
+```
+for i in `seq 1 4`; 
+do 
+  docker-machine create --driver virtualbox worker$i; 
+done
+```
+Now we have 4 workers, you can see those with `docker-machine ls`.
+If all is gone correctly, your output should be similar to this:
+```
+Alessandros-MBP:web alessandro$ docker-machine ls
+NAME      ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER        ERRORS
+worker1   -        virtualbox   Running   tcp://192.168.99.100:2376           v17.11.0-ce   
+worker2   -        virtualbox   Running   tcp://192.168.99.101:2376           v17.11.0-ce   
+worker3   -        virtualbox   Running   tcp://192.168.99.102:2376           v17.11.0-ce   
+worker4   -        virtualbox   Running   tcp://192.168.99.103:2376           v17.11.0-ce   
+```
+
+##### Create a manager
+Now that we have created 4 workers, let's do create a Swarm Manager.
+```
+docker-machine create manager1
+```
+and then, get the `manager1` IP address, typing `docker-machine ls` and reading the URL field for `manager1`.
+
+Connect now to `manager1` with 
+```
+docker-machine ssh manager1
+```
+and then start a new swarm, so run inside `manager1`:
+```
+docker swarm init --advertise-addr <MANAGER-IP>
+```
+in my case, `<MANAGER-IP>` is `192.168.99.104`.
+
+##### Join the workers to the swarm
+This initialization create a token, that you have to use to join from workers.
+```
+docker@manager1:~$ docker swarm init --advertise-addr 192.168.99.104
+Swarm initialized: current node (ghip4g5s8l1qaj19u9bt4z1g5) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-5vkvrcb97hwf7lnd8bwdwoz86n9roqh594aj34unp8ephtj7wb-c6vyjcedx7qsj0zvxxaje7zz7 192.168.99.104:2377
+
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+```
+So get the command `docker swarm join --token ... <MANAGER-IP>:<PORT` and paste it into each worker connecting to it via `docker-machine ssh`.
+
+You can perform this operation typing 
+```
+for i in `seq 1 4`; 
+do 
+  docker-machine ssh worker$i docker swarm join --token ... <MANAGER-IP>:<PORT`;
+done
+```
+Now we have the swarm created.
+
+Reconnect via `docker-machine ssh` to `manager1` to configure the service, then execute `docker node ls` to see all the worker joined to the swarm.
+```
+docker@manager1:~$ docker node ls
+ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS
+ghip4g5s8l1qaj19u9bt4z1g5 *   manager1            Ready               Active              Leader
+rarxfvelnw1sl6kxll2hvum7z     worker1             Ready               Active              
+64rcnb9unhkrkx15gk43tld5b     worker2             Ready               Active              
+oerktjryawqzadakuwnjnka3l     worker3             Ready               Active              
+whq7kd3zkld9jlg7vgbi307uj     worker4             Ready               Active         
+```
+
+Now start a service, with 5 tasks and mounting a "/web" volume with:
+```
+docker service create --replicas 5 -p 80:80 --name web httpd
+```
+Now you can see the service progress with
+```
+$ docker service ps web
+ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE           ERROR               PORTS
+vsyi9ywzy1xc        web.1               httpd:latest        worker1             Running             Running 3 minutes ago                       
+cbs958bkwx3f        web.2               httpd:latest        worker2             Running             Running 2 minutes ago                       
+thalirehjpfa        web.3               httpd:latest        worker3             Running             Running 3 minutes ago                       
+shrtupjr4bjy        web.4               httpd:latest        worker4             Running             Running 2 minutes ago                       
+ttz7c79ogk8r        web.5               httpd:latest        manager1            Running             Running 3 minutes ago   
+```
+
+Now reperform the Benchmark and see the result:
+```
+docker@manager1:~$ time docker run --net=host --rm jordi/ab ab -c 10000 -n 30000 -r http://localhost:80/
+This is ApacheBench, Version 2.3 <$Revision: 1796539 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+Completed 3000 requests
+Completed 6000 requests
+apr_pollset_poll: The timeout specified has expired (70007)
+Total of 8124 requests completed
+Command exited with non-zero status 119
+real  0m 40.90s
+user  0m 0.01s
+sys 0m 0.00s
+```
