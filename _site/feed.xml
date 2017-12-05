@@ -1,4 +1,458 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="https://apagiaro.it/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="https://apagiaro.it/feed.xml" rel="self" type="application/atom+xml" /><link href="https://apagiaro.it/" rel="alternate" type="text/html" /><updated>2017-12-04T15:09:11+01:00</updated><id>https://apagiaro.it/</id><title type="html">Alessandro Pagiaro</title><subtitle>Studente di Informatica presso l'Università di Pisa. Scout a tempo perso.</subtitle><entry><title type="html">How download MacOS Sierra and downgrade to it</title><link href="https://apagiaro.it/how-downgrade-to-sierra/" rel="alternate" type="text/html" title="How download MacOS Sierra and downgrade to it" /><published>2017-12-02T00:00:00+01:00</published><updated>2017-12-02T00:00:00+01:00</updated><id>https://apagiaro.it/how-downgrade-to-sierra</id><content type="html" xml:base="https://apagiaro.it/how-downgrade-to-sierra/">&lt;h1 id=&quot;short-version&quot;&gt;Short Version&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="http://127.0.0.1:4000/feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.2.1">Jekyll</generator><link href="http://127.0.0.1:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://127.0.0.1:4000/" rel="alternate" type="text/html" /><updated>2017-12-05T17:24:33+01:00</updated><id>http://127.0.0.1:4000/</id><title type="html">Alessandro Pagiaro</title><subtitle>Studente di Informatica presso l'Università di Pisa. Scout a tempo perso.</subtitle><entry><title type="html">An introduction to Docker Swarm, with example</title><link href="http://127.0.0.1:4000/docker-swarm/" rel="alternate" type="text/html" title="An introduction to Docker Swarm, with example" /><published>2017-12-05T00:00:00+01:00</published><updated>2017-12-05T00:00:00+01:00</updated><id>http://127.0.0.1:4000/docker-swarm</id><content type="html" xml:base="http://127.0.0.1:4000/docker-swarm/">&lt;p&gt;&lt;em&gt;Those are a personal notes about Docker Swarm, derivated by Documentation. After theory part there is an &lt;a href=&quot;#play&quot;&gt;concrete example&lt;/a&gt;. Enjoy!&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://communities.bmc.com/servlet/JiveServlet/showImage/102-46538-4-232915/Docker+Swarm+v2.png&quot; alt=&quot;Docker Swarm Logo&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Docker Swarm is a Docker-native clustering system. It turns a pool of Docker hosts into a single, virtual host.&lt;/p&gt;
+
+&lt;h1 id=&quot;feature-highlights&quot;&gt;Feature highlights&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;Cluster management integrated with Docker Engine&lt;/li&gt;
+  &lt;li&gt;Scaling&lt;/li&gt;
+  &lt;li&gt;Desired state reconciliation&lt;/li&gt;
+  &lt;li&gt;Multi-host networking&lt;/li&gt;
+  &lt;li&gt;Load balancing&lt;/li&gt;
+  &lt;li&gt;Secure by default&lt;/li&gt;
+  &lt;li&gt;Rolling updates&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;key-concepts&quot;&gt;Key Concepts&lt;/h1&gt;
+&lt;p&gt;A swarm consists of multiple Docker hosts which run is swarm mode and act as managers and workers. A given Docker hosts can be a manager, a worker or performs both roles.&lt;/p&gt;
+
+&lt;p&gt;When you create a service, you define its optimal state (number of replicas, network and storage resources available to it, ports the service exposes to the outside world, and more).
+&lt;strong&gt;Docker works to maintain that desired state.&lt;/strong&gt;
+If a worker becames unavaiable, Docker schedules that’s &lt;em&gt;tasks&lt;/em&gt; on other nodes. (A task is a running container which is part of swarm service and managed by a swarm manager).&lt;/p&gt;
+
+&lt;p&gt;Pro
+You can modify a service’s configuration without the need to manually restart the service. Docker will update the swarm to fit new configuration.&lt;/p&gt;
+
+&lt;h3 id=&quot;node&quot;&gt;Node&lt;/h3&gt;
+&lt;p&gt;A node is an instace of Docker engine. You can run one or more nodes on a single physical computer (&lt;code class=&quot;highlighter-rouge&quot;&gt;docker-machine&lt;/code&gt;), but tipically each node runs on a different machines.&lt;/p&gt;
+
+&lt;h3 id=&quot;load-balancing&quot;&gt;Load balancing&lt;/h3&gt;
+&lt;p&gt;The swarm manager uses ingress load balancing to expose the services you want to make available externally to the swarm.
+Swarm mode has an internal DNS component that automatically assigns each service in the swarm a DNS entry. The swarm manager uses internal load balancing to distribute requests among services within the cluster based upon the DNS name of the service.&lt;/p&gt;
+
+&lt;h1 id=&quot;how-works&quot;&gt;How Works&lt;/h1&gt;
+&lt;h2 id=&quot;nodes&quot;&gt;Nodes&lt;/h2&gt;
+&lt;h3 id=&quot;manager-nodes&quot;&gt;Manager nodes&lt;/h3&gt;
+&lt;p&gt;Manager nodes handle cluster managament tasks:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Mantaining cluster state&lt;/li&gt;
+  &lt;li&gt;scheduling services&lt;/li&gt;
+  &lt;li&gt;serving swarm mode HTTP API endpoints&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The internal state is mantained using a &lt;a href=&quot;https://raft.github.io/raft.pdf&quot;&gt;Raft algorithm&lt;/a&gt;. If a manager fails (and there are no more managers), the service will continue to run, but you will need to create a new cluster to recover.&lt;/p&gt;
+
+&lt;h3 id=&quot;worker-nodes&quot;&gt;Worker nodes&lt;/h3&gt;
+&lt;p&gt;Worker nodes are instances of Docker Engine whose unique purpore is to execute containers.
+By default, all managers are also workers. To prevent this, set &lt;code class=&quot;highlighter-rouge&quot;&gt;--availability&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;Drain&lt;/code&gt;. The scheduler gracefully stops tasks on nodes in Drain mode and schedules the tasks on an Active node.&lt;/p&gt;
+
+&lt;h2 id=&quot;services&quot;&gt;Services&lt;/h2&gt;
+&lt;p&gt;A service is frequently an image for a microservice within the context of some larger application (HTTP Server, database, or any other distributed environment).&lt;/p&gt;
+
+&lt;p&gt;When you define a service, you specify, optionally, in addition to image,&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;the port where the swarm will make the service available outside the swarm&lt;/li&gt;
+  &lt;li&gt;an overlay network to connect to other services in the swarm&lt;/li&gt;
+  &lt;li&gt;CPU and memory limits&lt;/li&gt;
+  &lt;li&gt;a rolling update policy&lt;/li&gt;
+  &lt;li&gt;the number of replicas of the image to run in the swarm&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The services can be of two types:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;replicated, when you specify the number of identical tasks you want to run (web services…)&lt;/li&gt;
+  &lt;li&gt;global, when runs one task on every node (monitoring agents, antivirus…)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;security&quot;&gt;Security&lt;/h2&gt;
+&lt;p&gt;The swarm mode public key infrastructure (PKI) system build into Docker makes it simple to securely deploy a container orchestration system. The nodes use TLS to authenticate, authorize and encrypt the communication with other nodes. 
+When you create a new swarm manager, it create a new root Certificate Authority which are used to secure communication with other nodes.&lt;/p&gt;
+
+&lt;h1 id=&quot;deploy-a-service&quot;&gt;Deploy a service&lt;/h1&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;docker service create --name web nginx&lt;/code&gt;
+This command create a service, called “web”, that run nginx image.
+Now you can change all the configurations using &lt;code class=&quot;highlighter-rouge&quot;&gt;docker service update&lt;/code&gt; command.
+&lt;code class=&quot;highlighter-rouge&quot;&gt;docker service update --publish-add 80 web&lt;/code&gt;
+To remove a service, simply do, &lt;code class=&quot;highlighter-rouge&quot;&gt;docker service remove web&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;There are a lots of configuration that can be set to run a service.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Alessandros-MBP:~ alessandro$ docker service create --help
+
+Usage:	docker service create [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+Create a new service
+
+Options:
+      --config config                      Specify configurations to expose to the service
+      --constraint list                    Placement constraints
+      --container-label list               Container labels
+      --credential-spec credential-spec    Credential spec for managed service account (Windows only)
+  -d, --detach                             Exit immediately instead of waiting for the service to converge (default true)
+      --dns list                           Set custom DNS servers
+      --dns-option list                    Set DNS options
+      --dns-search list                    Set custom DNS search domains
+      --endpoint-mode string               Endpoint mode (vip or dnsrr) (default &quot;vip&quot;)
+      --entrypoint command                 Overwrite the default ENTRYPOINT of the image
+  -e, --env list                           Set environment variables
+      --env-file list                      Read in a file of environment variables
+      --group list                         Set one or more supplementary user groups for the container
+      --health-cmd string                  Command to run to check health
+      --health-interval duration           Time between running the check (ms|s|m|h)
+      --health-retries int                 Consecutive failures needed to report unhealthy
+      --health-start-period duration       Start period for the container to initialize before counting retries towards unstable (ms|s|m|h)
+      --health-timeout duration            Maximum time to allow one check to run (ms|s|m|h)
+      --help                               Print usage
+      --host list                          Set one or more custom host-to-IP mappings (host:ip)
+      --hostname string                    Container hostname
+  -l, --label list                         Service labels
+      --limit-cpu decimal                  Limit CPUs
+      --limit-memory bytes                 Limit Memory
+      --log-driver string                  Logging driver for service
+      --log-opt list                       Logging driver options
+      --mode string                        Service mode (replicated or global) (default &quot;replicated&quot;)
+      --mount mount                        Attach a filesystem mount to the service
+      --name string                        Service name
+      --network network                    Network attachments
+      --no-healthcheck                     Disable any container-specified HEALTHCHECK
+      --no-resolve-image                   Do not query the registry to resolve image digest and supported platforms
+      --placement-pref pref                Add a placement preference
+  -p, --publish port                       Publish a port as a node port
+  -q, --quiet                              Suppress progress output
+      --read-only                          Mount the container's root filesystem as read only
+      --replicas uint                      Number of tasks
+      --reserve-cpu decimal                Reserve CPUs
+      --reserve-memory bytes               Reserve Memory
+      --restart-condition string           Restart when condition is met (&quot;none&quot;|&quot;on-failure&quot;|&quot;any&quot;) (default &quot;any&quot;)
+      --restart-delay duration             Delay between restart attempts (ns|us|ms|s|m|h) (default 5s)
+      --restart-max-attempts uint          Maximum number of restarts before giving up
+      --restart-window duration            Window used to evaluate the restart policy (ns|us|ms|s|m|h)
+      --rollback-delay duration            Delay between task rollbacks (ns|us|ms|s|m|h) (default 0s)
+      --rollback-failure-action string     Action on rollback failure (&quot;pause&quot;|&quot;continue&quot;) (default &quot;pause&quot;)
+      --rollback-max-failure-ratio float   Failure rate to tolerate during a rollback (default 0)
+      --rollback-monitor duration          Duration after each task rollback to monitor for failure (ns|us|ms|s|m|h) (default 5s)
+      --rollback-order string              Rollback order (&quot;start-first&quot;|&quot;stop-first&quot;) (default &quot;stop-first&quot;)
+      --rollback-parallelism uint          Maximum number of tasks rolled back simultaneously (0 to roll back all at once) (default 1)
+      --secret secret                      Specify secrets to expose to the service
+      --stop-grace-period duration         Time to wait before force killing a container (ns|us|ms|s|m|h) (default 10s)
+      --stop-signal string                 Signal to stop the container
+  -t, --tty                                Allocate a pseudo-TTY
+      --update-delay duration              Delay between updates (ns|us|ms|s|m|h) (default 0s)
+      --update-failure-action string       Action on update failure (&quot;pause&quot;|&quot;continue&quot;|&quot;rollback&quot;) (default &quot;pause&quot;)
+      --update-max-failure-ratio float     Failure rate to tolerate during an update (default 0)
+      --update-monitor duration            Duration after each task update to monitor for failure (ns|us|ms|s|m|h) (default 5s)
+      --update-order string                Update order (&quot;start-first&quot;|&quot;stop-first&quot;) (default &quot;stop-first&quot;)
+      --update-parallelism uint            Maximum number of tasks updated simultaneously (0 to update all at once) (default 1)
+  -u, --user string                        Username or UID (format: &amp;lt;name|uid&amp;gt;[:&amp;lt;group|gid&amp;gt;])
+      --with-registry-auth                 Send registry authentication details to swarm agents
+  -w, --workdir string                     Working directory inside the container
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;update&quot;&gt;Update&lt;/h2&gt;
+&lt;p&gt;As seen, you can specify how update a service. With &lt;code class=&quot;highlighter-rouge&quot;&gt;--update-dalay&lt;/code&gt; flag configures the time dalay between updates to a service task or sets of tasks (and can set parallelism actions with &lt;code class=&quot;highlighter-rouge&quot;&gt;--update-parallelism&lt;/code&gt;). 
+If an update succeeds, a new tasks is updated, else, if the update fails, an action can be performed (&lt;code class=&quot;highlighter-rouge&quot;&gt;pause|continue|rollback&lt;/code&gt;).&lt;/p&gt;
+
+&lt;h2 id=&quot;volumes&quot;&gt;Volumes&lt;/h2&gt;
+&lt;p&gt;You can create two types of mounts for services in a swarm&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;volume&lt;/code&gt; mounts, or&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;bind&lt;/code&gt; mounts.
+You can configure it using the &lt;code class=&quot;highlighter-rouge&quot;&gt;--mount&lt;/code&gt; flag on creating phase, or &lt;code class=&quot;highlighter-rouge&quot;&gt;--mount-add|--mount-rm&lt;/code&gt; on updateing phase.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;data-volumes&quot;&gt;Data Volumes&lt;/h4&gt;
+&lt;p&gt;Data Volumes are storage that remain alive after a container for a task has been removed. The preferred method is to leverage an existing volume:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ docker service create \
+  --mount src=&amp;lt;VOLUME-NAME&amp;gt;,dst=&amp;lt;CONTAINER-PATH&amp;gt; \
+  --name myservice \
+  &amp;lt;IMAGE&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;You can also create a volume at deployment time, just before starting the container.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; --mount type=volume,src=&amp;lt;VOLUME-NAME&amp;gt;,dst=&amp;lt;CONTAINER-PATH&amp;gt;,volume-driver=&amp;lt;DRIVER&amp;gt;,volume-opt=&amp;lt;KEY0&amp;gt;=&amp;lt;VALUE0&amp;gt;,volume-opt=&amp;lt;KEY1&amp;gt;=&amp;lt;VALUE1&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;bind-mounts&quot;&gt;Bind Mounts&lt;/h4&gt;
+&lt;p&gt;Bind mounts are file system paths from the host. Docker mounts the path into the container.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker service create \
+  --mount type=bind,src=&amp;lt;HOST-PATH&amp;gt;,dst=&amp;lt;CONTAINER-PATH&amp;gt; \
+  --name myservice \
+  &amp;lt;IMAGE&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Some problems can occur with bind mounts:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;if you bind mount a host path into a service’s container, the path must exist on every swarm node.&lt;/li&gt;
+  &lt;li&gt;The Docker swarm mode scheduler may reschedule a running service containers at any time if they became unhealthly or unreachable&lt;/li&gt;
+  &lt;li&gt;Host bind mounts are completely non-portable. When you use bind mounts, there is no guarantee that your application will run the same way in developement as it does in production.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;manage-sensitive-data-with-docker-secrets&quot;&gt;Manage sensitive data with Docker secrets&lt;/h1&gt;
+&lt;p&gt;A &lt;em&gt;secret&lt;/em&gt; is a blob of data (such a password, SSH private key, SSl certificate…) that should not be trasmetted over a network or store unencrypted in a Dockerfile or in your application’s source code.&lt;/p&gt;
+
+&lt;p&gt;When you add a secret to the swarm, Docker sends the secret to the swarm manager over a mutual TLS connecton.
+The location of the mount point within the container defaults to &lt;code class=&quot;highlighter-rouge&quot;&gt;/run/secrets/&amp;lt;secret_name&lt;/code&gt; (Linux containers) or &lt;code class=&quot;highlighter-rouge&quot;&gt;C:\ProgramData\Docker\secrets&lt;/code&gt; (Windows containers).&lt;/p&gt;
+
+&lt;h1 style=&quot;color:red&quot; id=&quot;play&quot;&gt;Let's play!!!&lt;/h1&gt;
+&lt;p&gt;Let’s try Docker Swarm. We are going to create a single, usual container on Docker Engine, with Apache Webserver (&lt;code class=&quot;highlighter-rouge&quot;&gt;httpd&lt;/code&gt; Docker image), and try to saturate it with &lt;code class=&quot;highlighter-rouge&quot;&gt;Apache Benchmark&lt;/code&gt; tool. After that, we are going to create a Docker Swarm Service and try to see if the network is able to resist to &lt;code class=&quot;highlighter-rouge&quot;&gt;Apache Benchmark&lt;/code&gt; with same amount of request.&lt;/p&gt;
+
+&lt;h3 id=&quot;docker-standard-container&quot;&gt;Docker standard container&lt;/h3&gt;
+&lt;p&gt;We deploy a service, starting a container with the following command:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run --rm -it --name web -p 8080:80 -v web:/usr/local/apache2/htdocs/ httpd:latest
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;(Some problems may occur on MacOS while trying to mount a volume in this way. Try to insert absolute path to &lt;code class=&quot;highlighter-rouge&quot;&gt;web&lt;/code&gt; directory instead of relative path).&lt;/p&gt;
+
+&lt;p&gt;Now check that all works going on &lt;code class=&quot;highlighter-rouge&quot;&gt;http://localhost:8080&lt;/code&gt; with your favourite browser.
+You should see something like this
+&lt;a href=&quot;http://127.0.0.1:4000/assets/img/post-image/works.png&quot;&gt;It works!&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Now try to make the webserver unavaiable using &lt;code class=&quot;highlighter-rouge&quot;&gt;ab&lt;/code&gt; (Apache Benchmark).
+You can run &lt;code class=&quot;highlighter-rouge&quot;&gt;ab&lt;/code&gt; with… Docker container! Let’s write:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;time docker run --net=host --rm jordi/ab ab -c 10000 -n 30000 -r http://localhost:8080/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;to measure time needed to complete 30000 connections to webserver, with 10000 connections performed simultaneously
+and without closing the socket in the case of erro (&lt;code class=&quot;highlighter-rouge&quot;&gt;-r&lt;/code&gt; flag).&lt;/p&gt;
+
+&lt;p&gt;My output is&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;This is ApacheBench, Version 2.3 &amp;lt;$Revision: 1796539 $&amp;gt;
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+Completed 3000 requests
+Completed 6000 requests
+Completed 9000 requests
+Completed 12000 requests
+Completed 15000 requests
+Completed 18000 requests
+Completed 21000 requests
+Completed 24000 requests
+Completed 27000 requests
+Completed 30000 requests
+Finished 30000 requests
+
+
+Server Software:        Apache/2.4.29
+Server Hostname:        localhost
+Server Port:            8080
+
+Document Path:          /
+Document Length:        45 bytes
+
+Concurrency Level:      10000
+Time taken for tests:   141.045 seconds
+Complete requests:      30000
+Failed requests:        13593
+   (Connect: 0, Receive: 4530, Length: 4533, Exceptions: 4530)
+Total transferred:      7373257 bytes
+HTML transferred:       1148085 bytes
+Requests per second:    212.70 [#/sec] (mean)
+Time per request:       47015.097 [ms] (mean)
+Time per request:       4.702 [ms] (mean, across all concurrent requests)
+Transfer rate:          51.05 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0  605 1363.4      9   15168
+Processing:     0 23477 44276.7   1906  131857
+Waiting:        0 4547 8138.6    892   63191
+Total:          0 24081 44220.3   3070  135258
+
+Percentage of the requests served within a certain time (ms)
+  50%   3070
+  66%   8556
+  75%  15994
+  80%  26979
+  90%  127318
+  95%  127405
+  98%  127626
+  99%  130373
+ 100%  135258 (longest request)
+real  2m 22.08s
+user  0m 0.02s
+sys 0m 0.00s
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now try to build a distributed service that execute this webserver with 6 tasks and see how many times does it needed to complete 30000 connections.&lt;/p&gt;
+
+&lt;h3 id=&quot;docker-swarm-mode&quot;&gt;Docker Swarm Mode&lt;/h3&gt;
+&lt;h5 id=&quot;create-4-nodes&quot;&gt;Create 4 Nodes&lt;/h5&gt;
+&lt;p&gt;To create 4 nodes on the same machine, we are going to use &lt;code class=&quot;highlighter-rouge&quot;&gt;docker-machine&lt;/code&gt; with the following command:
+&lt;code class=&quot;highlighter-rouge&quot;&gt;docker-machine create --driver virtualbox worker1&lt;/code&gt;
+And do this for four times, or:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for i in `seq 1 4`; 
+do 
+  docker-machine create --driver virtualbox worker$i; 
+done
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Now we have 4 workers, you can see those with &lt;code class=&quot;highlighter-rouge&quot;&gt;docker-machine ls&lt;/code&gt;.
+If all is gone correctly, your output should be similar to this:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Alessandros-MBP:web alessandro$ docker-machine ls
+NAME      ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER        ERRORS
+worker1   -        virtualbox   Running   tcp://192.168.99.100:2376           v17.11.0-ce   
+worker2   -        virtualbox   Running   tcp://192.168.99.101:2376           v17.11.0-ce   
+worker3   -        virtualbox   Running   tcp://192.168.99.102:2376           v17.11.0-ce   
+worker4   -        virtualbox   Running   tcp://192.168.99.103:2376           v17.11.0-ce   
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;create-a-manager&quot;&gt;Create a manager&lt;/h5&gt;
+&lt;p&gt;Now that we have created 4 workers, let’s do create a Swarm Manager.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker-machine create manager1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;and then, get the &lt;code class=&quot;highlighter-rouge&quot;&gt;manager1&lt;/code&gt; IP address, typing &lt;code class=&quot;highlighter-rouge&quot;&gt;docker-machine ls&lt;/code&gt; and reading the URL field for &lt;code class=&quot;highlighter-rouge&quot;&gt;manager1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Connect now to &lt;code class=&quot;highlighter-rouge&quot;&gt;manager1&lt;/code&gt; with&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker-machine ssh manager1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;and then start a new swarm, so run inside &lt;code class=&quot;highlighter-rouge&quot;&gt;manager1&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker swarm init --advertise-addr &amp;lt;MANAGER-IP&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;in my case, &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;MANAGER-IP&amp;gt;&lt;/code&gt; is &lt;code class=&quot;highlighter-rouge&quot;&gt;192.168.99.104&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h5 id=&quot;join-the-workers-to-the-swarm&quot;&gt;Join the workers to the swarm&lt;/h5&gt;
+&lt;p&gt;This initialization create a token, that you have to use to join from workers.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker@manager1:~$ docker swarm init --advertise-addr 192.168.99.104
+Swarm initialized: current node (ghip4g5s8l1qaj19u9bt4z1g5) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-5vkvrcb97hwf7lnd8bwdwoz86n9roqh594aj34unp8ephtj7wb-c6vyjcedx7qsj0zvxxaje7zz7 192.168.99.104:2377
+
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;So get the command &lt;code class=&quot;highlighter-rouge&quot;&gt;docker swarm join --token ... &amp;lt;MANAGER-IP&amp;gt;:&amp;lt;PORT&lt;/code&gt; and paste it into each worker connecting to it via &lt;code class=&quot;highlighter-rouge&quot;&gt;docker-machine ssh&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can perform this operation typing&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for i in `seq 1 4`; 
+do 
+  docker-machine ssh worker$i docker swarm join --token &amp;lt;TOKEN&amp;gt;
+   &amp;lt;MANAGER-IP&amp;gt;:&amp;lt;PORT`;
+done
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Now we have the swarm created.&lt;/p&gt;
+
+&lt;p&gt;Reconnect via &lt;code class=&quot;highlighter-rouge&quot;&gt;docker-machine ssh&lt;/code&gt; to &lt;code class=&quot;highlighter-rouge&quot;&gt;manager1&lt;/code&gt; to configure the service, then execute &lt;code class=&quot;highlighter-rouge&quot;&gt;docker node ls&lt;/code&gt; to see all the worker joined to the swarm.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker@manager1:~$ docker node ls
+ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS
+ghip4g5s8l1qaj19u9bt4z1g5 *   manager1            Ready               Active              Leader
+rarxfvelnw1sl6kxll2hvum7z     worker1             Ready               Active              
+64rcnb9unhkrkx15gk43tld5b     worker2             Ready               Active              
+oerktjryawqzadakuwnjnka3l     worker3             Ready               Active              
+whq7kd3zkld9jlg7vgbi307uj     worker4             Ready               Active         
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h5 id=&quot;create-a-service&quot;&gt;Create a service&lt;/h5&gt;
+
+&lt;p&gt;Now start a service, with 5 tasks and mounting a “/web” volume with:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker service create --replicas 5 -p 8080:80 --name web httpd
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Now you can see the service progress with&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ docker service ps web
+ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE           ERROR               PORTS
+vsyi9ywzy1xc        web.1               httpd:latest        worker1             Running             Running 3 minutes ago
+cbs958bkwx3f        web.2               httpd:latest        worker2             Running             Running 2 minutes ago
+thalirehjpfa        web.3               httpd:latest        worker3             Running             Running 3 minutes ago
+shrtupjr4bjy        web.4               httpd:latest        worker4             Running             Running 2 minutes ago
+ttz7c79ogk8r        web.5               httpd:latest        manager1            Running             Running 3 minutes ago   
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Pay attention on CURRENT STATE, it must be a “Running” state, not “Preparing”.&lt;/p&gt;
+
+&lt;p&gt;Now reperform the Benchmark and see the result:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ time docker run --net=host --rm jordi/ab ab -c 10000 -n 30000 -r http://localhost:80/
+This is ApacheBench, Version 2.3 &amp;lt;$Revision: 1796539 $&amp;gt;
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+Completed 3000 requests
+Completed 6000 requests
+Completed 9000 requests
+Completed 12000 requests
+Completed 15000 requests
+Completed 18000 requests
+Completed 21000 requests
+Completed 24000 requests
+Completed 27000 requests
+Completed 30000 requests
+Finished 30000 requests
+
+
+Server Software:        Apache/2.4.29
+Server Hostname:        localhost
+Server Port:            80
+
+Document Path:          /
+Document Length:        45 bytes
+
+Concurrency Level:      10000
+Time taken for tests:   77.014 seconds
+Complete requests:      30000
+Failed requests:        167
+   (Connect: 0, Receive: 22, Length: 123, Exceptions: 22)
+Total transferred:      8635031 bytes
+HTML transferred:       1344555 bytes
+Requests per second:    389.54 [#/sec] (mean)
+Time per request:       25671.464 [ms] (mean)
+Time per request:       2.567 [ms] (mean, across all concurrent requests)
+Transfer rate:          109.49 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0 6530 10928.3   1369   35220
+Processing:     1  931 2714.5    505   64186
+Waiting:        0  655 2305.9    256   64186
+Total:          1 7460 11398.3   2432   65780
+
+Percentage of the requests served within a certain time (ms)
+  50%   2432
+  66%   3324
+  75%   3973
+  80%  15080
+  90%  33031
+  95%  33893
+  98%  34062
+  99%  34100
+ 100%  65780 (longest request)
+real  1m 18.10s
+user  0m 0.01s
+sys 0m 0.00s
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This result introduce a new tool implemented in Docker Swarm, the load balancing. As you can see, we have hit a manager(but should perform a connection using an IP address of another node) and the Swarm redirect the request to a running node.&lt;/p&gt;
+
+&lt;h3 id=&quot;some-other-stuff&quot;&gt;Some other stuff&lt;/h3&gt;
+&lt;p&gt;By default, the manager is also a worker. To avoid this, write:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker node update --availability drain manager1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;To delete a &lt;code class=&quot;highlighter-rouge&quot;&gt;docker-machine&lt;/code&gt; created, just write:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker-machine rm &amp;lt;NAME_LIST&amp;gt; (e.g. manager1 worker1 worker2)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;To scale the number of tasks that run for a service, you can execute:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker service scale web=8
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Try to delete a &lt;code class=&quot;highlighter-rouge&quot;&gt;worker1&lt;/code&gt; (write &lt;code class=&quot;highlighter-rouge&quot;&gt;docker-machine rm worker1&lt;/code&gt;) where, probably, is running a task and see, executing on &lt;code class=&quot;highlighter-rouge&quot;&gt;manager1&lt;/code&gt; &lt;code class=&quot;highlighter-rouge&quot;&gt;docker service ps web&lt;/code&gt; what happens (answer: the manager reschedule the task on other node automatically).&lt;/p&gt;</content><category term="english" /><category term="docker" /><summary type="html">A Docker-native clustering system.</summary></entry><entry><title type="html">How download MacOS Sierra and downgrade to it</title><link href="http://127.0.0.1:4000/how-downgrade-to-sierra/" rel="alternate" type="text/html" title="How download MacOS Sierra and downgrade to it" /><published>2017-12-02T00:00:00+01:00</published><updated>2017-12-02T00:00:00+01:00</updated><id>http://127.0.0.1:4000/how-downgrade-to-sierra</id><content type="html" xml:base="http://127.0.0.1:4000/how-downgrade-to-sierra/">&lt;h1 id=&quot;short-version&quot;&gt;Short Version&lt;/h1&gt;
 &lt;p&gt;If you, as me, think that High Sierra introduces more bugs than useful feature and want to downgrade to Sierra, execute this commands on Terminal:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;brew install mas
@@ -15,14 +469,14 @@ The problem appears after Sierra, when Apple said  “macOS Sierra or later does
 &lt;p&gt;Try to see console log error…
 I was developing a MacOS app and that, after update, has stopped working and this log appears in the log. And not just on my app…&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/month13.png&quot; alt=&quot;Month 13 is out of bound&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/month13.png&quot; alt=&quot;Month 13 is out of bound&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Of course, this error (maybe a warning?) is not the only reason to downgrade, in my experience, the resume from stop state is slowly, and some other problems has appears (you can simply Google “High Sierra problems” to find a very long posts about them).&lt;/p&gt;
 
 &lt;p&gt;So, after downloaded the Sierra image (see upper paragraph), follow &lt;a href=&quot;https://www.imore.com/how-downgrade-macos&quot;&gt;this steps&lt;/a&gt; and enjoy your resurrected good Mac!&lt;/p&gt;
 
 &lt;h2 id=&quot;why-dont-downgrade&quot;&gt;Why don’t downgrade&lt;/h2&gt;
-&lt;p&gt;Of course, High Sierra, introduced some security improvement (also if recent problem, read &lt;a href=&quot;https://www.macworld.co.uk/how-to/mac-software/how-stop-someone-getting-root-access-your-mac-3668317/&quot;&gt;root access&lt;/a&gt; make think the opposite). Oh, I’m forgetting, in order to fix the root access, Apple has introduced &lt;a href=&quot;http://mashable.com/2017/11/30/apple-security-fix-bug/&quot;&gt;new bugs, yeah!!&lt;/a&gt;. I’ve just downgraded.&lt;/p&gt;</content><category term="english" /><category term="problem" /><category term="MacOS" /><summary type="html">Make your computer great again...</summary></entry><entry><title type="html">Come salvare le password nel database e creare un login</title><link href="https://apagiaro.it/store-password-safe/" rel="alternate" type="text/html" title="Come salvare le password nel database e creare un login" /><published>2017-10-03T00:00:00+02:00</published><updated>2017-10-03T00:00:00+02:00</updated><id>https://apagiaro.it/store-password-safe</id><content type="html" xml:base="https://apagiaro.it/store-password-safe/">&lt;p&gt;Si sa, l’utente medio usa una password unica per tutti i vari siti a cui si iscrive. Ma quanti di questi si chiedono come sono salvate le loro password all’interno di questi siti? Lo scopo di questo articolo è quindi di fare una breve panoramica sulle tecniche utilizzate per salvare gli utenti e la password associata nei database sui vari siti e analizzarne le criticità.&lt;/p&gt;
+&lt;p&gt;Of course, High Sierra, introduced some security improvement (also if recent problem, read &lt;a href=&quot;https://www.macworld.co.uk/how-to/mac-software/how-stop-someone-getting-root-access-your-mac-3668317/&quot;&gt;root access&lt;/a&gt; make think the opposite). Oh, I’m forgetting, in order to fix the root access, Apple has introduced &lt;a href=&quot;http://mashable.com/2017/11/30/apple-security-fix-bug/&quot;&gt;new bugs, yeah!!&lt;/a&gt;. I’ve just downgraded.&lt;/p&gt;</content><category term="english" /><category term="problem" /><category term="MacOS" /><summary type="html">Make your computer great again...</summary></entry><entry><title type="html">Come salvare le password nel database per creare un login sicuro</title><link href="http://127.0.0.1:4000/store-password-safe/" rel="alternate" type="text/html" title="Come salvare le password nel database per creare un login sicuro" /><published>2017-11-23T00:00:00+01:00</published><updated>2017-11-23T00:00:00+01:00</updated><id>http://127.0.0.1:4000/store-password-safe</id><content type="html" xml:base="http://127.0.0.1:4000/store-password-safe/">&lt;p&gt;Si sa, l’utente medio usa una password unica per tutti i vari siti a cui si iscrive. Ma quanti di questi si chiedono come sono salvate le loro password all’interno di questi siti? Lo scopo di questo articolo è quindi di fare una breve panoramica sulle tecniche utilizzate per salvare gli utenti e la password associata nei database sui vari siti e analizzarne le criticità.&lt;/p&gt;
 
 &lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
 &lt;p&gt;Prima di iniziare ad approfondire l’argomento ci occorre conoscere il concetto di funzione hash. Questa particolare funzione la useremo infatti in alcuni dei metodi per incrementare la sicurezza del salvataggio della password.&lt;/p&gt;
@@ -149,7 +603,7 @@ L’utente al momento della registrazione invia la password, lato client (così 
 &lt;p&gt;Nel caso di una violazione del database le password risulteranno al sicuro perchè, pur conoscendo la password di un utente, non siamo in grado di determinare se altri utente hanno la stessa password (se non andando a ricalcolare tutti gli hash).&lt;/p&gt;
 
 &lt;h2 id=&quot;precisazioni-finali&quot;&gt;Precisazioni finali&lt;/h2&gt;
-&lt;p&gt;Tanto per chiarezza, nessun dato possiamo ritenerlo al sicuro se è online, ma possiamo rendere la vita difficile a chi tenta di rubarlo. Conoscere l’hash non ci porta a nessun risultato utile poichè trovare una stringa che generi quell’hash vuol dire provare tutte le possibili stringhe, cioè taaaantissimi tentativi, e usare l’hash come password non porterà a nessun risultato in quanto il server si aspetta una password e quindi tratterà l’hash come tale, producendo di fatto, per il confronto nel database, l’hash dell’hash, che è un nuovo hash totalmente differente dal precedente.&lt;/p&gt;</content><category term="security" /><category term="database" /><summary type="html">E come non salvarle...</summary></entry><entry><title type="html">How to create sorted run for merge-sort larger than M (memory size) using SnowPlow Algorithm</title><link href="https://apagiaro.it/snowplow-algorithm/" rel="alternate" type="text/html" title="How to create sorted run for merge-sort larger than M (memory size) using SnowPlow Algorithm" /><published>2017-10-03T00:00:00+02:00</published><updated>2017-10-03T00:00:00+02:00</updated><id>https://apagiaro.it/snowplow-algorithm</id><content type="html" xml:base="https://apagiaro.it/snowplow-algorithm/">&lt;p&gt;If we design an algoritmh and we stop thinking about CPU time and focus our attention on main bottleneck of “computer speed”, we have to fucus our attention on IO access in (main) memory. Moreover this introduce new problem, how to optimize access in memory?&lt;/p&gt;
+&lt;p&gt;Tanto per chiarezza, nessun dato possiamo ritenerlo al sicuro se è online, ma possiamo rendere la vita difficile a chi tenta di rubarlo. Conoscere l’hash non ci porta a nessun risultato utile poichè trovare una stringa che generi quell’hash vuol dire provare tutte le possibili stringhe, cioè taaaantissimi tentativi, e usare l’hash come password non porterà a nessun risultato in quanto il server si aspetta una password e quindi tratterà l’hash come tale, producendo di fatto, per il confronto nel database, l’hash dell’hash, che è un nuovo hash totalmente differente dal precedente.&lt;/p&gt;</content><category term="security" /><category term="database" /><summary type="html">E come non salvarle...</summary></entry><entry><title type="html">How to create sorted run for merge-sort larger than M (memory size) using SnowPlow Algorithm</title><link href="http://127.0.0.1:4000/snowplow-algorithm/" rel="alternate" type="text/html" title="How to create sorted run for merge-sort larger than M (memory size) using SnowPlow Algorithm" /><published>2017-10-03T00:00:00+02:00</published><updated>2017-10-03T00:00:00+02:00</updated><id>http://127.0.0.1:4000/snowplow-algorithm</id><content type="html" xml:base="http://127.0.0.1:4000/snowplow-algorithm/">&lt;p&gt;If we design an algoritmh and we stop thinking about CPU time and focus our attention on main bottleneck of “computer speed”, we have to fucus our attention on IO access in (main) memory. Moreover this introduce new problem, how to optimize access in memory?&lt;/p&gt;
 
 &lt;p&gt;If I design a mergesort algorithm, I’ll find useful to build a &lt;em&gt;k-way mergesort&lt;/em&gt; where the complexity decrease when the run size increas [1]. So it’s useful to find a way to create a sorted run as long as we can.&lt;/p&gt;
 
@@ -184,7 +638,7 @@ L’utente al momento della registrazione invia la password, lato client (così 
 &lt;h1 id=&quot;example&quot;&gt;Example&lt;/h1&gt;
 
 &lt;p&gt;Here I provide a small example to show how this algorithm works.
-&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/snowplow.jpg&quot; alt=&quot;SnowPlow Algorithm Example&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/snowplow.jpg&quot; alt=&quot;SnowPlow Algorithm Example&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;So the sorted runs are:&lt;/p&gt;
 &lt;ul&gt;
@@ -198,7 +652,7 @@ L’utente al momento della registrazione invia la password, lato client (così 
 &lt;p&gt;[1] The magic of Algorithm, lecture notes of Paolo Ferragina&lt;/p&gt;
 
 &lt;p&gt;[2] Donald E. Knuth. The Art of Computer Programming: volume 3. Addison-Wesley, 2nd
-Edition, 1998.&lt;/p&gt;</content><category term="algorithm" /><category term="english" /><summary type="html">A simple algorithm to create runs larger than memory size</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma, parte 3</title><link href="https://apagiaro.it/intro-crittografia-3/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma, parte 3 " /><published>2017-08-26T00:00:00+02:00</published><updated>2017-08-26T00:00:00+02:00</updated><id>https://apagiaro.it/intro-crittografia-3</id><content type="html" xml:base="https://apagiaro.it/intro-crittografia-3/">&lt;p&gt;Dopo aver visto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia&quot;&gt;prima parte&lt;/a&gt; come scambiarsi una chiave senza doverla comunicare in chiaro, abbiamo visto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia-2&quot;&gt;seconda parte&lt;/a&gt; come è possibile scambiarsi messaggi cifrati senza neanche doversi scambiare una chiave, tramite l’uso dell’RSA.&lt;/p&gt;
+Edition, 1998.&lt;/p&gt;</content><category term="algorithm" /><category term="english" /><summary type="html">A simple algorithm to create runs larger than memory size</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma, parte 3</title><link href="http://127.0.0.1:4000/intro-crittografia-3/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma, parte 3 " /><published>2017-08-26T00:00:00+02:00</published><updated>2017-08-26T00:00:00+02:00</updated><id>http://127.0.0.1:4000/intro-crittografia-3</id><content type="html" xml:base="http://127.0.0.1:4000/intro-crittografia-3/">&lt;p&gt;Dopo aver visto nella &lt;a href=&quot;http://127.0.0.1:4000/intro-crittografia&quot;&gt;prima parte&lt;/a&gt; come scambiarsi una chiave senza doverla comunicare in chiaro, abbiamo visto nella &lt;a href=&quot;http://127.0.0.1:4000/intro-crittografia-2&quot;&gt;seconda parte&lt;/a&gt; come è possibile scambiarsi messaggi cifrati senza neanche doversi scambiare una chiave, tramite l’uso dell’RSA.&lt;/p&gt;
 
 &lt;p&gt;Lo scopo di oggi è vedere come sfruttare l’RSA, o qualsiasi altro algoritmo di cifratura asimmetrico, per verificare l’identità di un mittente come se lui lo avesse firmato.&lt;/p&gt;
 
@@ -253,7 +707,7 @@ sha256(&quot;ciao a tutte&quot;) = 41a0afdbed24669aad1da115f0e8577277a41ec351ac6
 
 &lt;p&gt;Un eventuale ricevente non deve far nient’altro che prendere la &lt;em&gt;chiave pubblica&lt;/em&gt; di Bob, e applicarla al secondo componente spedito. Se il procedimento è andato a buon fine il risultato sarà \( &amp;lt;m, h(m)&amp;gt; \). Basterà quindi calcolare l’hash di &lt;em&gt;m&lt;/em&gt; e confrontarlo con il risultato della decifratura.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/facebook.png&quot; alt=&quot;facebook certificato&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/facebook.png&quot; alt=&quot;facebook certificato&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;il-problema-della-verifica-della-chiave-pubblica&quot;&gt;Il problema della verifica della chiave pubblica&lt;/h1&gt;
 &lt;p&gt;Si introduce, in tutto questo ragionamento, un problema che, quando abbiamo introdotto i cifrari asimmetrici, avevamo ignorato.&lt;/p&gt;
@@ -266,9 +720,9 @@ sha256(&quot;ciao a tutte&quot;) = 41a0afdbed24669aad1da115f0e8577277a41ec351ac6
 
 &lt;p&gt;A questo punto si torna alla domanda con cui avevamo aperto questa serie di articoli sulla crittografia, &lt;strong&gt;chi certifica la Certification Authority&lt;/strong&gt;?&lt;/p&gt;
 
-&lt;p&gt;Beh, in tal caso diciamo che si autocertificano, o meglio, per capirlo bisogna capire in che scenario si utilizzano. Quando navighiamo noi usiamo un browser che si connetterà in maniera cifrata a vari server verificando l’identità di ognuno di questi leggendo la &lt;em&gt;chiave pubblica&lt;/em&gt; dichiarata (la questione è un po’ più complicata ma cerchiamo di lasciarla più semplice possibile). A questo punto, si connette alla &lt;em&gt;certification authority&lt;/em&gt; per controllare la validità. Questa connessione che effettua avviene con il metodo di cifratura asimmetrica visto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia-2&quot;&gt;seconda parte&lt;/a&gt; e, la chiave pubblica della &lt;em&gt;c. a.&lt;/em&gt;, il browser la conosce perchè ce l’ha salvata nel suo database locale. E chi l’ha inserita in quel database? Diciamo che il programmatore potrebbe aver inserito le principale &lt;em&gt;c.a.&lt;/em&gt; e quando scaricate il browser ve le ritrovate già lì pronte, e poi a cascata tutte le altre.&lt;/p&gt;
+&lt;p&gt;Beh, in tal caso diciamo che si autocertificano, o meglio, per capirlo bisogna capire in che scenario si utilizzano. Quando navighiamo noi usiamo un browser che si connetterà in maniera cifrata a vari server verificando l’identità di ognuno di questi leggendo la &lt;em&gt;chiave pubblica&lt;/em&gt; dichiarata (la questione è un po’ più complicata ma cerchiamo di lasciarla più semplice possibile). A questo punto, si connette alla &lt;em&gt;certification authority&lt;/em&gt; per controllare la validità. Questa connessione che effettua avviene con il metodo di cifratura asimmetrica visto nella &lt;a href=&quot;http://127.0.0.1:4000/intro-crittografia-2&quot;&gt;seconda parte&lt;/a&gt; e, la chiave pubblica della &lt;em&gt;c. a.&lt;/em&gt;, il browser la conosce perchè ce l’ha salvata nel suo database locale. E chi l’ha inserita in quel database? Diciamo che il programmatore potrebbe aver inserito le principale &lt;em&gt;c.a.&lt;/em&gt; e quando scaricate il browser ve le ritrovate già lì pronte, e poi a cascata tutte le altre.&lt;/p&gt;
 
-&lt;p&gt;Per vedere tutte queste cose, sui siti che visitate, basta cliccare sul lucchetto posto, solitamente, alla sinistra dell’url nella barra degli indirizzo. Vi dovreste ritrovare una schermata simile a quella mostrata nell’immagine qui sopra con tutti i dati di cui abbiamo parlato oggi che ora, spero, sarete in grado di capire un po’ meglio.&lt;/p&gt;</content><category term="crittografia" /><category term="RSA" /><category term="firma digitale" /><summary type="html">La firma digitale</summary></entry><entry><title type="html">Man-in-the-middle per tutti con Bettercap</title><link href="https://apagiaro.it/bettercap-guida-ita/" rel="alternate" type="text/html" title="Man-in-the-middle per tutti con Bettercap" /><published>2017-08-24T00:00:00+02:00</published><updated>2017-08-24T00:00:00+02:00</updated><id>https://apagiaro.it/bettercap-guida-ita</id><content type="html" xml:base="https://apagiaro.it/bettercap-guida-ita/">&lt;p&gt;Una delle cose che ci si immagina, quando si pensa alla sicurezza informatica, è l’intercettare e modificare il traffico internet di un computer &lt;em&gt;target&lt;/em&gt; per fare quello che ci occorre.&lt;/p&gt;
+&lt;p&gt;Per vedere tutte queste cose, sui siti che visitate, basta cliccare sul lucchetto posto, solitamente, alla sinistra dell’url nella barra degli indirizzo. Vi dovreste ritrovare una schermata simile a quella mostrata nell’immagine qui sopra con tutti i dati di cui abbiamo parlato oggi che ora, spero, sarete in grado di capire un po’ meglio.&lt;/p&gt;</content><category term="crittografia" /><category term="RSA" /><category term="firma digitale" /><summary type="html">La firma digitale</summary></entry><entry><title type="html">Man-in-the-middle per tutti con Bettercap</title><link href="http://127.0.0.1:4000/bettercap-guida-ita/" rel="alternate" type="text/html" title="Man-in-the-middle per tutti con Bettercap" /><published>2017-08-24T00:00:00+02:00</published><updated>2017-08-24T00:00:00+02:00</updated><id>http://127.0.0.1:4000/bettercap-guida-ita</id><content type="html" xml:base="http://127.0.0.1:4000/bettercap-guida-ita/">&lt;p&gt;Una delle cose che ci si immagina, quando si pensa alla sicurezza informatica, è l’intercettare e modificare il traffico internet di un computer &lt;em&gt;target&lt;/em&gt; per fare quello che ci occorre.&lt;/p&gt;
 
 &lt;div class=&quot;notice&quot;&gt;
 &lt;h3&gt;Attenzione!!!&lt;/h3&gt;
@@ -413,9 +867,9 @@ Con altissima probabilità verrete reindirizzati alla pagina cifrata, tutta colp
 
 &lt;p&gt;dove -T IP (opzionale) rappresenta l’IP di cui volete intercettare il traffico, &lt;em&gt;interfaccia&lt;/em&gt; è il nome dell’interfaccia su cui attivate il tutto, ad esempio la mia interfaccia wifi è en1, puoi scoprire la tua con un &lt;code class=&quot;highlighter-rouge&quot;&gt;ifconfig&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Per il resto la &lt;a href=&quot;https://www.bettercap.org/index.html&quot;&gt;documentazione&lt;/a&gt; ufficiale è molto chiara, quindi potete andare direttamente lì per leggere le mille opzioni previste e usarle.&lt;/p&gt;</content><category term="crittografia" /><category term="MITM" /><category term="sicurezza" /><category term="bettercap" /><summary type="html">Due/tre cosine spiegate su Bettercap</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma, parte 2</title><link href="https://apagiaro.it/intro-crittografia-2/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma, parte 2" /><published>2017-08-22T00:00:00+02:00</published><updated>2017-08-22T00:00:00+02:00</updated><id>https://apagiaro.it/intro-crittografia-2</id><content type="html" xml:base="https://apagiaro.it/intro-crittografia-2/">&lt;p&gt;Come avevamo già visto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia&quot;&gt;prima parte&lt;/a&gt;, uno dei problemi principale di quando dobbiamo cifrare qualcosa è il comunicare la chiave di decifrazione al destinatario in quanto non possiamo cifrarla in alcun modo. A risolvere questo problema ci pensano gli algoritmi di crittografia asimmetrica.&lt;/p&gt;
+&lt;p&gt;Per il resto la &lt;a href=&quot;https://www.bettercap.org/index.html&quot;&gt;documentazione&lt;/a&gt; ufficiale è molto chiara, quindi potete andare direttamente lì per leggere le mille opzioni previste e usarle.&lt;/p&gt;</content><category term="crittografia" /><category term="MITM" /><category term="sicurezza" /><category term="bettercap" /><summary type="html">Due/tre cosine spiegate su Bettercap</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma, parte 2</title><link href="http://127.0.0.1:4000/intro-crittografia-2/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma, parte 2" /><published>2017-08-22T00:00:00+02:00</published><updated>2017-08-22T00:00:00+02:00</updated><id>http://127.0.0.1:4000/intro-crittografia-2</id><content type="html" xml:base="http://127.0.0.1:4000/intro-crittografia-2/">&lt;p&gt;Come avevamo già visto nella &lt;a href=&quot;http://127.0.0.1:4000/intro-crittografia&quot;&gt;prima parte&lt;/a&gt;, uno dei problemi principale di quando dobbiamo cifrare qualcosa è il comunicare la chiave di decifrazione al destinatario in quanto non possiamo cifrarla in alcun modo. A risolvere questo problema ci pensano gli algoritmi di crittografia asimmetrica.&lt;/p&gt;
 
-&lt;p&gt;Avete presente quel discorso fatto nella &lt;a href=&quot;https://apagiaro.it/intro-crittografia&quot;&gt;prima parte&lt;/a&gt; in cui si diceva che trovare un inverso di un numero &lt;i&gt;n&lt;/i&gt; quando c’è di mezzo l’operatore &lt;em&gt;modulo&lt;/em&gt; non è poi così tanto banale? Ecco, è proprio ancora questa cosa che venne in aiuto a Ronald Rivest, Adi Shamir e Leonard Adleman nel 1977.&lt;/p&gt;
+&lt;p&gt;Avete presente quel discorso fatto nella &lt;a href=&quot;http://127.0.0.1:4000/intro-crittografia&quot;&gt;prima parte&lt;/a&gt; in cui si diceva che trovare un inverso di un numero &lt;i&gt;n&lt;/i&gt; quando c’è di mezzo l’operatore &lt;em&gt;modulo&lt;/em&gt; non è poi così tanto banale? Ecco, è proprio ancora questa cosa che venne in aiuto a Ronald Rivest, Adi Shamir e Leonard Adleman nel 1977.&lt;/p&gt;
 
 &lt;h2 id=&quot;come-avremmo-fatto-100-anni-fa&quot;&gt;Come avremmo fatto 100 anni fa..&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&quot;http://www.intecosas.com/immagini/catalogo/materiali_consumo/lucchetti_CISA/lucchetto_ottone.jpg&quot; alt=&quot;lucchetti&quot; /&gt;
@@ -493,7 +947,7 @@ essendo &lt;em&gt;d&lt;/em&gt;, l’inverso di &lt;em&gt;e&lt;/em&gt;.&lt;/li&gt
 
 &lt;p&gt;Non voglio ora annoiarvi con la dimostrazione del perchè questa cosa funziona, ci sono vari teoremi dietro che sfruttano le proprietà dei numero in un campo modulare. Trovate una buona spiegazione su &lt;a href=&quot;https://it.wikipedia.org/wiki/RSA&quot;&gt;Wikipedia&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Nel prossimo post vediamo come sfrutturare questa cosa per firmare dei documenti e avere la certezza che il firmatario sia effettivamente chi dice di essere (cioè validare la firma).&lt;/p&gt;</content><category term="crittografia" /><category term="RSA" /><summary type="html">La crittografia asimmetrica</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma</title><link href="https://apagiaro.it/intro-crittografia/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma" /><published>2017-08-21T00:00:00+02:00</published><updated>2017-08-21T00:00:00+02:00</updated><id>https://apagiaro.it/intro-crittografia</id><content type="html" xml:base="https://apagiaro.it/intro-crittografia/">&lt;p&gt;Da sempre l’uomo cerca modi per nascondere i propri messaggi. Erodoto narra che nell’antica Persia i messaggi venivano scritti sulla testa degli schiavi, si attendeva che i capelli crescessero e venivano mandati come messaggeri. 
+&lt;p&gt;Nel prossimo post vediamo come sfrutturare questa cosa per firmare dei documenti e avere la certezza che il firmatario sia effettivamente chi dice di essere (cioè validare la firma).&lt;/p&gt;</content><category term="crittografia" /><category term="RSA" /><summary type="html">La crittografia asimmetrica</summary></entry><entry><title type="html">La crittografia moderna spiegata a mia mamma</title><link href="http://127.0.0.1:4000/intro-crittografia/" rel="alternate" type="text/html" title="La crittografia moderna spiegata a mia mamma" /><published>2017-08-21T00:00:00+02:00</published><updated>2017-08-21T00:00:00+02:00</updated><id>http://127.0.0.1:4000/intro-crittografia</id><content type="html" xml:base="http://127.0.0.1:4000/intro-crittografia/">&lt;p&gt;Da sempre l’uomo cerca modi per nascondere i propri messaggi. Erodoto narra che nell’antica Persia i messaggi venivano scritti sulla testa degli schiavi, si attendeva che i capelli crescessero e venivano mandati come messaggeri. 
 Ad oggi, con l’introduzione dei computer siamo in grado chiaramente di usare metodi più veloci e sofisticati che spesso risultano come un’enorme magia agli occhi dei meno tecnici. Lo scopo di questa pagina è quindi quella di fornire l’idea di base delle nuove tecniche senza entrare nel dettaglio, un po’ come un mago che rivela i suoi trucchi, fornendo in caso riferimenti più specifici e tecnici per approfondire. Troverete in fondo alla pagina un piccolo glossario con i termini che noi informatici amiamo usare ma che spesso non sono chiari a chi non è dell’ambiente.&lt;/p&gt;
 
 &lt;p&gt;Iniziamo subito nel dire che esistono due tipi di &lt;a href=&quot;#glossario&quot;&gt;algoritmi&lt;/a&gt; crittografici, quelli simmetrici e quelli asimmetrici.
@@ -585,7 +1039,7 @@ Quel valore che cerchiamo è 14. Quindi, l’inverso di \( 14 \ mod\ 23 = 19 \).
  &lt;/li&gt;
 &lt;/ul&gt;
 
- &lt;/div&gt;</content><category term="crittografia" /><category term="RSA" /><summary type="html">Introduzione per non tecnici alla crittografia moderna - Scambiarsi una chiave</summary></entry><entry><title type="html">Come aggiungere a WooCommerce articoli con variazione via codice (programmatically)</title><link href="https://apagiaro.it/variable-product-programmatically/" rel="alternate" type="text/html" title="Come aggiungere a WooCommerce articoli con variazione via codice (programmatically)" /><published>2017-06-27T00:00:00+02:00</published><updated>2017-06-27T00:00:00+02:00</updated><id>https://apagiaro.it/variable-product-programmatically</id><content type="html" xml:base="https://apagiaro.it/variable-product-programmatically/">&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/woocommerce.png&quot; style=&quot;float:left; margin: 15px;&quot; /&gt;Woocommerce è il più famoso plugin di Wordpress per la realizzazione di siti eCommerce. I suoi punti di forza sono tantissimi tra i quali la personalizzazione estrame dei prodotti. Il problema che però spesso si incontra è come caricare in maniera efficiente le decine e decine di prodotti senza perderci le giornate intere?&lt;/p&gt;
+ &lt;/div&gt;</content><category term="crittografia" /><category term="RSA" /><summary type="html">Introduzione per non tecnici alla crittografia moderna - Scambiarsi una chiave</summary></entry><entry><title type="html">Come aggiungere a WooCommerce articoli con variazione via codice (programmatically)</title><link href="http://127.0.0.1:4000/variable-product-programmatically/" rel="alternate" type="text/html" title="Come aggiungere a WooCommerce articoli con variazione via codice (programmatically)" /><published>2017-06-27T00:00:00+02:00</published><updated>2017-06-27T00:00:00+02:00</updated><id>http://127.0.0.1:4000/variable-product-programmatically</id><content type="html" xml:base="http://127.0.0.1:4000/variable-product-programmatically/">&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/woocommerce.png&quot; style=&quot;float:left; margin: 15px;&quot; /&gt;Woocommerce è il più famoso plugin di Wordpress per la realizzazione di siti eCommerce. I suoi punti di forza sono tantissimi tra i quali la personalizzazione estrame dei prodotti. Il problema che però spesso si incontra è come caricare in maniera efficiente le decine e decine di prodotti senza perderci le giornate intere?&lt;/p&gt;
 
 &lt;p&gt;Quello che cercherò di fare io ora, è arrivare ad una soluzione per aggiungere prodotti con variazioni, via codice, andando quindi a velocizzare la fare di inserimento.
 &lt;br /&gt;&lt;/p&gt;
@@ -685,7 +1139,7 @@ wp_set_object_terms( $post_id, $product_categories, 'product_cat');
 &lt;p&gt;A questo punto, nella tabella &lt;code class=&quot;highlighter-rouge&quot;&gt;wp_posts&lt;/code&gt; abbiamo il nostro prodotto, a cui dobbiamo ancora aggiungere tutte le varie variazioni.&lt;/p&gt;
 
 &lt;h1 id=&quot;attributi&quot;&gt;Attributi&lt;/h1&gt;
-&lt;p class=&quot;notice&quot;&gt;&lt;strong&gt;Attenzione!&lt;/strong&gt; Prima di procedere devi creare gli attributi che andrai ad utilizzare (Dimensione, Colore, Taglia…).&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/attr.png&quot; alt=&quot;addAttributesMenu&quot; /&gt; Lo slug deve essere quello usato poi nel file JSON di riferimento, nel caso in fondo all’articolo quindi “Dimensione” e “Colore”.&lt;/p&gt;
+&lt;p class=&quot;notice&quot;&gt;&lt;strong&gt;Attenzione!&lt;/strong&gt; Prima di procedere devi creare gli attributi che andrai ad utilizzare (Dimensione, Colore, Taglia…).&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/attr.png&quot; alt=&quot;addAttributesMenu&quot; /&gt; Lo slug deve essere quello usato poi nel file JSON di riferimento, nel caso in fondo all’articolo quindi “Dimensione” e “Colore”.&lt;/p&gt;
 
 &lt;p&gt;Per inserire gli attributi dei vari prodotti è un po’ complessa la cosa. O li inseriamo a mano nei vari prodotti e poi andiamo quindi a creare le variazioni nel database con gli attributi già creati, o dobbiamo andare a modificare il record con &lt;code class=&quot;highlighter-rouge&quot;&gt;meta_key = _product_attributes&lt;/code&gt; dentro la tabelle &lt;code class=&quot;highlighter-rouge&quot;&gt;wp_postmeta&lt;/code&gt; che somiglia a questo (che dopo un po’ di ricerche ho scoperto essere una serializzazione PHP):&lt;/p&gt;
 
@@ -911,28 +1365,25 @@ wp_set_object_terms( $post_id, $product_categories, 'product_cat');
 &lt;p&gt;That’s all!
 Nice coding!&lt;/p&gt;
 
-&lt;p&gt;Complete plugin ready to run: &lt;a href=&quot;https://apagiaro.it/assets/plugin.zip&quot;&gt;download it&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Complete plugin ready to run: &lt;a href=&quot;http://127.0.0.1:4000/assets/plugin.zip&quot;&gt;download it&lt;/a&gt;&lt;/p&gt;
 
 &lt;h4 id=&quot;references&quot;&gt;References&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&quot;http://ryanknights.co.uk/insert-woocommerce-products-variations-programmatically/&quot;&gt;ryanknights.co.uk&lt;/a&gt;&lt;/p&gt;</content><category term="Wordpress" /><category term="WooCommerce" /><category term="Hack" /><category term="Reverse Engineering" /><summary type="html">Una guida su come velocizzare l'inserimento dei prodotti su WooCommerce, con l'aiuto del PHP e delle API Wordpress</summary></entry><entry><title type="html">Raccolta di giochi multiplayer online (senza installazione)</title><link href="https://apagiaro.it/giochi-multiplayer-online/" rel="alternate" type="text/html" title="Raccolta di giochi multiplayer online (senza installazione)" /><published>2017-06-24T00:00:00+02:00</published><updated>2017-06-24T00:00:00+02:00</updated><id>https://apagiaro.it/giochi-multiplayer-online</id><content type="html" xml:base="https://apagiaro.it/giochi-multiplayer-online/">&lt;h1 id=&quot;lichess&quot;&gt;&lt;a href=&quot;http://en.lichess.org/&quot;&gt;Lichess&lt;/a&gt;&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/lichess.png&quot; alt=&quot;LiChess.org&quot; /&gt;
+&lt;p&gt;&lt;a href=&quot;http://ryanknights.co.uk/insert-woocommerce-products-variations-programmatically/&quot;&gt;ryanknights.co.uk&lt;/a&gt;&lt;/p&gt;</content><category term="Wordpress" /><category term="WooCommerce" /><category term="Hack" /><category term="Reverse Engineering" /><summary type="html">Una guida su come velocizzare l'inserimento dei prodotti su WooCommerce, con l'aiuto del PHP e delle API Wordpress</summary></entry><entry><title type="html">Raccolta di giochi multiplayer online (senza installazione)</title><link href="http://127.0.0.1:4000/giochi-multiplayer-online/" rel="alternate" type="text/html" title="Raccolta di giochi multiplayer online (senza installazione)" /><published>2017-06-24T00:00:00+02:00</published><updated>2017-06-24T00:00:00+02:00</updated><id>http://127.0.0.1:4000/giochi-multiplayer-online</id><content type="html" xml:base="http://127.0.0.1:4000/giochi-multiplayer-online/">&lt;h1 id=&quot;lichess&quot;&gt;&lt;a href=&quot;http://en.lichess.org/&quot;&gt;Lichess&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/lichess.png&quot; alt=&quot;LiChess.org&quot; /&gt;
 Il più classico dei giochi: una partita a scacchi. Basta connettersi, creare una partita e mandare il link all’amico. Scacco matto!&lt;/p&gt;
 
 &lt;h1 id=&quot;battaglia-navale&quot;&gt;&lt;a href=&quot;http://it.battleship-game.org/&quot;&gt;Battaglia Navale&lt;/a&gt;&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/battleship.png&quot; alt=&quot;Battleship&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/battleship.png&quot; alt=&quot;Battleship&quot; /&gt;
 Anche qui un gioco piuttosto classico. Connettiti al sito, seleziona avversario “familiar”, mandagli il link generatato e inizia la battaglia!&lt;/p&gt;
 
 &lt;h1 id=&quot;forza-quattro&quot;&gt;&lt;a href=&quot;https://www.playc4.com&quot;&gt;Forza Quattro&lt;/a&gt;&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/four.png&quot; alt=&quot;Playc4.com&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/four.png&quot; alt=&quot;Playc4.com&quot; /&gt;
 Un sito un po’ più spartano dei precedenti ma con la stessa logica. Una volta aperto il sito, copiate il link dalla barra degli indirizzi, mandatelo ad un amico e iniziate la vostra sfida. Occhio alle diagonali!&lt;/p&gt;
 
 &lt;h1 id=&quot;curvytron&quot;&gt;&lt;a href=&quot;http://www.curvytron.com&quot;&gt;Curvytron&lt;/a&gt;&lt;/h1&gt;
-&lt;p&gt;&lt;img src=&quot;https://apagiaro.it/assets/img/post-image/curvytron.png&quot; alt=&quot;curvytron.com&quot; /&gt;
+&lt;p&gt;&lt;img src=&quot;http://127.0.0.1:4000/assets/img/post-image/curvytron.png&quot; alt=&quot;curvytron.com&quot; /&gt;
 Un gioco che richiama il film “Tron”. Crea una stanza, fai entrare i tuoi amici ed inizia a giocare. Non tagliare le linee degli avversari per non perdere e taglia la loro strada prima che siano loro a tagliare la tua!&lt;/p&gt;
 
 &lt;p class=&quot;notice&quot;&gt;Se avete un ping eccessivamente alto e vi trovate nella stessa stanza, potete anche avviare il vostro server Curvytron in NodeJS. Se avete capito cosa ho detto potete scaricare tutto &lt;a href=&quot;https://github.com/Curvytron/curvytron&quot;&gt;da qui&lt;/a&gt; altrimenti fate come se non vi avessi detto nulla! :)&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Avete altri giochi da segnalare? Lasciate il link nei commenti!&lt;/strong&gt;&lt;/p&gt;</content><category term="giochi" /><category term="javascript" /><category term="multiplayer" /><summary type="html">Per giocare con i tuoi amici una partita veloce, senza dover installare niente sul pc.</summary></entry><entry><title type="html">Coding Challange</title><link href="https://apagiaro.it/codeChallange/" rel="alternate" type="text/html" title="Coding Challange" /><published>2017-06-24T00:00:00+02:00</published><updated>2017-06-24T00:00:00+02:00</updated><id>https://apagiaro.it/codeChallange</id><content type="html" xml:base="https://apagiaro.it/codeChallange/">&lt;p&gt;Ho trovato su Youtube &lt;a href=&quot;https://www.youtube.com/channel/UCvjgXvBlbQiydffZU7m1_aw&quot;&gt;questo&lt;/a&gt; simpatico tipo che fa dei video sulla programmazione grafica ad eventi in Javascript davvero interessanti. Eccone un’esempio:&lt;/p&gt;
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/AaGK-fj-BAM&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;p&gt;Nel suo canale ne trovate a decine di video così. Buona visione!&lt;/p&gt;</content><category term="javascript" /><category term="snake" /><summary type="html">Per informatici annoiati...</summary></entry></feed>
+&lt;p&gt;&lt;strong&gt;Avete altri giochi da segnalare? Lasciate il link nei commenti!&lt;/strong&gt;&lt;/p&gt;</content><category term="giochi" /><category term="javascript" /><category term="multiplayer" /><summary type="html">Per giocare con i tuoi amici una partita veloce, senza dover installare niente sul pc.</summary></entry></feed>
