@@ -196,6 +196,13 @@ A _secret_ is a blob of data (such a password, SSH private key, SSl certificate.
 When you add a secret to the swarm, Docker sends the secret to the swarm manager over a mutual TLS connecton.
 The location of the mount point within the container defaults to `/run/secrets/<secret_name` (Linux containers) or `C:\ProgramData\Docker\secrets` (Windows containers). 
 
+# Scale the service
+In order to scale the service in the swarm, access to manager and then execute:
+```
+docker service scale <SERVICE-ID>=<NUMBER-OF-TASKS>
+```
+Docker Swarm doesn't implement any tool to scale up or down in accordance to load factor. To achieve this feature you can use [Orbiter](https://github.com/gianarb/orbiter).
+
 <h1 style="color:red" id="play">Let's play!!!</h1>
 Let's try Docker Swarm. We are going to create a single, usual container on Docker Engine, with Apache Webserver (`httpd` Docker image), and try to saturate it with `Apache Benchmark` tool. After that, we are going to create a Docker Swarm Service and try to see if the network is able to resist to `Apache Benchmark` with same amount of request.
 
