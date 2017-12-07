@@ -39,7 +39,7 @@ Questo perchè 10 diviso 3 fa 3 con il resto di 1. Se è chiaro il concetto, sap
 Il risultato è 3. È interessante notare che il risultato dell'operatore modulo tra due numeri <i>x</i> e <i>y</i> è al più <i>y-1</i>, altrimenti potevo dividere ancora per <i>y</i> e il resto inferiore. Ma forse vi sto solo confondendo con questa ultima frase... Quindi, torniamo a noi. 
 
 Un'altro operatore che andiamo ad usare è l'elevamento a potenza, molto più familiare a tutti noi che ci dice quante volte un numero deve essere moltiplicato per se stesso:
-\\[ 4^4 = 16\\]
+\\[ 4^2 = 16\\]
 
 ## Scambio di chiavi Diffie-Hellman (1976) [Wikipedia](https://it.wikipedia.org/wiki/Scambio_di_chiavi_Diffie-Hellman)
 
