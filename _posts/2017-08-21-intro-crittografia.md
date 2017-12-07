@@ -22,7 +22,7 @@ In questo caso, la chiave sarà la quantità di lettere traslate, nell'immagine 
 
 # Il problema dello scambio della chiave
 Ecco, qui si introduce il principale problema della crittografia moderna, come scambiarsi una chiave? Di certo non posso cifrarla perchè cifrando una chiave avrei bisogno della chiave per cifrare la chiave, che a sua volta richiederebbe... Avete capito no? 
-Il modo più semplice è quello di vedersi di persona e scambiarsi la chiave, anche perchè qualsiasi altro modo potrebbe essere intercettato (una chiamate al telefono, una mail, un messaggio...). 
+Il modo più semplice è quello di vedersi di persona e scambiarsi la chiave, anche perchè qualsiasi altro modo potrebbe essere intercettato (una chiamata al telefono, una mail, un messaggio...). 
 
 A questo problema qualcuno è riuscito a trovare una soluzione. La maggior parte degli algoritmi utilizza metodi matematici quindi da ora in poi la nostra chiave sarà un numero, potete facilmente immaginare come creare un numero da una parola, ad esempio dicendo che A=1, B=2, C=3... e facendo quindi diventare la parola ABCABC = 123123.
 
