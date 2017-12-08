@@ -65,7 +65,7 @@ L'idea, per tornare ai nostri scopi, è di per sè molto semplice: mandare due v
 
 Un eventuale ricevente non deve far nient'altro che prendere la *chiave pubblica* di Bob, e applicarla al secondo componente spedito. Se il procedimento è andato a buon fine il risultato sarà \\( <m, h(m)> \\). Basterà quindi calcolare l'hash di *m* e confrontarlo con il risultato della decifratura. 
 
-![facebook certificato]({{ site.url }}/assets/img/post-image/facebook.png)
+![facebook certificato]({{ site.url }}/assets/img/post-image/facebook-certificate.png)
 
 # Il problema della verifica della chiave pubblica
 Si introduce, in tutto questo ragionamento, un problema che, quando abbiamo introdotto i cifrari asimmetrici, avevamo ignorato. 
