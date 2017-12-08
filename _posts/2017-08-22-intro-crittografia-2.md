@@ -79,4 +79,5 @@ Non voglio ora annoiarvi con la dimostrazione del perchè questa cosa funziona, 
 
 Nel prossimo post vediamo come sfrutturare questa cosa per firmare dei documenti e avere la certezza che il firmatario sia effettivamente chi dice di essere (cioè validare la firma).
 
+[Terza parte >>>]({{ site.url }}/intro-crittografia-3)
 

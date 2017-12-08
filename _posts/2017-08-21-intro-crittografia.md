@@ -77,7 +77,7 @@ A questo punto, abbiamo Alice e Bob che si trovano quindi con una stessa chiave 
 # La crittografia asimmetrica
 Ci sono degli algoritmi e dei protocolli che non richiedono di avere una chiave scambiata in precedenza per garantire ad un mittente di spedire un messaggio cifrato ed ad un ricevente di decifrarlo correttamente. Lo so, è strana come cosa, a me sembrava magia oscura quando me l'hanno raccontata la prima volta, in realtà non è così complicata la cosa anche se, quando è stato trovato il famoso algoritmo asimmetrico RSA nel 1977 da Ronald Rivest, Adi Shamir e Leonard Adleman, la cosa non era poi così tanto scontata.
 
-Nel prossimo post ve ne parlerò in maniera più dettagliata.
+[Seconda parte >>>]({{ site.url }}/intro-crittografia-2)
 
 <div id="glossario">
 
