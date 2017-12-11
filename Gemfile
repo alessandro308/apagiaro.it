@@ -7,3 +7,4 @@ gem 'jekyll-mentions'
 gem 'jekyll-admin', group: :jekyll_plugins
 gem 'jekyll-admin', group: :jekyll_plugins
 gem 'jekyll-feed'
+gem 'jekyll-redirect-from'
