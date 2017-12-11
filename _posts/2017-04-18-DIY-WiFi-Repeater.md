@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "How build a DIY Wifi Repeater with ESP-01 Module"
+title:  "How to build a DIY Wifi Repeater with ESP-01 Module"
 date:   2017-04-20
 excerpt: "And using just a few euros..."
 redirect_from:
