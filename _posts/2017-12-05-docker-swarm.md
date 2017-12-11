@@ -25,13 +25,12 @@ Docker Swarm is a Docker-native clustering system. It turns a pool of Docker hos
  - Rolling updates
 
 # Key Concepts
-A swarm consists of multiple Docker hosts which run is swarm mode and act as managers and workers. A given Docker hosts can be a manager, a worker or performs both roles.
+A swarm consists of multiple Docker hosts which run in swarm mode and act as managers and workers. A given Docker hosts can be a manager, a worker or performs both roles.
 
 When you create a service, you define its optimal state (number of replicas, network and storage resources available to it, ports the service exposes to the outside world, and more).
 **Docker works to maintain that desired state.**
 If a worker becames unavaiable, Docker schedules that's _tasks_ on other nodes. (A task is a running container which is part of swarm service and managed by a swarm manager).
 
-Pro
 You can modify a service's configuration without the need to manually restart the service. Docker will update the swarm to fit new configuration.
 
 ### Node

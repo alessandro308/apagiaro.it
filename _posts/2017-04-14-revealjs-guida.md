@@ -95,7 +95,7 @@ che produce il seguente risultato
 
 
 ## Temi
-Questo framework contiene anche numerosi temi che possono essere applicati semplicemente cambiato il css importanto nell'header della pagina. A [questa pagina]({{ site.url }}/mesh/theme_example.html) potete trovare un'anteprima dei temi disponibili nella repository del framework su GitHub.
+Questo framework contiene anche numerosi temi che possono essere applicati semplicemente cambiato il css importanto nell'header della pagina. A [questa pagina]({{ site.url }}/revealjs/theme_example.html) potete trovare un'anteprima dei temi disponibili nella repository del framework su GitHub.
 
 
 
