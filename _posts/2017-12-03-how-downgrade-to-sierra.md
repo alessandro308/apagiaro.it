@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "How download MacOS Sierra and downgrade to it"
+title:  "How to download MacOS Sierra and downgrade to it"
 date:   2017-12-2
 excerpt: "Make your computer great again..."
 tag:
