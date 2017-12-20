@@ -96,6 +96,9 @@ Each attribute has an handle associated with it, used to identify the attribute 
 
 Attributes in a GATT server are grouped into services, each of which can contains zero or more characteristics. Characteristic is a data container, with declaration and value.
 
+## Real World
+Below there is a screenshot that shows what is possible to read from a Mi Band with BLE scanning. I hope that after this short post you are able to understand the response. 
+
 ![Mi Band GATT](https://apagiaro.it/BLE-slides/img/bleah2.png)
 
 ## Presentation Slides
