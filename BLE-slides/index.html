@@ -96,7 +96,7 @@
 						</ul>
 
 						<br/><br/>
-						<p class="fragment">It provides a reliable data link, using a 24-bit CRC and retransmit packet if error is detected.</p>
+						<p class="fragment">It provides a reliable data link using a 24-bit CRC and retrasmits packets if errors are detected.</p>
 
 					</section>
 					<section>
@@ -123,7 +123,7 @@
 					</section>
 					<section>
 						<h4>Advertising &amp; Scanning</h4>
-						<p>BLE has only one packet format and two type of packets: advertising and data packets.</p>
+						<p>BLE has only one packet format and two types of packets: advertising and data packets.</p>
 						<aside class="notes">
 						Advertising are use to:
 						<ul>
@@ -133,7 +133,7 @@
 						<p class="fragment">Each <u>advertising packet</u> can carry up 31 bytes of payload. They are sent at fixed rate, defined by advertising <i>interval</i>.</p>
 					</section>
 					<section>
-						<img src="img/24.png"/>
+						<img src="https://microchip.wdfiles.com/local--files/wireless:ble-link-layer-discovery/advertising-and-scanning.png"/>
 					</section>
 					<section>
 						<p>Scanning can be passive or active. The difference is on the replay that scanner emit after receiving a advertising packet.<p>
@@ -150,7 +150,7 @@
 					</section>
 					<section>
 						<h4>Connections</h4>
-						<img src="img/conn.png"/><br/>
+						<img src="http://apprize.info/hardware/bluetooth/bluetooth.files/image010.jpg"/><br/>
 						Each connection has 3 proprieties:
 						<ul>
 							<li>Connection interval (from 7.5ms up to 4s)</li>
@@ -272,7 +272,7 @@ Each server contains data organized as "attributes", each of which is assigned a
 						Data are encapsulated in services, with one or more characteristics.
 					</section>
 					<section>
-						Each service and characteristic is identify by a UUID. A UUID (Universally Unique ID) is a unique 128-bit number used to identify the services. Some UUID are defined in the Bluetooth Specs and are smaller (16 ore 32 bits). 
+						Each service and characteristic is identify by a UUID. A UUID (Universally Unique ID) is a unique 128-bit number used to identify the services. Some UUID are defined in the Bluetooth Specs and are smaller (16 or 32 bits). 
 					</section>
 					<section>
 						<p>The smallest data entity are the <b>attributes</b>. Attribute is an abstract concept for storing data. <br/>
