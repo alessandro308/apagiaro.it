@@ -9,7 +9,7 @@ tag:
 feature: https://communities.bmc.com/servlet/JiveServlet/showImage/102-46538-4-232915/Docker+Swarm+v2.png
 comments: true
 ---
-_Those are a personal notes about Docker Swarm, derivated by Documentation. After theory part there is an <a href="#play">concrete example</a>. Enjoy!_
+_Those are a personal notes about Docker Swarm, derivated by Documentation. After theory part, there is a <a href="#play">concrete example</a>. Enjoy!_
 
 ![Docker Swarm Logo](https://communities.bmc.com/servlet/JiveServlet/showImage/102-46538-4-232915/Docker+Swarm+v2.png)
 
@@ -25,16 +25,16 @@ Docker Swarm is a Docker-native clustering system. It turns a pool of Docker hos
  - Rolling updates
 
 # Key Concepts
-A swarm consists of multiple Docker hosts which run in swarm mode and act as managers and workers. A given Docker hosts can be a manager, a worker or performs both roles.
+A swarm consists of multiple Docker hosts which run in swarm mode and act as managers and workers. A given Docker hosts can be a manager, a worker or perform both roles.
 
 When you create a service, you define its optimal state (number of replicas, network and storage resources available to it, ports the service exposes to the outside world, and more).
 **Docker works to maintain that desired state.**
-If a worker becames unavaiable, Docker schedules that's _tasks_ on other nodes. (A task is a running container which is part of swarm service and managed by a swarm manager).
+If a worker becomes unavailable, Docker schedules that's _tasks_ on other nodes. (A task is a running container which is part of swarm service and managed by a swarm manager).
 
 You can modify a service's configuration without the need to manually restart the service. Docker will update the swarm to fit new configuration.
 
 ### Node
-A node is an instace of Docker engine. You can run one or more nodes on a single physical computer (`docker-machine`), but tipically each node runs on a different machines.
+A node is an instance of Docker engine. You can run one or more nodes on a single physical computer (`docker-machine`), but typically each node runs on different machines.
 
 ### Load balancing
 The swarm manager uses ingress load balancing to expose the services you want to make available externally to the swarm.
@@ -43,15 +43,15 @@ Swarm mode has an internal DNS component that automatically assigns each service
 # How Works
 ## Nodes
 ### Manager nodes
-Manager nodes handle cluster managament tasks:
-- Mantaining cluster state
+Manager nodes handle cluster management tasks:
+- Maintaining cluster state
 - scheduling services
 - serving swarm mode HTTP API endpoints
 
-The internal state is mantained using a [Raft algorithm](https://raft.github.io/raft.pdf). If a manager fails (and there are no more managers), the service will continue to run, but you will need to create a new cluster to recover.
+The internal state is maintained using a [Raft algorithm](https://raft.github.io/raft.pdf). If a manager fails (and there are no more managers), the service will continue to run, but you will need to create a new cluster to recover.
 
 ### Worker nodes
-Worker nodes are instances of Docker Engine whose unique purpore is to execute containers.
+Worker nodes are instances of Docker Engine whose unique purpose is to execute containers.
 By default, all managers are also workers. To prevent this, set `--availability` to `Drain`. The scheduler gracefully stops tasks on nodes in Drain mode and schedules the tasks on an Active node.
 
 ## Services
@@ -70,7 +70,7 @@ When you define a service, you specify, optionally, in addition to image,
 
 ## Security
 The swarm mode public key infrastructure (PKI) system build into Docker makes it simple to securely deploy a container orchestration system. The nodes use TLS to authenticate, authorize and encrypt the communication with other nodes. 
-When you create a new swarm manager, it create a new root Certificate Authority which are used to secure communication with other nodes.
+When you create a new swarm manager, it creates a new root Certificate Authority which is used to secure communication with other nodes.
 
 # Deploy a service
 `docker service create --name web nginx`
@@ -79,7 +79,7 @@ Now you can change all the configurations using `docker service update` command.
 `docker service update --publish-add 80 web`
 To remove a service, simply do, `docker service remove web`.
 
-There are a lots of configuration that can be set to run a service. 
+There are lots of configuration that can be set to run a service. 
 ```
 Alessandros-MBP:~ alessandro$ docker service create --help
 
@@ -161,10 +161,10 @@ If an update succeeds, a new tasks is updated, else, if the update fails, an act
 You can create two types of mounts for services in a swarm
  - `volume` mounts, or
  - `bind` mounts.
-You can configure it using the `--mount` flag on creating phase, or `--mount-add|--mount-rm` on updateing phase.
+You can configure it using the `--mount` flag on creating phase, or `--mount-add|--mount-rm` on updating phase.
 
 #### Data Volumes
-Data Volumes are storage that remain alive after a container for a task has been removed. The preferred method is to leverage an existing volume:
+Data Volume is a storage that remains alive after a container for a task has been removed. The preferred method is to leverage an existing volume:
 ```
 $ docker service create \
   --mount src=<VOLUME-NAME>,dst=<CONTAINER-PATH> \
@@ -186,24 +186,24 @@ docker service create \
 ```
 Some problems can occur with bind mounts:
  - if you bind mount a host path into a service's container, the path must exist on every swarm node.
- - The Docker swarm mode scheduler may reschedule a running service containers at any time if they became unhealthly or unreachable
- - Host bind mounts are completely non-portable. When you use bind mounts, there is no guarantee that your application will run the same way in developement as it does in production.
+ - The Docker swarm mode scheduler may reschedule a running service containers at any time if they became unhealthy or unreachable
+ - Host bind mounts are completely non-portable. When you use bind mounts, there is no guarantee that your application will run the same way in development as it does in production.
 
 # Manage sensitive data with Docker secrets
-A _secret_ is a blob of data (such a password, SSH private key, SSl certificate...) that should not be trasmetted over a network or store unencrypted in a Dockerfile or in your application's source code.
+A _secret_ is a blob of data (such a password, SSH private key, SSl certificate...) that should not be transmitted over a network or store unencrypted in a Dockerfile or in your application's source code.
 
-When you add a secret to the swarm, Docker sends the secret to the swarm manager over a mutual TLS connecton.
+When you add a secret to the swarm, Docker sends the secret to the swarm manager over a mutual TLS connection.
 The location of the mount point within the container defaults to `/run/secrets/<secret_name` (Linux containers) or `C:\ProgramData\Docker\secrets` (Windows containers). 
 
 # Scale the service
-In order to scale the service in the swarm, access to manager and then execute:
+In order to scale the service in the swarm, access to a manager and then execute:
 ```
 docker service scale <SERVICE-ID>=<NUMBER-OF-TASKS>
 ```
 Docker Swarm doesn't implement any tool to scale up or down in accordance to load factor. To achieve this feature you can use [Orbiter](https://github.com/gianarb/orbiter).
 
 <h1 style="color:red" id="play">Let's play!!!</h1>
-Let's try Docker Swarm. We are going to create a single, usual container on Docker Engine, with Apache Webserver (`httpd` Docker image), and try to saturate it with `Apache Benchmark` tool. After that, we are going to create a Docker Swarm Service and try to see if the network is able to resist to `Apache Benchmark` with same amount of request.
+Let's try Docker Swarm. We are going to create a single, usual container on Docker Engine, with Apache Webserver (`httpd` Docker image), and try to saturate it with `Apache Benchmark` tool. After that, we are going to create a Docker Swarm Service and try to see if the network is able to resist to `Apache Benchmark` with the same amount of request.
 
 ### Docker standard container
 We deploy a service, starting a container with the following command:
@@ -212,17 +212,17 @@ docker run --rm -it --name web -p 8080:80 -v web:/usr/local/apache2/htdocs/ http
 ```
 (Some problems may occur on MacOS while trying to mount a volume in this way. Try to insert absolute path to `web` directory instead of relative path).
 
-Now check that all works going on `http://localhost:8080` with your favourite browser.
+Now check that all works going on `http://localhost:8080` with your favorite browser.
 You should see something like this
 [It works!]({{ site.url }}/assets/img/post-image/works.png)
 
-Now try to make the webserver unavaiable using `ab` (Apache Benchmark).
+Now try to make the webserver unavailable using `ab` (Apache Benchmark).
 You can run `ab` with... Docker container! Let's write:
 ```
 time docker run --net=host --rm jordi/ab ab -c 10000 -n 30000 -r http://localhost:8080/
 ```
 to measure time needed to complete 30000 connections to webserver, with 10000 connections performed simultaneously
-and without closing the socket in the case of erro (`-r` flag).
+and without closing the socket in the case of error (`-r` flag).
 
 My output is
 ```
@@ -442,7 +442,7 @@ user  0m 0.01s
 sys 0m 0.00s
 ```
 
-This result introduce a new tool implemented in Docker Swarm, the load balancing. As you can see, we have hit a manager(but should perform a connection using an IP address of another node) and the Swarm redirect the request to a running node. 
+This result introduces a new tool implemented in Docker Swarm, the load balancing. As you can see, we have hit a manager(but should perform a connection using an IP address of another node) and the Swarm redirect the request to a running node. 
 
 ### Some other stuff
 By default, the manager is also a worker. To avoid this, write:
@@ -458,4 +458,4 @@ To scale the number of tasks that run for a service, you can execute:
 docker service scale web=8
 ```
 
-Try to delete a `worker1` (write `docker-machine rm worker1`) where, probably, is running a task and see, executing on `manager1` `docker service ps web` what happens (answer: the manager reschedule the task on other node automatically).
+Try to delete a `worker1` (write `docker-machine rm worker1`) where, probably, is running a task and see, executing on `manager1` `docker service ps web` what happens (answer: the manager reschedule the task on another node automatically).
