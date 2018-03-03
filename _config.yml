@@ -9,8 +9,8 @@ background:         #'assets/img/placeholder-big.jpg' #Leave empty to use backgr
 #background-color:   edit variables.scss to set background color
 tiled_bg:           false   # Set this true if you want to tile your background image, otherwise it will be covered
 locale:             it_IT
-#url:                https://apagiaro.it
-url:                http://127.0.0.1:4000
+url:                https://apagiaro.it
+#url:                http://127.0.0.1:4000
 
 # Jekyll
 permalink:          /:title/
