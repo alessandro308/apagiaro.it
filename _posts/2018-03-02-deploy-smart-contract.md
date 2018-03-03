@@ -59,7 +59,7 @@ Now we need some Ether to try our contract. Fortunately, the Ether on TestNet ha
 
 In that faucet you have to authenticate yourself to receive some money: __publish your ethereum address on a public post on Twitter, Google+ or Facebook, then copy the post permalink on the faucet input__. After that operation, you will receive your free Ether on your account.
 
-Now we need to connect MetaMask provider to Remix. The simplest way is to open both on Chrome, the select the Environment Remix as `Injected Web3` (see the previous image, step number 1). In the account selectable field should appear your MetaMask address with your 3 Ether.
+Now we need to connect MetaMask provider to Remix. The simplest way is to open both on Chrome, then select the Environment Remix as `Injected Web3` (see the previous image, step number 1). In the account selectable field should appear your MetaMask address with your 3 Ether.
 
 Now you can deploy the contract clicking on create button. Of course, you don't need to set any scenario since the scenario in the test net status. It will open a MetaMask window that asks to approve the transaction and here you can set the input values as Gas cost. 
 
