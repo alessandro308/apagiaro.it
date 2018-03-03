@@ -8,6 +8,7 @@ tag:
 - smart contract
 - ethereum
 - blockchain
+feature: https://ethereum.org/images/wallpaper-homestead.jpg
 comments: true
 ---
 In order to deploy a smart contract, we will use [Remix IDE](https://remix.ethereum.org). Why I've chosen this tool? Because it is online so we don't need to install any tool. 
