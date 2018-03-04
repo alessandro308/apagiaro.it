@@ -8,3 +8,5 @@ gem 'jekyll-admin', group: :jekyll_plugins
 gem 'jekyll-admin', group: :jekyll_plugins
 gem 'jekyll-feed'
 gem 'jekyll-redirect-from'
+gem 'jekyll-seo-tag'
+gem 'jekyll-seo'

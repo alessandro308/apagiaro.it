@@ -3,6 +3,8 @@ layout: post
 title:  "How to deploy a smart contract on Ethereum Test Net easily"
 date:   2018-03-02
 excerpt: "An easy guide, step-by-step, to deploy a smart contract"
+lang: en_EN
+locale: en_EN
 tag:
 - english
 - smart contract
