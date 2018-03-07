@@ -15,6 +15,7 @@ showFeature: true
 CryptoMarket is a smart contract. What does it mean? Is a marketplace that runs without any server, that cannot be censured and its security is based on cryptographic functions.
 
 # Overview
+![FrontEnd Preview]({{site.url}}/assets/img/post-image/cryptoPreview.png)
 The project is composed of two parts:
  - The smart contract, written in Solidity 
  - The front-end, written in HTML5 that shows the smart contract status
