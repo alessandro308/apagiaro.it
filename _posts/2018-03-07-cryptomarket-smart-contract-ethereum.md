@@ -9,7 +9,7 @@ tag:
 - blockchain
 - english
 comments: true
-feature: /assets/img/post-image/cryptomarket.png
+feature: https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png
 showFeature: true
 ---
 CryptoMarket is a smart contract. What does it mean? Is a marketplace that runs without any server, that cannot be censured and its security is based on cryptographic functions.
@@ -26,7 +26,7 @@ Of course, as every smart contract, its data are stored over the blockchain and 
 
 ![CryptoMarket]({{site.url}}//assets/img/post-image/cryptomarket.png)
 # How to try it
-In order to try it, you need to have something that injects Web3 into the site. The simplest way to satisfy that dependency is to use Google Chrome with [MetaMask Extension](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn). 
+In order to try it, you need to have something that injects Web3 into the site. The simplest way to satisfy that dependency is to use Google Chrome with [MetaMask Extension](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn)
 
 The project is deployed over the Rinkeby Test Net. So, if you use MetaMask, open in then select Rinkeby
 ![Rinkeby Test Net]({{site.url}}/assets/img/post-image/metamask.png). If you have no Ether on Rinkeby Test Net, you can receive some free Ether [here](https://www.rinkeby.io/#faucet) in order to try the contract.
