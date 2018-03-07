@@ -23,6 +23,7 @@ My bechelor thesis is about Bitcoin. [Here]({{ site.url }}/assets/main.pdf) (in 
 [Full screen size](http://slides.com/alessandropagiaro/la-blockchain-2/live#/)
 
 If you would like to send me Bitcoin this is my waller: `1CZJk6yZcKMnS9sDKYpXnXKFRKRWH9mXjg`
+
 I have Ethereum too: `0x07167794AbB2142a37AC961d3528Bab3b4fD6e92`
 
 This site is built with Jekyll, using the [Moon theme edited by me](https://github.com/alessandro308/Moon).
