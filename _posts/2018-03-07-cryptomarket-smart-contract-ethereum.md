@@ -25,7 +25,7 @@ The main contract `Marketplace`, inherit the storage function by another contrac
 ### Authentication
 Of course, as every smart contract, its data are stored over the blockchain and are public. So, everyone can store data into this contract and can get the products. Each product created in this marketplace is associated with an Ethereum address. Only that address can delete that product.
 
-![CryptoMarket]({{site.url}}//assets/img/post-image/cryptomarket.png)
+![CryptoMarket]({{site.url}}/assets/img/post-image/cryptomarket.png)
 # How to try it
 In order to try it, you need to have something that injects Web3 into the site. The simplest way to satisfy that dependency is to use Google Chrome with [MetaMask Extension](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn)
 
