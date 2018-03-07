@@ -29,7 +29,7 @@ Of course, as every smart contract, its data are stored over the blockchain and 
 <h1><a href="https://apagiaro.it/cryptomarket" target="_blank">How to try it</a></h1>
 In order to try it, you need to have something that injects Web3 into the site. The simplest way to satisfy that dependency is to use Google Chrome with [MetaMask Extension](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn)
 
-The project is deployed over the Rinkeby Test Net. So, if you use MetaMask, open in then select Rinkeby
+The project is deployed over the Rinkeby Test Net. So, if you use MetaMask, open it and then select Rinkeby
 ![Rinkeby Test Net]({{site.url}}/assets/img/post-image/metamask.png)
 If you have no Ether on Rinkeby Test Net, you can receive some free Ether [here](https://www.rinkeby.io/#faucet) in order to try the contract.
 
