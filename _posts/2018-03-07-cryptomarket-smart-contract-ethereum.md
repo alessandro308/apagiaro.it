@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "CryptoMarket"
+title:  "CryptoMarket, a decentralized marketplace over Ethereum"
 date:   2018-03-07
 excerpt: "A smart-contract experiment: a decentralized marketplace that runs over the Ethereum Blockchain"
 project: true
