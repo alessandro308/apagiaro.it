@@ -11,11 +11,11 @@
     <title>CryptoMarket - Decentralized Marketplace on Etherem Blockchain</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/shop-homepage.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="assets/css/shop-homepage.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
 
   </head>
 
@@ -53,9 +53,9 @@
 
       <div class="row">
 
-        <div class="col-lg-3">
+        <div class="col-lg-3" id="sidebar">
 
-          <h1 class="my-4">CryptoMarket</h1>
+          <h2 class="my-4">CryptoMarket</h2>
           
           <div class="card" style="">
             <div class="card-body">
@@ -68,11 +68,13 @@
             </div>
           </div>
           <br/>
-          <div class="card" style="">
-            <div class="card-body" id="orders">
-              <h5 class="card-title">Your orders</h5>
-              //TODO
+          <div class="card" style="margin-bottom: 20px ">
+            <div class="card-header">
+              Your orders
             </div>
+            <ul class="list-group list-group-flush" id="orders"
+              style="overflow-y: scroll; max-height:400px;">
+            </ul>
           </div>
 
         </div>
@@ -138,11 +140,12 @@
     <!-- End Product Detail Modal -->
 
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="js/web3.js"></script>
-    <script src="js/contract.js"></script>
-    <script src="js/ethereum.js"></script>
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/web3.js"></script>
+    <script src="assets/js/contract.js"></script>
+    <script src="assets/js/ethereum.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
   </body>
 
 </html>

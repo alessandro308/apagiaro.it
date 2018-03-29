@@ -28,7 +28,7 @@ function createAnimation(id) {
 	                  <h4 class="card-title">
 	                    Removing product...
 	                  </h4>
-	                  <img src="http://www.amarassociatestvm.com/assets/img/preloader2.gif"/>
+	                  <img src="assets/images/loader.gif"/>
 	                </div>
 	                <div class="card-footer">
 	                <p>Your product will be deleted from the blockchain...</p>
