@@ -1,8 +1,5 @@
-<<<<<<< HEAD:cryptomarket/assets/js/contract.js
-var address = "0xd57d3519ff066a820b518f170d1038c29962441e";
-=======
 var address = "0x9ac1ac2eeaffa12cf15b80a3200266eebb27ec7f";
->>>>>>> parent of a6dda67... Edit Cryptomarket frontend:cryptomarket/js/contract.js
+
 var abi = [
   {
     "constant": false,
