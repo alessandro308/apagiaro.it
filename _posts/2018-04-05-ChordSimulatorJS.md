@@ -13,7 +13,9 @@ showFeature: true
 ---
 <img src="{{ site.url }}/assets/img/post-image/chord.png" style="width: 200px; height: auto; float:left"/>
 This project is developed as mid-term for P2P Course, one of my Master Degree's course. The assignment is to develop a chord simulation and analyse the topology and the network performance.
-First of all, why Javascript? Because in the last period I've found various features and libraries that I wanted to try. 
+First of all, in order to replay to my collegue, why I've choosen Javascript? Because in the last period I've found various features and libraries that I wanted to try, moreover there was not language constraint on this assignement... so, JAVASCRIPT! 
+
+The project is online [here](https://apagiaro.it/chord/).
 
 ## The project
 
@@ -29,12 +31,13 @@ In order to execute the code faster, the following values are defined:
  - Number of bit used to describe a key: 16 (insted of 160 of a SHA1)
     - The simulation uses the SHA1 function but store only the 16 less significant bits
  - Number of node: 20 
-    - This value is settable passing the parameter `nn` in HTTP GET mode (e.g. `https://.../chord/?nn=10`)
+    - This value is settable passing the parameter `nn` in HTTP GET mode (e.g. [`https://apagiaro.it/chord/?nn=10`](https://apagiaro.it/chord/?nn=10))
 
 #### Performance
 During this project I focus the attention on the simplicity. It is not focused on the performance (i.e. some search that can be done by a binary search are done using a linear algorithms). However you can try to increase the number of nodes and it generates the graph in a few seconds (try with `nn=2000`).
 
 ## Graphs analysis
+![Chord Analysis Graphs]({{site.url}}/assets/img/post-image/chordgraphs.png)
 
 Under the network topology graph are shown four column graphs. They shows the statitical data collected during the lookups in the network simulation.
 
@@ -55,8 +58,11 @@ The `index.html` is the object that you have to execute to view all the stuff de
 # Libraries and Frameworks used
 
 The components that I used:
- - BigNumber: I discover this library analyzing how Web3.JS (the standard library for the Smart Contract) manages the number that exceed the maxInt in Javascript.
- - p5.js: already known since I discovered Coding Train Youtube Channel, I was searching for a project to use it
- - driven.js: a library to highlight some parts of the page and drive the user insede the website to explain something 
- - p5.gui.js: a library that, combined with p5.js, permits to generate automatically some controls over a set of variables
+ - [BigNumber](https://github.com/MikeMcl/bignumber.js/): I discover this library analyzing how Web3.JS (the standard library for the Smart Contract) manages the number that exceed the maxInt in Javascript.
+ - [p5.js](https://p5js.org): already known since I discovered Coding Train Youtube Channel, I was searching for a project to use it
+ - [driver.js](https://github.com/kamranahmedse/driver.js): a library to highlight some parts of the page and drive the user insede the website to explain something 
+ - [p5.gui.js](https://github.com/bitcraftlab/p5.gui): a library that, combined with p5.js, permits to generate automatically some controls over a set of variables
+ - [Highcharts](https://www.highcharts.com): used to render the fantastic columns graphs
+
+ Don't forget to try it [here](https://apagiaro.it/chord/)
 
