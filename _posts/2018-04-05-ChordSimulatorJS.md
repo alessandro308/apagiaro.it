@@ -11,7 +11,7 @@ comments: true
 feature: https://apagiaro.it/assets/img/post-image/chord.png
 showFeature: true
 ---
-<img src="{{site.url/assets/img/post-image/chord.png" style="float:left"/>
+<img src="{{ site.url }}/assets/img/post-image/chord.png" style="float:left"/>
 This project is developed as mid-term for P2P Course, one of my Master Degree's course. The assignment is to develop a chord simulation and analyse the topology and the network performance.
 First of all, why Javascript? Because in the last period I've found various features and libraries that I wanted to try. 
 
