@@ -19,7 +19,7 @@ The project is online [here](https://apagiaro.it/chord/).
 
 ## The project
 
-This project borns with the aim to analyze the Chord overlay network topology and routing. We can generate, each time, a Chord graph and performs, from each node, a key lookup. The data generated are store in a variable that, after some processing, generates the graphs.
+This project borns with the aim to analyze the Chord overlay network topology and routing. We can generate, each time, a Chord graph and performs, from each node, a key lookup. The data generated are stored in a variable that, after some processing, is used to generate the graphs.
 
 The collected statistical data are:
  - Number of noded that a query have to traverse to return the owner of a key
