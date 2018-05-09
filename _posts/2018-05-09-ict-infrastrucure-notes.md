@@ -3,7 +3,6 @@ layout: post
 title:  "How the datacenter are built. How the cloud runs. Where the world is going."
 date:   2018-05-09
 excerpt: "Notes of the ICT Infrastructure Course at University of Pisa"
-project: false
 tag:
 - university
 - notes
