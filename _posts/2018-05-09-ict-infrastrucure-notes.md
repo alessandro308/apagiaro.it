@@ -8,6 +8,7 @@ tag:
 - university
 - notes
 comments: true
+feature: https://media.licdn.com/mpr/mpr/AAEAAQAAAAAAAAhHAAAAJGI4NmQ3ZDkzLTA2MzUtNGY2MC1hZWMzLTZhMDZkNGEwZTU3Nw.png
 showFeature: false
 ---
 
