@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "How the datacenter are built. How the cloud runs. Where the world is going."
+title:  "How the datacenters are built. How the cloud runs. Where the world is going."
 date:   2018-05-09
 excerpt: "Notes of the ICT Infrastructure Course at University of Pisa"
 tag:
@@ -11,7 +11,7 @@ feature: https://media.licdn.com/mpr/mpr/AAEAAQAAAAAAAAhHAAAAJGI4NmQ3ZDkzLTA2MzU
 showFeature: false
 ---
 
-_Since there is no material on ICT Infastructure course, I'm trying to recap all lessons done in this page. The notes are written trying to remember the contents of the course (in accordance with the OneNote Notebook published on course page) and then expanding that contents with structured resources found online. If you find any error please, fork and push!_
+_Since there is no material on ICT Infastructure course, I'm trying to recap all lessons done in this page. The notes are written trying to remember the contents of the course (in accordance with the OneNote Notebook published on course page) and then expanding that contents with structured resources found online. If you find any error please, [fork](https://github.com/alessandro308/ICT-infrastructure) and push!_
 
 # Introduction
 The world is changing and a lot of axiom are becaming false. Some example? In the bechelor course (and not, sigh), the teachers say: "The main bottleneck is the disk", and so all the performance are evalueted with reference to disk usage, number of IOs operations and so on... This, nowadays, is false.  Just thing of [Intel Optane SSD](https://www.anandtech.com/show/11702/intel-introduces-new-ruler-ssd-for-servers) where the new SSD tecnologie based on 3D NAND permits to write and read more fast then previous SSD (the disk that we have installed on our system, sigh number 2), and so we have to redesign the system. Some distributed file system, written in '90s, are crashing due the axiom that the disks are slower than CPU and so you have enough time to do all the computation needed. False! 
@@ -77,13 +77,13 @@ Software-defined Storage is a term fro computer data storage software for policy
 Software-defined data center is a sort of upgrade of the previous term and indicate a series of virtualization concepts such as abstraction, pooling and automation to all data center resources and services to achieve IT as a service.
 
 ## Hyperconvergence
-So we virtualize the networking, the storage, the data center... and the cloud! Some tools, as [Nutanix(https://www.nutanix.com/hyperconverged-infrastructure/) build the hyperconverged infrastructure ([HCI](https://en.wikipedia.org/wiki/Hyper-converged_infrastructure)) technology.
+So we virtualize the networking, the storage, the data center... and the cloud! Some tools, as [Nutanix](https://www.nutanix.com/hyperconverged-infrastructure/) build the hyperconverged infrastructure ([HCI](https://en.wikipedia.org/wiki/Hyper-converged_infrastructure)) technology.
 
 ## Network topologies
 ### Spanning Tree Protocol (STP) 
 The spanning Tree Protocol is a network protocol that builds a logical loop-free topology for Ethernet networks. The spanning tree is built using some Bridge Protocol Data Units (BPDUs) frames. In 2001 the IEEE introduced Rapid Spanning Tree Protocol (RSTP) that provides significantly faster spanning tree convergence after a topology change.
 [Why so useful?](http://searchdatacenter.techtarget.com/feature/The-case-for-a-leaf-spine-data-center-topology)
-![Spine-Leaf VS Traditional 3-tier](https://media.licdn.com/mpr/mpr/AAEAAQAAAAAAAAhHAAAAJGI4NmQ3ZDkzLTA2MzUtNGY2MC1hZWMzLTZhMDZkNGEwZTU3Nw.png)
+
 ### Three-tier design
 This architecture is simple architecture where each component has a redundant unit to replace it in case of failure.
 
