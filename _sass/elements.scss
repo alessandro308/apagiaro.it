@@ -80,6 +80,9 @@
     .btn {
         @include font-rem(14);
     }
+    ul > li{
+      box-shadow: 0 0 10px 0 rgba($color_shark,0.3);
+    }
 }
 
 // hr break
