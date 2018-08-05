@@ -140,15 +140,19 @@ This permits to get a pair of traces, from and to the new monitor, in order to c
 The server collects all the results and, for each pair, it compares the IP addresses in order to detect cases of aliasing. 
 
 For example, given the trace from the monitor _A_ to the monitor _B_ 
+
 $$ 10.10.0.1 \rightarrow 10.10.0.2 \rightarrow 10.10.0.3 \rightarrow 10.10.0.4 $$
+
 and the trace from the monitor _B_ to the monitor _A_
+
 $$ 10.10.1.4 \rightarrow 10.10.1.3 \rightarrow 10.10.1.2 \rightarrow 10.10.1.1 $$
+
 the server candidates as alias the pairs:
 
-  - $10.10.0.1$ $10.10.1.1$
-  - $10.10.0.2$ $10.10.1.2$
-  - $10.10.0.3$ $10.10.1.3$
-  - $10.10.0.4$ $10.10.1.4$
+  - 10.10.0.1 10.10.1.1
+  - 10.10.0.2 10.10.1.2
+  - 10.10.0.3 10.10.1.3
+  - 10.10.0.4 10.10.1.4
 
 Due the blocking routers, the server cannot invoke Ally by itself. Ally, in fact, uses ICMP packet that may be blocked in some path. So, to resolve the alias, the server sends to the monitors of that path (_A_ and _B_) an _Ally_ operation for each alias pair candidates.
 
