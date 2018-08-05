@@ -7,7 +7,7 @@ tag:
  - network topology
  - security
 comments: true
-feature: /assets/nettopo/rete.png
+feature: /assets/nettopo/rete.jpg
 showFeature: false
 project: true
 ---
