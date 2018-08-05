@@ -198,9 +198,13 @@ In order to infers the correct topology this phase is composed by three subphase
 In this phase, all the traceroute outputs are combined together and the first representation of the network is built. Due the blocking and anonymous routers, some same traces can be shown as different ones since, in this phase, we don't have any available information about these unknown routers. We will refers to these routers as _not cooperative_, abbreviated in `NC`.
 
 An example with an anonymous router is given with the following paths, where the trace 
+
 $$A \rightarrow R1 \rightarrow R2 \rightarrow * \rightarrow R3 \rightarrow R4 \rightarrow C$$
+
 equal to 
+
 $$B \rightarrow R1 \rightarrow R2 \rightarrow * \rightarrow R3 \rightarrow R4 \rightarrow C$$
+
 except for the starting point, are combined into the following path:
 
 ![Phase1 with anonymous routers]({{ site.url }}/assets/nettopo/traccia_anonima.png)
@@ -215,12 +219,15 @@ The condition to pass are:
   -  _Compatibility_: if the merging of two edges involves the merging of two nodes (its endpoint) and these nodes are not compatible between themselves (see below for compatible definition), the edges cannot be merged
 
 In the case of the blocking routers (given the router after R1 in the path as blocking one), the traceroute output is:
+
 $$A \rightarrow R1 \rightarrow * \rightarrow * \rightarrow * \rightarrow * \rightarrow *$$
 
 In this case, the Server searches for the opposite trace and combine the traces adding, between the known routers, some hidden (`HID`) routers as many as they are required to satisfy the distance declared by the user.
 
 For example, given the opposite trace, with another blocking router:
+
 $$B \rightarrow R4 \rightarrow * \rightarrow * \rightarrow * \rightarrow * \rightarrow *$$
+
 the resulting trace that will be added to the graph is:
 
 ![Phase2 with blocking routers]({{ site.url }}/assets/nettopo/traccia_bloccata.png)
