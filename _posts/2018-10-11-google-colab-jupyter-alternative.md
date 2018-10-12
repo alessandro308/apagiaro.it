@@ -2,7 +2,7 @@
 layout: post
 title: "A cloud alternative to Jupyter from Google"
 date: 2018-10-11
-excerpt: "Jupyter is a notebook to write and execute code in the same page. Google have created a tool that is like Jupyter but easily to use"
+excerpt: "Jupyter is a notebook to write and execute code in the same page. Google have created a tool that is like Jupyter but easier to use"
 tag:
  - python
  - google
