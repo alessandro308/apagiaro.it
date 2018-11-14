@@ -77,7 +77,7 @@ If you are reluctant to run chaos experiment in your system, you have to start t
 You have to create a system that terminates all the experiment immediately and recover the system. No excuse to don't run the experiment, just use the real strategy!
 
 # The tools
-## Chaos Monkey [GitHub]
+## Chaos Monkey [GitHub](https://github.com/Netflix/chaosmonkey)
 Chaos Monkey randomly terminates virtual machine instances and containers that run inside your production environment. Exposing engineers to failures more frequently incentivizes them to build resilient services.
 
 ## ChaosKong [Blog Post](https://medium.com/netflix-techblog/chaos-engineering-upgraded-878d341f15fa)
