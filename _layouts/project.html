@@ -13,6 +13,8 @@ layout: compress
     {% if site.addScrollOnProjectPage == true %}
         <div id="bg" style="background: url({{ site.url }}/{{ site.scrollImage }}) bottom left;"></div>
     {% endif %}
+    <div id="overlay" style="
+            background-image: url('{{site.url}}/assets/img/overlay-pattern.png'), url('{{site.url}}/assets/img/overlay.svg');"></div>
     {% include nav.html %}
     <!-- Header -->
     <header class="header" role="banner">
