@@ -28,12 +28,12 @@ sass:
   style:            compressed
 
 #Homepage Background Setting
-enableScrollBackground: true
+enableScrollBackground: false
 scrollImage:        'assets/img/bg_nosfondo.png'
 enableOverlay:      true #add overlay layer
-addScrollOnPageList: true #enable scroll image in pages that show a list of post/projects
+addScrollOnPageList: false #enable scroll image in pages that show a list of post/projects
 addScrollOnPostPage: false #enable scroll image in single post page
-addScrollOnProjectPage: true #enable scroll image in single project page
+addScrollOnProjectPage: false #enable scroll image in single project page
 
 # Comments
 disqus_shortname:   alessandro308
