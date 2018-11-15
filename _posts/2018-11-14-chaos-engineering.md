@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "A Chaos Engineering, what is it?"
+title: "What is the Chaos Engineering?"
 date: 2018-11-14
 excerpt: "Chaos Engineering is the discipline of experimenting on a distributed system in order to build confidence in the system’s capability to withstand turbulent conditions in production."
 tag:
@@ -77,10 +77,10 @@ If you are reluctant to run chaos experiment in your system, you have to start t
 You have to create a system that terminates all the experiment immediately and recover the system. No excuse to don't run the experiment, just use the real strategy!
 
 # The tools
-## Chaos Monkey [GitHub](https://github.com/Netflix/chaosmonkey)
+## Chaos Monkey - [GitHub](https://github.com/Netflix/chaosmonkey)
 Chaos Monkey randomly terminates virtual machine instances and containers that run inside your production environment. Exposing engineers to failures more frequently incentivizes them to build resilient services.
 
-## ChaosKong [Blog Post](https://medium.com/netflix-techblog/chaos-engineering-upgraded-878d341f15fa)
+## ChaosKong - [Blog Post](https://medium.com/netflix-techblog/chaos-engineering-upgraded-878d341f15fa)
 ![Chaos Kong Logo]({{ site.url }}/assets/img/post-image/kong.png)
 After Choas Monkey, another tool was created. "We built Chaos Kong, which doesn’t just kill a server. It kills an entire AWS Region." (ok, ok, it simulates to kill an entire region...)
 
