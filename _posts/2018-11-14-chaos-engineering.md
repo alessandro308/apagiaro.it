@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "What is the Chaos Engineering?"
+title: "What is Chaos Engineering?"
 date: 2018-11-14
 excerpt: "Chaos Engineering is the discipline of experimenting on a distributed system in order to build confidence in the system’s capability to withstand turbulent conditions in production."
 tag:
