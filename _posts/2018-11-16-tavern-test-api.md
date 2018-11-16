@@ -11,7 +11,9 @@ feature: /assets/img/post-image/tavern.png
 showFeature: false
 ---
 
-Recently, for my master thesis, I've started to deploy a RESTful service. Since my service simulates another system, I needed some tests that are able to show if my service replies as the original system. Then I started to search for a tool to test API and I've found a perfect tool to test my APIs, here I'll explain how to use it and I'll cover some parts that the documentation not discuss.
+Recently, for my master thesis, I've started to deploy a RESTful service. Since my service simulates another system, I needed some tests that are able to show if my service replies as the original system. Then I started to search for a tool to test API and I've found a perfect tool to test my APIs, here I'll explain how to use it and I'll cover some parts that the documentation not discuss.+
+
+![Tavern]({{site.url}}/assets/img/post-image/tavern.png)
 
 # [Tavern](https://taverntesting.github.io)
 Tavern is a tool to test API. The strength of this tool is that you have not to write a code to call the API but you have just to describe it. A very simple syntax is used (YAML) and you can start to test your API in 5 minutes.
