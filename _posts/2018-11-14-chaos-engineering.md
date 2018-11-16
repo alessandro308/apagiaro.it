@@ -58,7 +58,7 @@ It is difficult to identify this type of problem. If someone had run some unit t
  - Each microservices has balanced his monitoring, alerting and performances
  - The scale rules that watch CPU load and Memory utilization have done their jobs
 
-The scenario above is called [bullship effect](https://en.wikipedia.org/wiki/Bullwhip_effect): a small perturbation in input can cause dramatic fluctuations in output.
+The scenario above is called [bullship effect](https://en.wikipedia.org/wiki/Bullwhip_effect): a small perturbation in input can cause dramatic fluctuations in output. Discovering this type of errors can be very difficult, Chaos Engineering tries to describe a methodology to find them.
 
 # How does Chaos Engineering work?
 Netflix, when creates the Chaos Engineering experiments, kept in mind the following principles (from [Principle of Chaos](https://principlesofchaos.org/)):
