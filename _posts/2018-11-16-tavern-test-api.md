@@ -4,8 +4,9 @@ title: "How to test a RESTful API"
 date: 2018-11-15
 excerpt: "Tavern is a tool to test API. The strengths of this tool is that you have not to write a code to call the API but you have just to describe it. A very simple syntax is used (YAML) and you can start to test your API in 5 minute."
 tag:
- - chaos
+ - python
  - testing
+ - RESTful
 comments: true
 feature: /assets/img/post-image/tavern.png
 showFeature: false
@@ -18,7 +19,7 @@ Recently, for my master thesis, I've started to deploy a RESTful service. Since 
 # [Tavern](https://taverntesting.github.io)
 Tavern is a tool to test API. The strength of this tool is that you have not to write a code to call the API but you have just to describe it. A very simple syntax is used (YAML) and you can start to test your API in 5 minutes.
 
-## How YAML works?
+## How YAML works
 The fastest way to describe how YAML works is to show you an example:
 
 ```yaml
