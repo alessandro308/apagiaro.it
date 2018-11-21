@@ -85,7 +85,6 @@ and you would like to check if the *data* array contains your device *(deviceId,
           - deviceValue: 4
             deviceId: 5
 ```
-Notice that the `deviceId` field has not `-` sign before. With this syntax it is in the same dictionary of `deviceValue` field. 
 
 ## External function
 In Tavern, if you have to validate a response to complex to be represented in YAML, you can define a Python function and then you can call it from YAML. An example can be:
