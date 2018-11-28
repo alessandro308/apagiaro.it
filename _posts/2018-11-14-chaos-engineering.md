@@ -11,7 +11,7 @@ feature: /assets/img/post-image/chaosMonkey.png
 showFeature: false
 ---
 
-> TLTD; Chaos Engineering is shutting down randomly nodes in the production environment. If the health of the system is good enough, the test is passed.
+> TL;DR: Chaos Engineering is shutting down randomly nodes in the production environment. If the health of the system is good enough, the test is passed.
 
 Today the distributed complex systems are very used. Often we listen to *works on the cloud* and, often, the system is a distributed system that relies on a bigger distributed system. All this complexity have to be managed and test and some classical approaches can be useless since they cannot simulate all the variables of the real system.
 
