@@ -41,6 +41,7 @@ Il circuito semplificato per il solo utilizzo, pensato per un'utilizzo tramite b
 
 ## Presentazione del progetto
 <iframe src="https://apagiaro.it/mesh" height="450px" width="700px"></iframe>
+([See it](https://apagiaro.it/mesh) on fullscreen)
 
 # Altre idee
 Cercando soluzioni per questo progetto mi sono imbattuto in un progetto per la realizzazione di un Wifi-Extender con questo modulo da 2€. Potete approfondire il progetto [sulla pagina]({{ site.url }}/ripetitoreWifiDIY/) in cui ne parlo in maniera più specifica.
