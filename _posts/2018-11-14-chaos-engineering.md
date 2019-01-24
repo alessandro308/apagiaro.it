@@ -62,7 +62,7 @@ The scenario above is called [bullship effect](https://en.wikipedia.org/wiki/Bul
 
 # How does Chaos Engineering work?
 Netflix, when creates the Chaos Engineering experiments, kept in mind the following principles (from [Principle of Chaos](https://principlesofchaos.org/)):
- - Start by defining *steady state* as some measurable output of a system that indicates normal behaviour. In the case of Netflix, they measure how many videos are started per second. Some other examplez can be *product sold per minute* or *views per seconds*.
+ - Start by defining *steady state* as some measurable output of a system that indicates normal behaviour. In the case of Netflix, they measure how many videos are started per second. Some other example can be *product sold per minute* or *views per seconds*.
  - Hypothesize that this steady state will continue in both the control group and the experimental group
  - Introduce variables that reflect real-world events like servers that crash, hard drives that malfunction, network connections that are severed, etc.: the most interesting cases are when several events are combined e.g. try to simulate hardware failures, network latency and functional bugs at the same time. Netflix turns off machines and simulates regional failures even if to do so is costly and complex, only because it can happen and they have to be prepared to it. Don't limit your imagination! 
  - Run experiment in Production: which is the best method to test a software in an environment as close to the production environment as possible? Use the production environment! This approach is able to test the entire overall system.
