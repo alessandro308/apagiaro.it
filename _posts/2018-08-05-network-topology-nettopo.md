@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "How to infer a network topology using iTop and Ally"
+title: "How to infer a network topology with no-cooperative routers, using iTop and Ally"
 date: 2018-08-05
-excerpt: "How we implemented iTop algorithm, using Ally as alias resolution, to infer a network topology"
+excerpt: "How we implemented iTop algorithm, using Ally as alias resolution, to infer a network topology with no-cooperative and blocked routers"
 tag:
  - network topology
  - security
@@ -18,8 +18,6 @@ _This post is written in collaboration with Andrea Mantovani, for a better readi
 In any common industrial network keeping track of its evolution can be not a really trivial task: the changes should be not reported, the current status of the network should not well know or the network admin should be replaced. So an autonomous and automatic system of network scanning could be a very effective tool to help the network maintenance and management.
 
 Starting from this need, the NetTopo project has been built with the goal in mind to supply interesting information from the scanning of a target network. Actually, given a network, NetTopo is able to retrieve its topology, by the implementation of the steps described in _iTop_[1], and builds a simple inventory actually composed by the network routers along to the IP addresses of their interfaces, guaranteeing an overview to macroscopic level and in detail as well.
-
-  
 
 To build up a virtual representation of the network target as close as possible to the real one require several steps and some tools in order to refine the raw data and removing possible duplication leading the network size estimation in an overestimation. It's important to specify that the scanning approach is based on the Traceroute tool, so the network is discovered by running Traceroute commands from a set of network points to obtaining a set of paths which give us a basic definition on how the network nodes are connected with each other (i.e. the topology). However, this approach suffers from two drawbacks which may generate a wrong result:
  - Alias: depending on which router's interface is traversed by the Traceroute, over the set of probed paths the same router appears differently, namely, it appears with the interface's IP returned by the ICMP packet sent by the router for a packet with time exceeded. This phenomenon is called _alias_. The topology inferred from the just Traceroute outputs differ from the real one for a number of nodes (might be as more numbers of nodes as the number of interfaces in each router) and end-point connections. For this reason, _alias resolution_ techniques have to be applied to achieve to a correct result.
@@ -66,14 +64,14 @@ Runs the Traceroute tool between the current monitor and those specified inside 
 - Reply:
 	 ```json
 	{
-	    "type": string,
-	    "from": string,
-	    "to": string,
+	    "type": "string",
+	    "from": "string",
+	    "to": "string",
 	    "hops": [{
-	        "address": string,
-	        "host": string,
-	        "success": boolean,
-	        "ttl": int
+	        "address": "string",
+	        "host": "string",
+	        "success": "boolean",
+	        "ttl": 1
 	    }]
 	}
 	```
