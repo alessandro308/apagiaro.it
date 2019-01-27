@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How to infer a network topology using iTop, Ally and Docker"
+title: "How to infer a network topology using iTop and Ally"
 date: 2018-08-05
 excerpt: "How we implemented iTop algorithm, using Ally as alias resolution, to infer a network topology"
 tag:
@@ -23,7 +23,7 @@ Starting from this need, the NetTopo project has been built with the goal in min
 
 To build up a virtual representation of the network target as close as possible to the real one require several steps and some tools in order to refine the raw data and removing possible duplication leading the network size estimation in an overestimation. It's important to specify that the scanning approach is based on the Traceroute tool, so the network is discovered by running Traceroute commands from a set of network points to obtaining a set of paths which give us a basic definition on how the network nodes are connected with each other (i.e. the topology). However, this approach suffers from two drawbacks which may generate a wrong result:
  - Alias: depending on which router's interface is traversed by the Traceroute, over the set of probed paths the same router appears differently, namely, it appears with the interface's IP returned by the ICMP packet sent by the router for a packet with time exceeded. This phenomenon is called _alias_. The topology inferred from the just Traceroute outputs differ from the real one for a number of nodes (might be as more numbers of nodes as the number of interfaces in each router) and end-point connections. For this reason, _alias resolution_ techniques have to be applied to achieve to a correct result.
- - Anonymous and Blocking Routers: for security policies internal to the company, to the routers might be denied generating ICMP packets or the routers don't be allow any ICMP packet traffic or both. This scenarios define what are called _anonymous routers_ and _blocking routers_: the first ones generating no ICMP packets then negates to the Traceroute to identify their own IP interfaces and so during the probing path they are unrecognizable among each other (in the Traceroute report the anonymous routers results in a "*" symbol); the second ones, the _blocking routers_, in addition to having the same effects of the anonymous routers, they don't allow to the ICMP packets to pass through their interfaces and therefore no other routers can be detected by the Traceroute on the other side of the blocking interface.
+ - Anonymous and Blocking Routers: for security policies internal to the company, to the routers might be denied generating ICMP packets or the routers don't be allow any ICMP packet traffic or both. This scenarios define what are called _anonymous routers_ and _blocking routers_: the first ones generating no ICMP packets then negates to the Traceroute to identify their own IP interfaces and so during the probing path they are unrecognizable among each other (in the Traceroute report the anonymous routers results in a "\*" symbol); the second ones, the _blocking routers_, in addition to having the same effects of the anonymous routers, they don't allow to the ICMP packets to pass through their interfaces and therefore no other routers can be detected by the Traceroute on the other side of the blocking interface.
 
 The resolution of the previous two points are done on two different levels of abstraction of the network exploiting two tools: _Ally_[2] and _iTop_[1]. Ally is an alias resolver and will be run over the physical network, instead, iTop starts from the probed path and builds a graph representing the network trying to simplify it as much as it can and filling the gaps left by the anonymous and blocking routers (indeed it is the business logic of the project). 
 
@@ -51,14 +51,12 @@ The Monitor actually performs the following operations by receving JSON packets 
 Runs the Traceroute tool between the current monitor and those specified inside the request.
 
 - Request:
-	```javascript
+	```json
 	{
-
-		type: string,
-		monitors: [{
-			IP: string
+		"type": "traceroute",
+		"monitors": [{
+			"IP": "0.0.0.0"
 		}]
-
 	}
 	```
 
@@ -66,16 +64,16 @@ Runs the Traceroute tool between the current monitor and those specified inside 
 
 	 - _monitor_ - array of objects with the _IP_ attribute set to the UnkNetIp of the target Monitor.
 - Reply:
-	 ```javascript
+	 ```json
 	{
-	    type: string,
-	    from: string,
-	    to: string,
-	    hops: [{
-	        address: string,
-	        host: string,
-	        success: boolean,
-	        ttl: int
+	    "type": string,
+	    "from": string,
+	    "to": string,
+	    "hops": [{
+	        "address": string,
+	        "host": string,
+	        "success": boolean,
+	        "ttl": int
 	    }]
 	}
 	```
