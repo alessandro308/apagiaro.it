@@ -9,14 +9,13 @@ comments: false
 <!--<img src="{{ site.url }}/assets/img/me2.png" style="width: 200px; margin: 10px" align="left" />-->
 I'm a young italian developer that looking for new techologies (especially web techologies). I'm constantly looking for projects that can help me to expand my knowledge.
 
-My tech interests are about clouding, application management and web tecnologies. I'm attending master degrees at University of Pisa (ICT Solution Architect curriculum).
+My tech interests are about clouding, application management and web tecnologies.
+I completed my master degree in Computer Science at University of Pisa in March 2019. Now I'm a full stack engineer intern at [Yelp](https://www.yelp.it/), based in Hamburg (Germany).
 
 <!--From 2003 till 2018, I was a member of AGESCI, an italian scout association. My scout experience started in Rome, when I was 9, then I moved to Latina and finally in Pisa, where I was a scout leader of Pisa 3. -->
 
 Since I was in elementary school (thank you teacher Antonella!), I play chess. Sometimes you can find me on [LiChess](https://lichess.org).
 On my free time I also play a guitar, even if my friends ask me to stop... But I continue, just for them pleasure!
-
-On March 2019, I'll move to Hamburg, Germany. I'll start an intership at [Yelp](https://www.yelp.it/)! I'm hoping to graduate before that date, in this days I'm deployment my master thesis on a CISCO Fog Director simulation model.
 
 ### Bitcoin
 My bechelor thesis is about Bitcoin. [Here]({{ site.url }}/assets/main.pdf) (in italian) you can find the paper, below, the presentation.
