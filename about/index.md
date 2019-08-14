@@ -9,10 +9,11 @@ comments: false
 <!--<img src="{{ site.url }}/assets/img/me2.png" style="width: 200px; margin: 10px" align="left" />-->
 I'm a young italian developer that looking for new techologies (especially web techologies). I'm constantly looking for projects that can help me to expand my knowledge.
 
-My tech interests are about clouding, application management and web tecnologies.
-I completed my master degree in Computer Science at University of Pisa in March 2019. Now I'm a full stack engineer intern at [Yelp](https://www.yelp.it/), based in Hamburg (Germany).
+My tech interests are about clouding, application management, crittography and web tecnologies.
+I completed my master degree in Computer Science at University of Pisa in March 2019. After my first work experience as FullStack Engineer Intern at [Yelp](https://www.yelp.com/), based in Hamburg (Germany), I moved in Pisa again and I currently work in Pisa, at [Domotz](https://www.domotz.com/).
 
-<!--From 2003 till 2018, I was a member of AGESCI, an italian scout association. My scout experience started in Rome, when I was 9, then I moved to Latina and finally in Pisa, where I was a scout leader of Pisa 3. -->
+From 2003 till 2018, I was a member of AGESCI, an italian scout association. My scout experience started in Rome, when I was 9, then I moved to Latina and finally in Pisa, where I was a scout leader in _Pisa 3_ group. When I have the opportunity, I continue to go to the mountains, even just to enjoy beautiful landscapes like this.
+<img src="{{site.url}}/assets/img/majella.jpg" />
 
 Since I was in elementary school (thank you teacher Antonella!), I play chess. Sometimes you can find me on [LiChess](https://lichess.org).
 On my free time I also play a guitar, even if my friends ask me to stop... But I continue, just for them pleasure!
