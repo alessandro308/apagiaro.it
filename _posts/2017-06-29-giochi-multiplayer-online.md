@@ -29,8 +29,8 @@ Un gioco che richiama il film "Tron". Crea una stanza, fai entrare i tuoi amici 
  Se avete un ping eccessivamente alto e vi trovate nella stessa stanza, potete anche avviare il vostro server Curvytron in NodeJS. Se avete capito cosa ho detto potete scaricare tutto [da qui](https://github.com/Curvytron/curvytron) altrimenti fate come se non vi avessi detto nulla! :) 
  {: .notice}
 
- # [BoardGameArena](https://boardgamearena.com/)
- ![https://boardgamearena.com/]({{ site.url}}/assets/img/post-image/board-game-arena.png)
- Non c'è molto da aggiungere. Tantissimi giochi da tavolo in versione digitale. È un bellissimo sito adatto a chiunque ama i giochi classici ma non può giocarci con gli amici per la distanza.
+# [BoardGameArena](https://boardgamearena.com/)
+![https://boardgamearena.com/]({{ site.url}}/assets/img/post-image/board-game-arena.png)
+Non c'è molto da aggiungere. Tantissimi giochi da tavolo in versione digitale. È un bellissimo sito adatto a chiunque ama i giochi classici ma non può giocarci con gli amici per la distanza.
 
 **Avete altri giochi da segnalare? Lasciate il link nei commenti!**
