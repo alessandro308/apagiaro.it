@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "How to start to use to Webpack with a legacy file concatenation build"
+title: "How to start to use Webpack with a legacy file concatenation build"
 date: 2020-03-14
-excerpt: "Integrate Webpack in your actual build requires some analysis but it is possible. Here the solution I've found and implemented."
+excerpt: "Integrating Webpack in your build requires some analysis but it is possible. Here the solution I've found and implemented."
 comments: true
 feature: /assets/img/post-image/webpack-logo-small.png
 showFeature: true
