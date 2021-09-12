@@ -310,6 +310,7 @@ Actually, both technologies are not "coming from the future" but they are so rar
 Do you have any other tips? Leave a comment here!
 
 ### References
+ - https://github.com/kentcdodds/react-performance
  - https://reactjs.org/docs/concurrent-mode-suspense.html
  - https://kentcdodds.com/blog/usememo-and-usecallback
  - https://reactjs.org/docs/react-api.html#reactpurecomponent
