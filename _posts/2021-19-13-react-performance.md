@@ -8,7 +8,7 @@ feature: /assets/img/post-image/react-performance.png
 showFeature: true
 ---
 
-Whan of the thing I like most React is the versatility. On the other hand, this versatility may result in an app that works correctly but doesn't run in the optimal way we expected because we applied some patterns that don't perform as we want and the user experience downgrades. 
+One of the thing I like most React is the versatility. On the other hand, this versatility may result in an app that works correctly but doesn't run in the optimal way we expected because we applied some patterns that don't perform as we want and the user experience downgrades. 
 In this post, we are going to see how can we improve our app performance by providing some daily based examples we can use in our app. 
 
 ## Table of contents
