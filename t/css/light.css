@@ -18,6 +18,10 @@ body {
     background-color: #e8e6e6;
 }
 
+tr.boilerplate {
+    color: #4a4848;
+}
+
 table {
     width: 100%;
     word-break: break-word;

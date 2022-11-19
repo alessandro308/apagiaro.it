@@ -38,8 +38,11 @@ function switchTheme(){
     });
 }
 
+const isInIntervals = (intervals, index) => {
+    return intervals.some(interval => index <= interval[1] && index >= interval[0])
+}
 
-function TransparentCode({children, interactiveLines=[]}){
+function TransparentCode({children, boilerplate}){
     const [pageContent, setContent] = React.useState('');
 
     const fetchData = React.useCallback(() => {
@@ -71,13 +74,23 @@ function TransparentCode({children, interactiveLines=[]}){
             <tbody>
                {
                 lines.map((rawLine, i) => {
+                    const isBoilerplate = isInIntervals(boilerplate, i); 
                     const highlightedLine = hljs.highlightAuto(rawLine).value;
-                    const html = i <= interactiveLines[1] && i >= interactiveLines[0] 
-                        ? addLink(highlightedLine)
-                        : highlightedLine
-                    return <tr value={`${i}`} key={i}>
+
+                    const html =  isBoilerplate 
+                        ? rawLine 
+                        : addLink(highlightedLine);
+
+                    return <tr 
+                        value={`${i}`} key={i} 
+                        className={isBoilerplate ? 'boilerplate' : null}
+                    >
                         <td className="line-number">{i}</td>
-                        <td className="html-line" dangerouslySetInnerHTML={{__html: html}}></td>
+                        {
+                            isBoilerplate 
+                            ? <td className="html-line">{html}</td>
+                            : <td className="html-line" dangerouslySetInnerHTML={{__html: html}}></td>
+                        }
                     </tr>
                 })
                } 

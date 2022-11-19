@@ -22,6 +22,11 @@ body {
   background-color: #424242;
 }
 
+tr.boilerplate {
+  color: #d8d8d8;
+}
+
+
 a {
   color:#8be9fd;
 }
