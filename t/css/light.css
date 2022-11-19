@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+}
+#root {
+    margin: 0;
+    top: 0;
+    left: 0;
+}
+
+.line-number {
+    text-align: right;
+    background-color: lightgray;
+    width: 30px;
+    border-bottom: 1px solid white;
+}
+
+.html-line {
+}
+
+table {
+    width: 100%;
+    word-break: break-word;
+    font-size: initial;
+    font-family: monospace;
+    tab-size: 4;
+    white-space: pre-wrap;
+    border-spacing: 0px;
+    margin: 0px;
+
+    line-height: normal;
+    font-weight: normal;
+    font-variant: normal;
+    font-style: normal;
+    color: -internal-quirk-inherit;
+    text-align: start;
+
+    display: table;
+    border-collapse: separate;
+    border-color: grey;
+}
