@@ -14,7 +14,8 @@ body {
     border-bottom: 1px solid white;
 }
 
-.html-line {
+.html-line:hover {
+    background-color: #e8e6e6;
 }
 
 table {

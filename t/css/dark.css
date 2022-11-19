@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    background-color: #333333;
 }
 #root {
     margin: 0;
@@ -9,13 +10,16 @@ body {
 
 .line-number {
     text-align: right;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: #8A8A8A;
     width: 30px;
     border-bottom: 1px solid white;
 }
 
 .html-line {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #333333;
+}
+.html-line:hover {
+  background-color: #424242;
 }
 
 a {
