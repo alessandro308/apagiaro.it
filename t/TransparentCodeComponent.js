@@ -38,6 +38,7 @@ function switchTheme(){
     });
 }
 
+
 function TransparentCode({children, interactiveLines=[]}){
     const [pageContent, setContent] = React.useState('');
 
@@ -45,6 +46,13 @@ function TransparentCode({children, interactiveLines=[]}){
         fetch(document.location.href)
         .then(res => res.text())
         .then(data => setContent(data));
+    });
+    
+    React.useEffect(() => {
+        document.onkeydown = function(evt) {
+            evt = evt || window.event;
+            console.log(evt.key)
+        };
     });
 
     React.useLayoutEffect(() => {
@@ -58,11 +66,6 @@ function TransparentCode({children, interactiveLines=[]}){
     const lines = pageContent.split('\n')
     .filter(l => !l.startsWith('//# sourceMappingURL'));
 
-    React.useEffect(() => {
-        console.log('Unfortunately there is no space to render the children in the proper way in the DOM...');
-        console.log(children);
-    }, [])
-
     return (
         <table>
             <tbody>
@@ -72,7 +75,7 @@ function TransparentCode({children, interactiveLines=[]}){
                     const html = i <= interactiveLines[1] && i >= interactiveLines[0] 
                         ? addLink(highlightedLine)
                         : highlightedLine
-                    return <tr>
+                    return <tr value={`${i}`} key={i}>
                         <td className="line-number">{i}</td>
                         <td className="html-line" dangerouslySetInnerHTML={{__html: html}}></td>
                     </tr>
