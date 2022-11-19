@@ -1,7 +1,7 @@
 const URL_REGEX = /(((https?:\/\/)|mailto:)(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?//=]*))/
 
 function addLink (line){
-    return line.replace(URL_REGEX, '<a href="$1">$1</a>')
+    return line.replace(URL_REGEX, '<a href="$1" target="_blank">$1</a>')
 }
 
 function loadCssFile(version){
@@ -57,6 +57,11 @@ function TransparentCode({children, interactiveLines=[]}){
 
     const lines = pageContent.split('\n')
     .filter(l => !l.startsWith('//# sourceMappingURL'));
+
+    React.useEffect(() => {
+        console.log('Unfortunately there is no space to render the children in the proper way in the DOM...');
+        console.log(children);
+    }, [])
 
     return (
         <table>
