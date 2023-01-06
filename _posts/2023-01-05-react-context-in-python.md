@@ -8,6 +8,8 @@ tag:
 - python
 - react
 comments: true
+feature: /assets/img/post-image/react_python.png
+showFeature: true
 ---
 
 As a Python developer you may not know what React Context is. Let me explain this fantastic tool and why sometimes can be useful to have that pattern in our backend code.
