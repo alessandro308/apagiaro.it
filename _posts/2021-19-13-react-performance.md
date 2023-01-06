@@ -4,6 +4,9 @@ title: "How to increase your React performance, with practical examples"
 date: 2021-09-12
 excerpt: "Create a high-performance application is a process. Here some tips you can use to create a better user experience."
 comments: true
+tags: 
+- react
+- performance
 feature: /assets/img/post-image/react-performance.png
 showFeature: true
 ---
