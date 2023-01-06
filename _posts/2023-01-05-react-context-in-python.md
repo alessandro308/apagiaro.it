@@ -14,7 +14,7 @@ As a Python developer you may not know what React Context is. Let me explain thi
 
 React Context is a way to pass data through the component tree without having to pass props down manually at every level. It can be useful in a number of cases, such as when you have deeply nested components and you don't want to pass props down through all of them. Using React Context can help to make your code more reusable and maintainable, as well as making it easier to understand how your data is being used and where it is coming from. It can also help to reduce the amount of prop drilling that you have to do in your application.
 
-```
+```jsx
 function Button() {
   const { theme} = useContext(ThemeContext);
 
@@ -49,7 +49,7 @@ To resolve this problem I'm proposing an API that you can use to wrap a piece of
 
 In code, this is the result:
 
-```
+```python
 def nested_function():
     return get_context('something', 'default_value')
 
@@ -69,7 +69,7 @@ In practice, to set variables you can use the `use_context(**variables)` API tha
 
 It can also be used to define nested context, so you write code like
 
-```
+```python
 def nested_function():
     return get_context('something', 'default_value')
 
