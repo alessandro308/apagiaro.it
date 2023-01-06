@@ -3,7 +3,6 @@ layout: post
 title: "React Context API in Python"
 date: 2023-01-05
 excerpt: "An API to pass data in the inner function inspired by React Context"
-project: false
 tag:
 - python
 - react
