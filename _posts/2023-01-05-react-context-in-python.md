@@ -57,7 +57,7 @@ def nested_function():
 def in_between_function():
     return nested_function()
 
-with use_context(something=123):
+with create_context(something=123):
     value = in_between_function()
     print(value) # 123
 
@@ -66,7 +66,7 @@ print(nested_function()) # 'default_value'
 
 ## Library details
 
-In practice, to set variables you can use the `use_context(**variables)` API that accept one or more named arguments and set them in the current context. 
+In practice, to set variables you can use the `create_context(**variables)` API that accept one or more named arguments and set them in the current context. 
 
 It can also be used to define nested context, so you write code like
 
@@ -75,13 +75,13 @@ def nested_function():
     return get_context('something', 'default_value')
 
 def in_between_function():
-    with use_context(something='nested_value'):
+    with create_context(something='nested_value'):
         value = nested_function()
         print('Nested Value', value) # Nested Value 'nested_value'
     original_value = nested_function()
     print('Outer value', original_value) # Nested Value 'original_value'
 
-with use_context(something='original_value'):
+with create_context(something='original_value'):
     in_between_function()
 ```
 to handle more complex scenarios.
