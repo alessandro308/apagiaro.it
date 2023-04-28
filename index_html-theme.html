@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <title> Alessandro Pagiaro </title>
+        <meta charset="utf-8">
+
+        <meta description="Alessandro Pagiaro is a senior frontend engineer">
+        <meta author="Alessandro Pagiaro">
+        <meta keywords="Frontend, React, Javascript, HTML5, Web Technologies">
+
+        <link rel="stylesheet" href="t/css/highlight.css">
+        <link rel="stylesheet" x-suggestion="click me!" href="t/css/light.css">
+
+    </head>
+    <body>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <script src="t/js/highlight.min.js"></script>
+        <script type="text/babel" src="t/TransparentCodeComponent.js"></script>
+
+        <script type="text/babel">
+            function AboutMe(){
+                return <React.Fragment>
+                            \\\\\\\
+                            \\\\\\\\\\\\
+                          \\\\\\\\\\\\\\\
+  -----------,-|           |C>   // )\\\\|
+           ,','|          /    || ,'/////|
+---------,','  |         (,    ||   /////
+         ||    |          \\  ||||//''''|
+         ||    |           |||||||     _|
+         ||    |______      `````\____/ \
+         ||    |     ,|         _/_____/ \
+         ||  ,'    ,' |        /          |
+         ||,'    ,'   |       |         \  |
+_________|/    ,'     |      /           | |
+_____________,'      ,',_____|      |    | |
+             |     ,','      |      |    | |
+             |   ,','    ____|_____/    /  |
+             | ,','  __/ |             /   |
+_____________|','   ///_/-------------/   |
+              |===========,'
+              
+              🤓 Alessandro Pagiaro
+              @ Italy based
+
+              Senior Frontend Developer 
+              @ Domotz
+
+              MSc. in Computer Science
+              @ University of Pisa
+
+              <a href="mailto:alessandropagiaro@gmail.com" target="_blank">e-mail</a>
+              <a href="https://linkedin.com/in/alessandro-pagiaro-9a5a5496" target="_blank">linkedin</a>
+              <a href="https://github.com/alessandro308" target="_blank">github</a>
+              <a href="https://telegram.me/alessandro308" target="_blank">telegram</a>
+              <a href="https://twitter.com/alessandro308" target="_blank">twitter</a>
+              <a href="https://apagiaro.it/posts" target="_blank">blog</a>
+              
+                </React.Fragment>
+            }
+            
+            const root = ReactDOM.createRoot(document.querySelector('#root'));
+            root.render(
+                <TransparentCode boilerplate={[[16, 21], [62, 69]]}>
+                    <AboutMe/>
+                </TransparentCode>
+            );
+        </script>
+
+        <!-- 
+            About this homepage
+            
+            Inspired by an old website (now offline), this is the evolved version 
+               that uses React to render the content and auto build itself.
+               
+               It loads the content directly from the source 
+               (i.e. the HTML you are seeing is exactly the same HTML code used
+               by your browser to render this page - check the network tab in the Devools!). 
+        -->
+    </body>
+</html>
