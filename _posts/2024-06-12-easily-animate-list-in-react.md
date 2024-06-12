@@ -9,6 +9,7 @@ tag:
 - libraries
 feature: http://apagiaro.it/assets/img/post-image/list.png
 comments: true
+showFeature: true
 ---
 One of the most common patterns used to offer to our users some data is to present the data as a list. A list is easy to understand, easy to filter, easy to sort and also easy to improve if you know how.
 Here are my two cents on how we improved a simple UI in a matter of minutes using just two libraries.
