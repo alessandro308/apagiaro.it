@@ -15,13 +15,15 @@ Here are my two cents on how we improved a simple UI in a matter of minutes usin
 
 When a user sees a list, if something changes, it should immediately be clear to our user what just happened. This can be done using a blinking row or word, a pattern frequently used in the financial fields but in a web app that doesn't want to appear deployed in the 90's I think we can do better.
 
+![AutoAnimate List Example](http://apagiaro.it/assets/img/post-image/autoanimatelist.gif)
+
 Most of the time, changes in the list can happen because:
 - A new row has been added
 - A row has been removed
 - Line order has been changed
 - Some rows have been removed because of a filter
 
-Luckily, these changes can be highlighted with just a few animations. Yeah yeah, no, animation! It is hard to write and struggle with CSS rules, especially if your team is not used to working with them and hasn't built a framework to support the daily activities. But here is a solution: [AutoAnimate](https://auto-animate.formkit.com/) a library that can enhance your UX in a single line. Everything that is required to do is import the library, it can be a framework agnostic library or a simple hook for your React component, and be sure that your application preserves the DOM objects between different states, for instance providing the [key to our React items](https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key) as you should already do.
+Luckily, these changes can be highlighted with just a few animations. Yeah yeah, no, animation! They are hard to write and you may struggle with CSS rules, especially if your team is not used to working with them and hasn't built a framework to support the integration of animations in your components. But here is a solution: [AutoAnimate](https://auto-animate.formkit.com/) a library that can enhance your UX in a single line. Everything that is required to do is import the library, it can be a framework agnostic library or a simple hook for your React component, and be sure that your application preserves the DOM objects between different states, for instance providing the [key to our React items](https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key) as you should already do.
 
 ``` jsx
 import { useAutoAnimate } from '@formkit/auto-animate/react'
