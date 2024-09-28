@@ -44,7 +44,7 @@ However, this setup had its own challenges. Since it used a shared database, dev
 
 ### Replicating the Yelp Approach
 
-Attempting to replicate this setup at **Domotz** required some creative thinking. While I’m not entirely sure of the exact implementation Yelp used, I recalled a similar system involving a Chrome extension and routing configurations. This led me to explore a combination of tools to achieve a similar result.
+While I’m not entirely sure of the exact implementation Yelp used, I recalled a similar system involving a Chrome extension and routing configurations. This led me to explore a combination of tools to achieve a similar result.
 
 The solution involved injecting custom headers through a Chrome extension, along with adjustments to the **Envoy** configuration using [HTTP Dynamic Forward Proxy](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/http/http_proxy). In addition, changes were made to the backend core libraries to ensure the custom headers were propagated correctly. This configuration allowed **Envoy** to recognize the headers and forward requests to my specific development cluster, making it possible to test only the parts of the system that were modified.
 
