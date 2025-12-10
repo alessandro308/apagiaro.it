@@ -1,5 +1,140 @@
----
-layout: home
-title: Home
-comments: false
----
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alessandro Pagiaro | Portfolio</title>
+    <meta name="description" content="Personal portfolio of Alessandro Pagiaro.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/portfolio-modern.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="bg-glow"></div>
+
+    <nav>
+        <div class="container nav-content">
+            <a href="#" class="logo">AP.</a>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#work">Work</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-content">
+                <h1 class="animate-in">Hello, I'm <br><span class="hero-name">Alessandro Pagiaro</span></h1>
+                <p class="hero-subtitle animate-in delay-1">Building digital experiences with code and creativity.</p>
+                <div class="animate-in delay-2">
+                    <a href="#work" class="cta-button">View My Work</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="container">
+                <h2 class="animate-in">About Me</h2>
+                <p class="project-desc animate-in delay-1" style="max-width: 800px; margin-top: 1rem;">
+                    I am passionate about technology and innovation. I love creating clean, efficient, and beautiful
+                    solutions to complex problems.
+                    Welcome to my personal space on the web where I share my projects and thoughts.
+                </p>
+            </div>
+        </section>
+
+        <section id="work">
+            <div class="container">
+                <h2 class="animate-in">Selected Work</h2>
+                <div class="projects-grid">
+                    <!-- Project 1 -->
+                    <article class="project-card animate-in delay-1">
+                        <h3 class="project-title">Project Alpha</h3>
+                        <p class="project-desc">A revolutionary app that changes how we interact with data.</p>
+                        <div class="project-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">Node.js</span>
+                            <span class="tag">Design</span>
+                        </div>
+                    </article>
+
+                    <!-- Project 2 -->
+                    <article class="project-card animate-in delay-2">
+                        <h3 class="project-title">Project Beta</h3>
+                        <p class="project-desc">An e-commerce platform built for scale and performance.</p>
+                        <div class="project-tags">
+                            <span class="tag">Next.js</span>
+                            <span class="tag">Stripe</span>
+                            <span class="tag">Tailwind</span>
+                        </div>
+                    </article>
+
+                    <!-- Project 3 -->
+                    <article class="project-card animate-in delay-3">
+                        <h3 class="project-title">Project Gamma</h3>
+                        <p class="project-desc">Interactive visualization dashboard for complex datasets.</p>
+                        <div class="project-tags">
+                            <span class="tag">D3.js</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Analytics</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container" style="text-align: center;">
+                <h2 class="animate-in">Get In Touch</h2>
+                <p class="project-desc animate-in delay-1" style="margin: 1rem auto 2rem; max-width: 600px;">
+                    I'm always open to discussing new projects, creative ideas or opportunities to be part of your
+                    visions.
+                </p>
+                <a href="mailto:hello@example.com" class="cta-button animate-in delay-2">Say Hello</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <p>&copy; 2025 Alessandro Pagiaro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple scroll reveal effect
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-in').forEach(el => {
+            // Reset for scroll effect if not already visible
+            // Note: CSS animation handles initial load, this is for scrolling down to other sections
+            // For simplicity in this static version, we rely on CSS animation for initial view
+            // and could add a class 'visible' here for scroll trigger if we removed the default animation
+        });
+    </script>
+</body>
+
+</html>

@@ -5,58 +5,105 @@ layout: compress
 <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
 <!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9"><![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"><!--<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"><!--<![endif]-->
+
 <head>
     {% include head.html %}
-    <link href="{{site.url}}/assets/css/imageBrightness.css" rel="stylesheet" type="text/css">
+    <link href="{{site.url}}/assets/css/new-home.css" rel="stylesheet" type="text/css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
+
 <body>
-    {% if site.enableScrollBackground == true %}
-        <div id="bg" style="background: url({{ site.scrollImage }}) bottom left;"></div>
-        {% if site.enableOverlay == true %}
-        <div id="overlay" style="
-        background-image: url('assets/img/overlay-pattern.png'), url('assets/img/overlay.svg');"></div>
-        {% endif %}
-    {% endif %}
-    <div id="overlay" style="
-        background-image: url('assets/img/overlay-pattern.png'), url('assets/img/overlay.svg');"></div>
-    <!-- FINE BG -->
     {% include nav.html %}
-    
-    <!-- Header -->
-    <header class="header flex" role="banner">
-        <div class="container animated fadeIn">
-            <div class="row">
-                    <a href="{{ site.url }}">
-                        <img src="{{ site.logo }}" class="img-circle zoombtn animated rotateIn">
+
+    <main class="home-container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <img src="{{ site.logo | prepend: site.url }}" alt="{{ site.title }}" class="hero-image animated rotateIn">
+            <div class="hero-content animated fadeIn">
+                <h1>{{ site.title }}</h1>
+                <p class="subtitle">{{ site.bio }}</p>
+                <div class="hero-bio">
+                    {{ site.description }}
+                </div>
+                <div class="social-links">
+                    {% if site.email %}
+                    <a href="mailto:{{ site.email }}" class="social-icon" title="Email">
+                        <i class="fas fa-envelope"></i>
                     </a>
-                    <h3 class="title">
-                        <a class="zoombtn" href="{{ site.url }}">
-                        	<p style="font-size:1.2rem;font-weight:300">{{ site.title }}</p>
-			            </a>
+                    {% endif %}
+                    {% if site.twitter %}
+                    <a href="https://twitter.com/{{ site.twitter }}" class="social-icon" title="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    {% endif %}
+                    {% if site.github-url %}
+                    <a href="https://github.com/{{ site.github-url }}" class="social-icon" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    {% endif %}
+                    {% if site.linkedin %}
+                    <a href="https://linkedin.com/in/{{ site.linkedin }}" class="social-icon" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Latest Posts Section -->
+        <section class="section">
+            <h2 class="section-title">Latest Posts</h2>
+            <div class="posts-grid">
+                {% for post in site.posts limit:3 %}
+                <article class="post-card">
+                    <span class="post-date">{{ post.date | date: "%B %d, %Y" }}</span>
+                    <h3 class="post-title">
+                        <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
                     </h3>
-                    <hr class="hr-line">
-                    <h3 class="title">
-                        <a href="{{ site.url }}">
-                        	<p style="font-size:1rem;font-weight:300">{{ site.bio }}</p>
-			            </a>
-                    </h3>
-                    {% include social-links.html %}
-                  <hr class="hr-line">
-                  <h3 class="title">
-                         <a class="btn zoombtn" href="{{ site.url }}/about">
-                         About
-                         </a>
-                         <a class="btn zoombtn" href="{{ site.url }}/posts">
-                         Posts
-                         </a>
-                         <a class="btn zoombtn" href="{{ site.url }}/projects">
-                         Projects
-                         </a>
-                 </h3>
+                    <p class="post-excerpt">
+                        {{ post.excerpt | strip_html | truncatewords: 20 }}
+                    </p>
+                    <a href="{{ post.url | prepend: site.baseurl }}" class="btn">Read More</a>
+                </article>
+                {% endfor %}
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="{{ '/posts' | prepend: site.baseurl }}" class="btn"
+                    style="background: transparent; color: var(--accent-color); border: 2px solid var(--accent-color);">View
+                    All Posts</a>
+            </div>
+        </section>
+
+        <!-- About Section Preview -->
+        <section class="section projects-section">
+            <h2 class="section-title">About Me</h2>
+            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 30px;">
+                    I'm a FullStack Software Engineer passionate about web technologies, cloud computing, and
+                    cryptography.
+                    Currently working at Domotz in Pisa, Italy.
+                </p>
+                <a href="{{ '/about' | prepend: site.baseurl }}" class="btn">More About Me</a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="{{ '/about' | prepend: site.baseurl }}">About</a>
+                <a href="{{ '/posts' | prepend: site.baseurl }}">Posts</a>
+                <a href="{{ '/projects' | prepend: site.baseurl }}">Projects</a>
             </div>
         </div>
-    </header>
+    </footer>
+
     {% include scripts.html %}
 </body>
+
 </html>
