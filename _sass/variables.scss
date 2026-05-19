@@ -1,37 +1,37 @@
 //colors
-$bodycolor           : #348cb2;
-$black           	 : #000;
+$bodycolor           : #0a0a0a;
+$black               : #000;
 $white               : #fff;
-$color_gray          : #e8e8e8;
-$red                 : #FF4136;
-$maroon              : #85144b;
-$color_tuatara       : #383838;
-$color_shark         : #282828;
-$color_mischka       : #d0d1d5;
-$color_mercury       : #e5e6e9;
-$color_bon_jour      : #dfe0e4;
-$color_gallery       : #f0f0f0;
-$color_stack         : #8c8b8b;
-$color_alabaster     : #f9f9f9;
-$color_tundora       : #444;
-$color_fuscous_gray  : #555;
-$color_alabaster     : #fcfcfc;
-$color_celeste       : #ccc;
-$color_pink_swan     : #bbb;
-$comp-color 	     : complement(#222); 
+$color_gray          : #1e1e1e;
+$red                 : #f59e0b;
+$maroon              : #d97706;
+$color_tuatara       : #e5e5e5;
+$color_shark         : #e5e5e5;
+$color_mischka       : #333;
+$color_mercury       : #333;
+$color_bon_jour      : #2a2a2a;
+$color_gallery       : #1e1e1e;
+$color_stack         : #737373;
+$color_alabaster     : #141414;
+$color_tundora       : #a3a3a3;
+$color_fuscous_gray  : #a3a3a3;
+$color_alabaster     : #141414;
+$color_celeste       : #333;
+$color_pink_swan     : #404040;
+$comp-color          : complement(#222);
 
 //button colors
-$success			 : #5cb85c;
-$warning			 : #dd8338;
-$danger				 : #C64537;
-$info		         : #308cbc;
+$success             : #22c55e;
+$warning             : #f59e0b;
+$danger              : #ef4444;
+$info                : #f59e0b;
 
 //fonts
-$font1               : Fira Sans,sans-serif;
-$font2               : Inconsolata;
-$alt-font            : serif;
+$font1               : 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+$font2               : 'JetBrains Mono', 'Space Grotesk', ui-monospace, monospace;
+$alt-font            : Georgia, serif;
 $doc-font-size       : 16;
-$doc-line-height     : 26;
+$doc-line-height     : 28;
 
 //media
 $small               : "only screen and (max-width: 30em)";

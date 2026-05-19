@@ -2,50 +2,199 @@
 layout: compress
 ---
 <!DOCTYPE html>
-<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
-<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9"><![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"><!--<![endif]-->
+<html lang="en">
 <head>
     {% include head.html %}
+    <style>
+        body { background: #0a0a0a; }
+        .article-container {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 6rem;
+        }
+        .article-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #737373;
+            text-decoration: none;
+            margin-bottom: 2.5rem;
+            transition: color 0.2s;
+        }
+        .article-back:hover { color: #f59e0b; }
+        .article-header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        {% if page.feature and page.showFeature %}
+        .article-feature {
+            width: calc(100% + 3rem);
+            margin: -1rem -1.5rem 2rem;
+            border-radius: 8px;
+            overflow: hidden;
+            max-height: 400px;
+        }
+        .article-feature img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        {% endif %}
+        .article-header h1 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 800;
+            color: #e5e5e5;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            margin: 0 0 1rem;
+        }
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            font-size: 0.85rem;
+            color: #737373;
+        }
+        .article-meta .dot {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: #404040;
+        }
+        .article-body {
+            color: #d4d4d4;
+            font-size: 1.05rem;
+            line-height: 1.85;
+        }
+        .article-body h2, .article-body h3, .article-body h4 {
+            color: #e5e5e5;
+            margin-top: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-body h2 { font-size: 1.5rem; font-weight: 700; }
+        .article-body h3 { font-size: 1.25rem; font-weight: 600; }
+        .article-body a {
+            color: #f59e0b;
+            text-decoration: underline;
+            text-decoration-color: rgba(245,158,11,0.3);
+            text-underline-offset: 3px;
+            transition: text-decoration-color 0.2s;
+        }
+        .article-body a:hover {
+            text-decoration-color: #f59e0b;
+        }
+        .article-body blockquote {
+            border-left: 3px solid #f59e0b;
+            padding-left: 1.25rem;
+            margin: 1.5rem 0;
+            color: #a3a3a3;
+            font-style: italic;
+        }
+        .article-body img {
+            border-radius: 6px;
+            margin: 1.5rem auto;
+        }
+        .article-body ul, .article-body ol {
+            padding-left: 1.5rem;
+            color: #d4d4d4;
+        }
+        .article-body li {
+            margin-bottom: 0.35rem;
+        }
+        .article-body pre {
+            border-radius: 6px;
+            border: 1px solid #1e1e1e;
+        }
+        .article-body code {
+            font-size: 0.9em;
+        }
+        .article-body p code {
+            background: #1e1e1e;
+            border: 1px solid #2a2a2a;
+            border-radius: 4px;
+            padding: 0.1em 0.4em;
+            color: #fbbf24;
+            font-size: 0.85em;
+        }
+        .article-body strong {
+            color: #e5e5e5;
+            font-weight: 600;
+        }
+        .article-tags {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #1e1e1e;
+        }
+        .article-tags .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            margin: 0.25rem 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #a3a3a3;
+            background: #1e1e1e;
+            border: 1px solid #2a2a2a;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .article-tags .tag:hover {
+            border-color: #f59e0b;
+            color: #f59e0b;
+        }
+    </style>
 </head>
 <body>
-    {% if site.addScrollOnPostPage == true %}
-        <div id="bg" style="background: url({{ site.url }}/{{ site.scrollImage }}) bottom left;"></div>
-    {% endif %}
     {% include nav.html %}
-    <!-- Header -->
-    <header class="header" role="banner">
-        <div class="wrapper animated fadeIn">
-            <div class="content">
-                <div class="post-title {% if page.feature and page.showFeature %} feature {% endif %}">
-                    <h1>{{ page.title }}</h1>
-                    <h4>{{ page.date | date_to_string }}</h4>
-                    {% if site.reading_time %}
-                    <p class="reading-time">
-                      <i class="fa fa-clock-o"></i>
-                      {% include read-time.html %}
-                    </p><!-- /.entry-reading-time -->
-                    {% endif %}
-                    {% if page.project %}
-                    <a class="btn zoombtn" href="{{site.url}}/projects/">
-                    {% else %}
-                    <a class="btn zoombtn" href="{{site.url}}/posts/">
-                    {% endif %}
-                        <i class="fa fa-chevron-left"></i>
-                    </a>
-                </div>
-                {{ content }}
-                <div class="entry-meta">
-                {% include meta.html %}
-                </div>
+    <article class="article-container">
+        {% if page.project %}
+        <a class="article-back" href="{{ site.url }}/projects/">← Projects</a>
+        {% else %}
+        <a class="article-back" href="{{ site.url }}/posts/">← All Posts</a>
+        {% endif %}
+
+        <div class="article-header">
+            {% if page.feature and page.showFeature %}
+            <div class="article-feature">
+                {% capture feature %}{{ page.feature }}{% endcapture %}
+                {% unless feature contains 'http://' or feature contains 'https://' %}{% capture feature %}{{ site.url }}/{{ feature }}{% endcapture %}{% endunless %}
+                <img src="{{ feature }}" alt="{{ page.title }}">
+            </div>
+            {% endif %}
+            <h1>{{ page.title }}</h1>
+            <div class="article-meta">
+                <span>{{ page.date | date: "%B %d, %Y" }}</span>
+                {% if site.reading_time %}
+                <span class="dot"></span>
+                <span>{% include read-time.html %}</span>
+                {% endif %}
             </div>
         </div>
-        {% if page.comments and site.disqus_shortname %}<section id="disqus_thread" class="animated fadeInUp"></section><!-- /#disqus_thread -->{% endif %}
-    </header>
+
+        <div class="article-body">
+            {{ content }}
+        </div>
+
+        {% if page.tags.size > 0 %}
+        <div class="article-tags">
+            {% for tag in page.tags %}
+            <a href="{{ site.url }}/tags/#{{ tag }}" title="Pages tagged {{ tag }}" class="tag">{{ tag }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </article>
+
+    {% if page.comments and site.disqus_shortname %}
+    <section id="disqus_thread"></section>
+    {% endif %}
+
     {% include scripts.html %}
     {% if site.mathjax == true %}
-    <!-- MathJax -->
     <script async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     {% endif %}
 </body>

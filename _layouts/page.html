@@ -2,33 +2,96 @@
 layout: compress
 ---
 <!DOCTYPE html>
-<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
-<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9"><![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"><!--<![endif]-->
+<html lang="en">
 <head>
     {% include head.html %}
+    <style>
+        body { background: #0a0a0a; }
+        .page-container {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 6rem;
+        }
+        .page-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #737373;
+            text-decoration: none;
+            margin-bottom: 2.5rem;
+            transition: color 0.2s;
+        }
+        .page-back:hover { color: #f59e0b; }
+        .page-header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .page-header h1 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 800;
+            color: #e5e5e5;
+            letter-spacing: -0.02em;
+            margin: 0;
+        }
+        .page-body {
+            color: #d4d4d4;
+            font-size: 1.05rem;
+            line-height: 1.85;
+        }
+        .page-body h2, .page-body h3, .page-body h4 {
+            color: #e5e5e5;
+            margin-top: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .page-body a {
+            color: #f59e0b;
+            text-decoration: underline;
+            text-decoration-color: rgba(245,158,11,0.3);
+            text-underline-offset: 3px;
+            transition: text-decoration-color 0.2s;
+        }
+        .page-body a:hover {
+            text-decoration-color: #f59e0b;
+        }
+        .page-body blockquote {
+            border-left: 3px solid #f59e0b;
+            padding-left: 1.25rem;
+            margin: 1.5rem 0;
+            color: #a3a3a3;
+            font-style: italic;
+        }
+        .page-body img {
+            border-radius: 6px;
+            margin: 1.5rem auto;
+        }
+        .page-body strong {
+            color: #e5e5e5;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
     {% include nav.html %}
-    <!-- Header -->
-    <header class="header" role="banner">
-        <div class="wrapper animated fadeIn">
-            <div class="content">
-                <div class="post-title {% if page.feature %} feature {% endif %}">
-                    <h1>{{ page.title }}</h1>
-                    <a class="btn zoombtn" href="{{site.url}}">
-                        <i class="fa fa-chevron-left"></i>
-                    </a>
-                </div>
-                {{ content }}
-            </div>
+    <div class="page-container">
+        <a href="{{ site.url }}/" class="page-back">← Home</a>
+
+        <div class="page-header">
+            <h1>{{ page.title }}</h1>
         </div>
-        {% if page.comments and site.disqus_shortname %}<section id="disqus_thread" class="animated fadeInUp"></section><!-- /#disqus_thread -->{% endif %}
-    </header>
+
+        <div class="page-body">
+            {{ content }}
+        </div>
+    </div>
+
+    {% if page.comments and site.disqus_shortname %}
+    <section id="disqus_thread"></section>
+    {% endif %}
+
     {% include scripts.html %}
     {% if site.mathjax == true %}
-    <!-- MathJax -->
     <script async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     {% endif %}
 </body>

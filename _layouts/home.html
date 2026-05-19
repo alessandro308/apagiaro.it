@@ -2,61 +2,308 @@
 layout: compress
 ---
 <!DOCTYPE html>
-<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
-<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9"><![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"><!--<![endif]-->
+<html lang="en">
 <head>
     {% include head.html %}
-    <link href="{{site.url}}/assets/css/imageBrightness.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            background: #0a0a0a;
+            font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+        }
+        .flow-section {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            overflow: hidden;
+        }
+        .flow-inner {
+            position: relative;
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 1.5rem;
+            padding: clamp(2rem, 8vw, 4vw) 4vw 4vw;
+            transform-origin: bottom left;
+            will-change: transform;
+        }
+        .flow-section hr {
+            border: none;
+            border-top: 1px solid currentColor;
+            opacity: 0.2;
+            margin: 2vw 0;
+        }
+        .flow-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+        .flow-heading {
+            font-size: clamp(3.5rem, 12vw, 14rem);
+            font-weight: 800;
+            line-height: 0.85;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            margin: 0;
+        }
+        .flow-text {
+            max-width: 55ch;
+            font-size: clamp(1rem, 2.5vw, 2rem);
+            font-weight: 400;
+            line-height: 1.6;
+        }
+        .flow-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3vw;
+        }
+        .flow-grid-item {
+            flex: 1;
+            min-width: 180px;
+        }
+        .flow-grid-item h4 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin: 0 0 0.5rem;
+        }
+        .flow-grid-item p {
+            font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+            line-height: 1.6;
+            opacity: 0.75;
+            margin: 0;
+        }
+        .flow-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+        }
+        .flow-links a {
+            opacity: 0.4;
+            text-decoration: none;
+            transition: opacity 0.2s, color 0.2s;
+        }
+        .flow-links a:hover {
+            opacity: 1;
+            color: #f59e0b;
+        }
+        .post-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-decoration: none;
+            transition: border-color 0.2s;
+        }
+        .post-row:hover {
+            border-color: rgba(245, 158, 11, 0.5);
+        }
+        .post-row-title {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: #fff;
+            transition: color 0.2s;
+        }
+        .post-row:hover .post-row-title {
+            color: #f59e0b;
+        }
+        .post-row-year {
+            font-size: 0.875rem;
+            opacity: 0.3;
+            margin-left: 1rem;
+            flex-shrink: 0;
+        }
+        .flow-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .flow-footer a {
+            color: #f59e0b;
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            text-decoration: none;
+        }
+        .flow-footer a:hover {
+            text-decoration: underline;
+        }
+        .flow-footer span {
+            font-size: 0.875rem;
+            opacity: 0.3;
+        }
+        .amber { color: #f59e0b; }
+        .flow-section a { color: inherit; }
+        .flow-section a.amber { color: #f59e0b; }
+
+        @media (max-width: 480px) {
+            .flow-inner { padding: 2rem 5vw 5vw; gap: 1rem; }
+            .flow-heading { font-size: clamp(2.5rem, 15vw, 6rem); }
+            .flow-grid { gap: 1.5rem; }
+            .flow-grid-item { min-width: 100%; }
+        }
+    </style>
 </head>
 <body>
-    {% if site.enableScrollBackground == true %}
-        <div id="bg" style="background: url({{ site.scrollImage }}) bottom left;"></div>
-        {% if site.enableOverlay == true %}
-        <div id="overlay" style="
-        background-image: url('assets/img/overlay-pattern.png'), url('assets/img/overlay.svg');"></div>
-        {% endif %}
-    {% endif %}
-    <div id="overlay" style="
-        background-image: url('assets/img/overlay-pattern.png'), url('assets/img/overlay.svg');"></div>
-    <!-- FINE BG -->
-    {% include nav.html %}
-    
-    <!-- Header -->
-    <header class="header flex" role="banner">
-        <div class="container animated fadeIn">
-            <div class="row">
-                    <a href="{{ site.url }}">
-                        <img src="{{ site.logo }}" class="img-circle zoombtn animated rotateIn">
-                    </a>
-                    <h3 class="title">
-                        <a class="zoombtn" href="{{ site.url }}">
-                        	<p style="font-size:1.2rem;font-weight:300">{{ site.title }}</p>
-			            </a>
-                    </h3>
-                    <hr class="hr-line">
-                    <h3 class="title">
-                        <a href="{{ site.url }}">
-                        	<p style="font-size:1rem;font-weight:300">{{ site.bio }}</p>
-			            </a>
-                    </h3>
-                    {% include social-links.html %}
-                  <hr class="hr-line">
-                  <h3 class="title">
-                         <a class="btn zoombtn" href="{{ site.url }}/about">
-                         About
-                         </a>
-                         <a class="btn zoombtn" href="{{ site.url }}/posts">
-                         Posts
-                         </a>
-                         <a class="btn zoombtn" href="{{ site.url }}/projects">
-                         Projects
-                         </a>
-                 </h3>
+    <main aria-label="Alessandro Pagiaro — Portfolio">
+
+        <!-- Slide 1: Hero -->
+        <section class="flow-section" style="background:#0a0a0a; color:#e5e5e5;">
+            <div class="flow-inner">
+                <p class="flow-label amber">01 — Hello</p>
+                <hr>
+                <h1 class="flow-heading">Alessandro<br>Pagiaro</h1>
+                <hr>
+                <p class="flow-text" style="margin-top:auto; opacity:0.7;">
+                    Tech Lead &amp; Engineering Manager at
+                    <a href="https://www.domotz.com" target="_blank" rel="noopener" class="amber" style="text-decoration:none;">Domotz</a>.
+                    Based in Pisa, Italy.
+                </p>
+                <div class="flow-links" style="color:#e5e5e5;">
+                    <a href="https://github.com/alessandro308" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://linkedin.com/in/alessandro-pagiaro-9a5a5496" target="_blank" rel="noopener">LinkedIn</a>
+                    <a href="https://telegram.me/alessandro308" target="_blank" rel="noopener">Telegram</a>
+                    <a href="mailto:alessandropagiaro@gmail.com">Email</a>
+                </div>
             </div>
-        </div>
-    </header>
-    {% include scripts.html %}
+        </section>
+
+        <!-- Slide 2: What I Do -->
+        <section class="flow-section" style="background:#fd5200; color:#fff;">
+            <div class="flow-inner">
+                <p class="flow-label">02 — What I Do</p>
+                <hr>
+                <h2 class="flow-heading">Build.<br>Lead.<br>Ship.</h2>
+                <hr>
+                <div class="flow-grid">
+                    <div class="flow-grid-item">
+                        <h4>AI Transformation</h4>
+                        <p>Driving AI adoption across the company — MCP servers, agent development, LLM-assisted workflows, and evaluation pipelines.</p>
+                    </div>
+                    <div class="flow-grid-item">
+                        <h4>Product Engineering</h4>
+                        <p>Understanding the business to deliver valuable features. From frontend architecture to backend services, across the full stack.</p>
+                    </div>
+                    <div class="flow-grid-item">
+                        <h4>Engineering Leadership</h4>
+                        <p>Mentoring developers, designing systems, and making sure teams ship reliably at scale.</p>
+                    </div>
+                </div>
+                <hr>
+                <p class="flow-text" style="margin-top:auto;">
+                    From hands-on code to people leadership — I sit at the intersection, and I like it here.
+                </p>
+            </div>
+        </section>
+
+        <!-- Slide 3: Background -->
+        <section class="flow-section" style="background:#F5F0E8; color:#000;">
+            <div class="flow-inner">
+                <p class="flow-label">03 — Background</p>
+                <hr>
+                <h2 class="flow-heading">The<br>Path</h2>
+                <hr>
+                <div class="flow-grid">
+                    <div class="flow-grid-item">
+                        <h4>Domotz</h4>
+                        <p>Tech Lead &amp; Engineering Manager. From platform engineering to AI transformation. Pisa, Italy.</p>
+                    </div>
+                    <div class="flow-grid-item">
+                        <h4>Yelp</h4>
+                        <p>FullStack Engineer Intern. First encounter with remote dev environments and large-scale microservices. Hamburg, Germany.</p>
+                    </div>
+                    <div class="flow-grid-item">
+                        <h4>University of Pisa</h4>
+                        <p>MSc in Computer Science. Research interests in cryptography and distributed systems.</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="flow-grid">
+                    <div class="flow-grid-item">
+                        <h4>Stack</h4>
+                        <p>React · TypeScript · Python · Docker · FastAPI · Node.js</p>
+                    </div>
+                    <div class="flow-grid-item">
+                        <h4>Interests</h4>
+                        <p>AI agents · MCP protocol · Frontend architecture · Cloud infrastructure · Cryptography</p>
+                    </div>
+                    <div class="flow-grid-item">
+                        <h4>Off the Clock</h4>
+                        <p>Mountains · Chess on LiChess · Guitar (my friends disagree) · Former scout leader</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Blog Posts -->
+        <section class="flow-section" style="background:#000; color:#fff;">
+            <div class="flow-inner">
+                <p class="flow-label amber">04 — Writing</p>
+                <hr>
+                <h2 class="flow-heading">From<br>The<br>Blog</h2>
+                <hr>
+                <div>
+                    {% for post in site.posts limit:6 %}
+                    {% if post.project == null %}
+                    <a href="{{ site.url }}{{ post.url }}" class="post-row">
+                        <span class="post-row-title">{{ post.title }}</span>
+                        <span class="post-row-year">{{ post.date | date: "%Y" }}</span>
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <hr>
+                <div class="flow-footer">
+                    <a href="{{ site.url }}/posts/">View all articles →</a>
+                    <span>© {{ site.time | date: '%Y' }} {{ site.title }}</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!prefersReduced) {
+            var sections = document.querySelectorAll('.flow-section');
+            sections.forEach(function(section, i) {
+                gsap.set(section, { zIndex: i + 1 });
+                var inner = section.querySelector('.flow-inner');
+                if (!inner) return;
+
+                if (i > 0) {
+                    gsap.set(inner, { rotation: 30, transformOrigin: 'bottom left' });
+                    gsap.to(inner, {
+                        rotation: 0,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top bottom',
+                            end: 'top 25%',
+                            scrub: true
+                        }
+                    });
+                }
+
+                if (i < sections.length - 1) {
+                    ScrollTrigger.create({
+                        trigger: section,
+                        start: 'bottom bottom',
+                        end: 'bottom top',
+                        pin: true,
+                        pinSpacing: false
+                    });
+                }
+            });
+        }
+    </script>
 </body>
 </html>

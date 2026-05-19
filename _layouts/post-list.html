@@ -2,49 +2,102 @@
 layout: compress
 ---
 <!DOCTYPE html>
-<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
-<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9"><![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"><!--<![endif]-->
+<html lang="en">
 <head>
     {% include head.html %}
+    <style>
+        body { background: #0a0a0a; }
+        .blog-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 6rem;
+        }
+        .blog-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        .blog-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #737373;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+        .blog-back:hover { color: #f59e0b; }
+        .blog-header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            color: #e5e5e5;
+            letter-spacing: -0.02em;
+            margin: 0;
+        }
+        .post-item {
+            display: block;
+            padding: 1.25rem 0;
+            border-bottom: 1px solid #1e1e1e;
+            text-decoration: none;
+            transition: border-color 0.2s;
+        }
+        .post-item:hover { border-color: rgba(245, 158, 11, 0.4); }
+        .post-item-top {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .post-item-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #e5e5e5;
+            transition: color 0.2s;
+            line-height: 1.4;
+        }
+        .post-item:hover .post-item-title { color: #f59e0b; }
+        .post-item-date {
+            font-size: 0.8rem;
+            color: #404040;
+            flex-shrink: 0;
+            font-variant-numeric: tabular-nums;
+        }
+        .post-item-excerpt {
+            font-size: 0.9rem;
+            color: #737373;
+            margin-top: 0.35rem;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
-    {% if site.addScrollOnPageList == true %}
-        <div id="bg" style="background: url({{ site.url }}/{{ site.scrollImage }}) bottom left;"></div>
-    {% endif %}
-    <div id="overlay" style="
-            background-image: url('{{site.url}}/assets/img/overlay-pattern.png'), url('{{site.url}}/assets/img/overlay.svg');"></div>
     {% include nav.html %}
-    <!-- Header -->
-    <header class="header" role="banner">
-        
-        <div class="wrapper animated fadeIn">
-            <div class="content">
-                <div class="post-title">
-                    <h1>{{ page.title }}</h1>
-                    <a class="btn zoombtn" href="{{site.url}}">
-                        <i class="fa fa-home"></i>
-                    </a>
-                </div>
-                <div class="post-list">
-                    {% for post in site.posts %} 
-                        {% if post.project == null %}
-                    <ul>
-                        <li class="wow fadeInLeft" data-wow-duration="1.5s">
-                            <a class="zoombtn" href="{{ site.url }}{{ post.url }}">{{ post.title }}</a>
-                            <p>{{ post.excerpt }}</p>
-                            <a href="{{ site.url }}{{ post.url }}" class="btn zoombtn">Read More</a>
-                        </li>
-                    </ul>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
+    <div class="blog-container">
+        <div class="blog-header">
+            <a href="{{ site.url }}/" class="blog-back">← Home</a>
+            <h1>{{ page.title }}</h1>
         </div>
-    </header>
+        <div>
+            {% for post in site.posts %}
+                {% if post.project == null %}
+                <a href="{{ site.url }}{{ post.url }}" class="post-item">
+                    <div class="post-item-top">
+                        <span class="post-item-title">{{ post.title }}</span>
+                        <span class="post-item-date">{{ post.date | date: "%b %Y" }}</span>
+                    </div>
+                    {% if post.excerpt %}
+                    <p class="post-item-excerpt">{{ post.excerpt | strip_html | truncatewords: 25 }}</p>
+                    {% endif %}
+                </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
     {% include scripts.html %}
-    <script src="{{ site.url }}/assets/js/wow.min.js"></script>
-    <script type="text/javascript">(new WOW).init();</script>
 </body>
 </html>
