@@ -6,26 +6,18 @@ date: 2017-07-01
 comments: false
 ---
 
-<!--<img src="{{ site.url }}/assets/img/me2.png" style="width: 200px; margin: 10px" align="left" />-->
-I'm a young italian developer that looking for new techologies (especially web techologies). I'm constantly looking for projects that can help me to expand my knowledge.
+I'm a Frontend Tech Lead and Engineering Manager at [Domotz](https://www.domotz.com/), based in Pisa, Italy. After leading a platform team that scaled our frontend architecture through micro-frontends adoption and developer experience, I'm now driving the AI transformation of the company — from AI-powered workflows and MCP server development to agent integration and LLM-assisted tooling. My work sits at the intersection of hands-on engineering and people leadership: I design systems, mentor developers, and make sure our teams ship reliably.
 
-My tech interests are about clouding, application management, crittography and web tecnologies.
-I completed my master degree in Computer Science at University of Pisa in March 2019. After my first work experience as FullStack Engineer Intern at [Yelp](https://www.yelp.com/), based in Hamburg (Germany), I moved in Pisa again and I currently work in Pisa, at [Domotz](https://www.domotz.com/).
+Before taking on a leadership role, I spent years as a FullStack Engineer building web applications across the entire stack. I started my career with an internship at [Yelp](https://www.yelp.com/) in Hamburg, Germany, where I first worked with remote development environments and large-scale microservice architectures. I hold a Master's degree in Computer Science from the University of Pisa.
 
-From 2003 till 2018, I was a member of AGESCI, an italian scout association. My scout experience started in Rome, when I was 9, then I moved to Latina and finally in Pisa, where I was a scout leader in _Pisa 3_ group. When I have the opportunity, I continue to go to the mountains, even just to enjoy beautiful landscapes like this.
+My technical interests span frontend architecture, cloud infrastructure, AI-assisted development workflows, and cryptography. I'm a strong believer in testing as a first-class practice — whether it's unit tests, e2e pipelines, or evaluating MCP tools against real LLMs.
+
+---
+
+When I'm not writing code, you can probably find me in the mountains. From 2003 to 2018 I was a member of AGESCI, an Italian scout association — starting in Rome when I was 9, then moving to Latina, and finally serving as a scout leader in _Pisa 3_. I still take every chance I get to hike, even just to enjoy landscapes like this one.
 <img src="{{site.url}}/assets/img/majella.jpg" />
 
-Since I was in elementary school (thank you teacher Antonella!), I play chess. Sometimes you can find me on [LiChess](https://lichess.org).
-On my free time I also play a guitar, even if my friends ask me to stop... But I continue, just for them pleasure!
-
-### Bitcoin
-My bechelor thesis is about Bitcoin. [Here]({{ site.url }}/assets/main.pdf) (in italian) you can find the paper, below, the presentation.
-
-<iframe src="//slides.com/alessandropagiaro/la-blockchain-2/embed" width="576" height="420" scrolling="no" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-[Full screen size](http://slides.com/alessandropagiaro/la-blockchain-2/live#/)
-
-If you would like to send me Bitcoin this is my wallet: `1CZJk6yZcKMnS9sDKYpXnXKFRKRWH9mXjg`
-
-I have Ethereum too, this is the address: `0x07167794AbB2142a37AC961d3528Bab3b4fD6e92`
+Since elementary school (thank you teacher Antonella!), I play chess. You can sometimes find me on [LiChess](https://lichess.org).
+I also play guitar, even if my friends keep asking me to stop. But I continue, just for their pleasure!
 
 This site is built with Jekyll and GitHub Pages, using the [Moon theme edited by me](https://github.com/alessandro308/Moon).

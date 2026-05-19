@@ -1,7 +1,7 @@
 # Site
 title:              Alessandro Pagiaro
-bio:                'Software & Web Developer'
-description:        "FullStack Software Engineer @ Domotz (Pisa, Italy)."
+bio:                'Frontend Tech Lead & Engineering Manager'
+description:        "Leading platform engineering @ Domotz — Pisa, Italy."
 reading_time:       true
 words_per_minute:   200
 logo:               'assets/img/me.png'
@@ -48,12 +48,12 @@ disqus_shortname:   alessandro308
   #ad-slot:
 #bing-verify:
 email:              alessandropagiaro@gmail.com
-twitter:            alessandro308
+#twitter:            alessandro308
 #facebook:           alessandro308
 github-url:         alessandro308
 #stackoverflow:     123456/username   from a "http://stackoverflow.com/users/123456/username" link
 linkedin:          alessandro-pagiaro-9a5a5496
-skype:              alessandro_308
+#skype:              alessandro_308
 telegram:           alessandro308
 #xing:              username
 #instagram:          username
