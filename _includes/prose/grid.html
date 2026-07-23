@@ -1,0 +1,14 @@
+{% comment %}
+Two-column card grid. Items are "Title|Body", separated by ";;".
+Param:
+  items - e.g. "Review|Judge the change.;;Debug|Fix it at 3am."
+{% endcomment %}
+<div class="prose-c">
+<div class="prose-grid">
+{% assign pc_cells = include.items | split: ";;" %}
+{% for pc_cell in pc_cells %}
+{% assign pc_parts = pc_cell | split: "|" %}
+<div class="prose-grid__cell"><b>{{ pc_parts[0] | strip }}</b>{% if pc_parts[1] %}{{ pc_parts[1] | strip }}{% endif %}</div>
+{% endfor %}
+</div>
+</div>

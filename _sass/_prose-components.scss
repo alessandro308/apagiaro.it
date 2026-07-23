@@ -1,0 +1,199 @@
+// ---------------------------------------------------------------------------
+//  Prose components
+//  Reusable editorial building blocks for blog posts.
+//  Markup lives in _includes/prose/*.html, behaviour in assets/js/prose-components.js
+//  Usage examples:
+//    {% include prose/lede.html eyebrow="..." text="..." %}
+//    {% include prose/split.html left_label="The agent" left="..." right_label="You" right="..." %}
+//    {% include prose/callout.html label="The move" text="..." tone="machine" %}
+//    {% include prose/steps.html items="Title|Body;;Title|Body" %}
+//    {% include prose/grid.html items="Title|Body;;Title|Body" %}
+// ---------------------------------------------------------------------------
+
+.prose-c {
+  --pc-machine: #5bb6c7;
+  --pc-machine-deep: #7cc9d8;
+  --pc-machine-glow: rgba(91, 182, 199, 0.09);
+  --pc-human: #f59e0b;
+  --pc-human-deep: #fbbf24;
+  --pc-line: #2a2a2a;
+  --pc-panel: #141414;
+  --pc-ink: #e5e5e5;
+  --pc-ink-soft: #a3a3a3;
+  --pc-ink-faint: #737373;
+  --pc-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+// --- eyebrow + lede -------------------------------------------------------
+.prose-eyebrow {
+  font-family: var(--pc-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--pc-human);
+  margin: 0 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+
+  &::before { content: ""; width: 1.6rem; height: 1px; background: var(--pc-human); }
+}
+
+.prose-lede {
+  font-size: clamp(1.35rem, 3.2vw, 1.9rem);
+  line-height: 1.28;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--pc-ink);
+  margin: 0.5rem 0 0;
+
+  .prose-lede__machine { color: var(--pc-machine-deep); }
+  .prose-lede__human   { color: var(--pc-human-deep); }
+}
+
+// --- split (agent vs you), static -----------------------------------------
+.prose-split-wrap { margin: 2.5rem 0; }
+
+.prose-split {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  border: 1px solid var(--pc-line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--pc-panel);
+
+  &__side { padding: 1.4rem 1.5rem; }
+  &__side--b { text-align: right; }
+
+  &__lbl {
+    font-family: var(--pc-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin: 0 0 0.55rem;
+  }
+  &__side--a &__lbl { color: var(--pc-machine); }
+  &__side--b &__lbl { color: var(--pc-human); }
+
+  &__side p { margin: 0; font-size: 0.92rem; line-height: 1.6; color: var(--pc-ink-soft); }
+
+  &__rift {
+    position: relative;
+    width: clamp(2rem, 7vw, 3.5rem);
+    background: repeating-linear-gradient(-45deg, var(--pc-line) 0 1px, transparent 1px 7px);
+    border-left: 1px solid var(--pc-line);
+    border-right: 1px solid var(--pc-line);
+  }
+
+  &__drift {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--pc-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    color: var(--pc-ink-faint);
+    background: var(--pc-panel);
+    padding: 0.35rem 0;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+}
+
+// --- callout --------------------------------------------------------------
+.prose-callout {
+  border-radius: 10px;
+  padding: 1.5rem 1.6rem;
+  margin: 2rem 0;
+  background: var(--pc-machine-glow);
+  border: 1px solid var(--pc-machine);
+
+  &--human { background: rgba(245, 158, 11, 0.08); border-color: var(--pc-human); }
+
+  &__label {
+    font-family: var(--pc-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--pc-machine-deep);
+    margin: 0 0 0.7rem;
+  }
+  &--human &__label { color: var(--pc-human-deep); }
+
+  p { margin: 0; color: var(--pc-ink); font-size: 1rem; line-height: 1.7; }
+}
+
+// --- numbered steps -------------------------------------------------------
+.prose-steps {
+  margin: 2rem 0;
+  display: grid;
+  gap: 0;
+
+  &__item {
+    display: flex;
+    gap: 0.9rem;
+    align-items: baseline;
+    padding: 0.9rem 0;
+    border-top: 1px solid var(--pc-line);
+    font-size: 0.98rem;
+    color: var(--pc-ink-soft);
+    line-height: 1.55;
+
+    &:last-child { border-bottom: 1px solid var(--pc-line); }
+
+    b { color: var(--pc-ink); font-weight: 600; }
+  }
+
+  &__n {
+    font-family: var(--pc-mono);
+    font-size: 0.8rem;
+    color: var(--pc-machine);
+    flex: none;
+    width: 1.5rem;
+  }
+}
+
+// --- grid -----------------------------------------------------------------
+.prose-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.7rem;
+  margin: 2rem 0;
+
+  &__cell {
+    border: 1px solid var(--pc-line);
+    border-radius: 8px;
+    padding: 0.95rem 1.1rem;
+    font-size: 0.92rem;
+    color: var(--pc-ink-soft);
+    background: var(--pc-panel);
+    line-height: 1.5;
+
+    b {
+      display: block;
+      font-family: var(--pc-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+      color: var(--pc-human);
+    }
+  }
+}
+
+@media (max-width: 34rem) {
+  .prose-grid { grid-template-columns: 1fr; }
+
+  .prose-split { grid-template-columns: 1fr; }
+  .prose-split__side--b { text-align: left; }
+  .prose-split__rift {
+    width: auto;
+    height: 1.4rem;
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid var(--pc-line);
+    border-bottom: 1px solid var(--pc-line);
+  }
+  .prose-split__drift { writing-mode: horizontal-tb; }
+}

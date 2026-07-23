@@ -1,0 +1,11 @@
+{% comment %}
+Eyebrow + large opening statement.
+Params:
+  eyebrow  - small uppercase kicker (optional)
+  text     - the statement (HTML allowed; use
+             <span class="prose-lede__machine"> / <span class="prose-lede__human"> for accents)
+{% endcomment %}
+<div class="prose-c">
+{% if include.eyebrow %}<p class="prose-eyebrow">{{ include.eyebrow }}</p>{% endif %}
+<p class="prose-lede">{{ include.text }}</p>
+</div>

@@ -1,0 +1,5 @@
+# Local development overrides. Merged on top of _config.yml when serving locally:
+#   jekyll serve --config _config.yml,_config_dev.yml
+# Empties site.url so {{ site.url }}/assets/... resolves to the local server
+# instead of the production domain (otherwise local pages load production CSS/JS).
+url: ""

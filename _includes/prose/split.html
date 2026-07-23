@@ -1,0 +1,20 @@
+{% comment %}
+Two-panel split (static) contrasting two sides, with a hatched center divider.
+Params:
+  left_label / left    - label + body for the left panel
+  right_label / right  - label + body for the right panel
+  divider              - tiny label on the center rift (default "drift")
+{% endcomment %}
+<div class="prose-c prose-split-wrap">
+<div class="prose-split">
+<div class="prose-split__side prose-split__side--a">
+<p class="prose-split__lbl">{{ include.left_label }}</p>
+<p>{{ include.left }}</p>
+</div>
+<div class="prose-split__rift" aria-hidden="true"><span class="prose-split__drift">{{ include.divider | default: "drift" }}</span></div>
+<div class="prose-split__side prose-split__side--b">
+<p class="prose-split__lbl">{{ include.right_label }}</p>
+<p>{{ include.right }}</p>
+</div>
+</div>
+</div>

@@ -1,0 +1,14 @@
+{% comment %}
+Numbered list. Items are "Bold lead|rest of line", separated by ";;".
+Param:
+  items - e.g. "What problem did we find?|Often not the ticket's.;;Why?|The root cause."
+{% endcomment %}
+<div class="prose-c">
+<div class="prose-steps">
+{% assign pc_rows = include.items | split: ";;" %}
+{% for pc_row in pc_rows %}
+{% assign pc_parts = pc_row | split: "|" %}
+<div class="prose-steps__item"><span class="prose-steps__n">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span><span><b>{{ pc_parts[0] | strip }}</b>{% if pc_parts[1] %} {{ pc_parts[1] | strip }}{% endif %}</span></div>
+{% endfor %}
+</div>
+</div>

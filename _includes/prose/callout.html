@@ -1,0 +1,13 @@
+{% comment %}
+Accented callout box.
+Params:
+  label - small uppercase label (optional)
+  text  - body (HTML allowed)
+  tone  - "machine" (default, teal) or "human" (amber)
+{% endcomment %}
+<div class="prose-c">
+<div class="prose-callout{% if include.tone == 'human' %} prose-callout--human{% endif %}">
+{% if include.label %}<p class="prose-callout__label">{{ include.label }}</p>{% endif %}
+<p>{{ include.text }}</p>
+</div>
+</div>
