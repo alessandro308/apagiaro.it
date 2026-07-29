@@ -10,6 +10,8 @@ tag:
 comments: true
 ---
 
+{% include prose/callout.html tone="human" label="Heads up" text="The MCP protocol was updated on 28 July 2026. Some of the details below &mdash; especially around tool discovery and visibility APIs &mdash; may no longer be accurate. Check the current spec before relying on them." %}
+
 The AI community has already noticed: CLI-based tool calling tends to be more token-efficient than MCP. And yet, there are scenarios where MCP is clearly the better fit. If you need remote business logic, if you want control over incoming requests, if you're running proprietary code, or if you're exposing tools to clients that simply cannot execute local commands — MCP is the way to go.
 
 But there's a problem that grows with your server: **context bloating**.
