@@ -1,7 +1,8 @@
 FROM ruby:2.6
 
 # Install dependencies
-RUN apt-get update -qq && apt-get install -y build-essential nodejs
+# ruby:2.6 is based on Debian Buster, whose packages moved to archive.debian.org
+RUN sed -i "s|deb.debian.org|archive.debian.org|g; s|security.debian.org|archive.debian.org|g; /buster-updates/d" /etc/apt/sources.list && apt-get update -qq && apt-get install -y build-essential nodejs
 
 # Set locale
 ENV LC_ALL C.UTF-8
