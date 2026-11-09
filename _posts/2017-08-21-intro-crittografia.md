@@ -7,7 +7,7 @@ tag:
 - crittografia
 - RSA
 comments: true
-feature: http://www.androidworld.it/wp-content/uploads/2015/03/crittografia-1280x720.jpg
+feature: /assets/img/post-image/crittografia.jpg
 ---
 
 Da sempre l'uomo cerca modi per nascondere i propri messaggi. Erodoto narra che nell'antica Persia i messaggi venivano scritti sulla testa degli schiavi, si attendeva che i capelli crescessero e venivano mandati come messaggeri. 
@@ -17,7 +17,9 @@ Iniziamo subito nel dire che esistono due tipi di <a href="#glossario">algoritmi
 Quelli simmetrici sono quelli che solitamente ti immagini quando pensi ad un modo per cifrare e decifrare qualcosa. All'asilo scrivevi le parole al contrario, quello era una algoritmo simmetrico perchè per decifrare il tutto dovevi... beh, dovevi semplicemente leggere le parole al contrario. L'idea, nel caso simmetrico, è quello che la <a href="#glossario">chiave</a> di cifratura è la stessa di decifratura.
 
 Un esempio di cifrario simmetrico piuttosto semplice è quello di Cesare dove ogni lettera viene sostituita da un'altra applicando uno <i>shift</i> all'alfabeto. Questa immagine vi chiarirà tutto:
-![cifrario di cesare](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Caesar3.svg/300px-Caesar3.svg.png)
+![cifrario di cesare]({{ site.url }}/assets/img/post-image/caesar-cipher.png)
+<small>Immagine: [Caesar3.svg](https://commons.wikimedia.org/wiki/File:Caesar3.svg) di Cepheus, pubblico dominio, via Wikimedia Commons.</small>
+
 In questo caso, la chiave sarà la quantità di lettere traslate, nell'immagine <i>chiave=2</i>.
 
 # Il problema dello scambio della chiave

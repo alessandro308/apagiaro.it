@@ -8,13 +8,14 @@ tag:
 - RSA
 - firma digitale
 comments: true
-feature: http://www.androidworld.it/wp-content/uploads/2015/03/crittografia-1280x720.jpg
+feature: /assets/img/post-image/crittografia.jpg
 ---
 Dopo aver visto nella [prima parte]({{ site.url}}/intro-crittografia) come scambiarsi una chiave senza doverla comunicare in chiaro, abbiamo visto nella [seconda parte]({{ site.url}}/intro-crittografia-2) come è possibile scambiarsi messaggi cifrati senza neanche doversi scambiare una chiave, tramite l'uso dell'RSA.
 
 Lo scopo di oggi è vedere come sfruttare l'RSA, o qualsiasi altro algoritmo di cifratura asimmetrico, per verificare l'identità di un mittente come se lui lo avesse firmato.
 
-![firma](http://www.ordineingegneri.ancona.it/sites/default/files/firmadigitale.jpg)
+![schema della firma digitale]({{ site.url }}/assets/img/post-image/digital-signature-diagram.png)
+<small>Immagine: [Digital Signature diagram.svg](https://commons.wikimedia.org/wiki/File:Digital_Signature_diagram.svg) di Acdx, [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/), via Wikimedia Commons.</small>
 
 # La firma digitale
 Bob mi manda un messaggio: "Il pagamento puoi effettuarlo al seguente IBAN: IT000....001". Ed ecco il problema, come verifico che quel messaggio sia stato spedito effettivamente da Bob e non sia stato intercettato da qualcuno che ha prontamente modificato l'IBAN con il suo?

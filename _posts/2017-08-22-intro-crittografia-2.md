@@ -7,14 +7,16 @@ tag:
 - crittografia
 - RSA
 comments: true
-feature: http://www.androidworld.it/wp-content/uploads/2015/03/crittografia-1280x720.jpg
+feature: /assets/img/post-image/crittografia.jpg
 ---
 Come avevamo già visto nella [prima parte]({{ site.url}}/intro-crittografia), uno dei problemi principale di quando dobbiamo cifrare qualcosa è il comunicare la chiave di decifrazione al destinatario in quanto non possiamo cifrarla in alcun modo. A risolvere questo problema ci pensano gli algoritmi di crittografia asimmetrica. 
 
 Avete presente quel discorso fatto nella [prima parte]({{ site.url}}/intro-crittografia) in cui si diceva che trovare un inverso di un numero <i>n</i> quando c'è di mezzo l'operatore *modulo* non è poi così tanto banale? Ecco, è proprio ancora questa cosa che venne in aiuto a Ronald Rivest, Adi Shamir e Leonard Adleman nel 1977. 
 
 ## Come avremmo fatto 100 anni fa..
-![lucchetti](http://www.intecosas.com/immagini/catalogo/materiali_consumo/lucchetti_CISA/lucchetto_ottone.jpg)
+![lucchetto]({{ site.url }}/assets/img/post-image/padlock.png)
+<small>Immagine: [Padlock.svg](https://commons.wikimedia.org/wiki/File:Padlock.svg) di AJ Ashton, CC0, via Wikimedia Commons.</small>
+
 In uno scenario classico, se volessimo scambiarci messaggi tramite posta assicurandoci che nessuno di noi legga il messaggio potremmo fare una cosa del genere :
  - Ti mando una scatolina con dentro il messaggio e chiudo la scatolina con un lucchetto
 
