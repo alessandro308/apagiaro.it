@@ -29,7 +29,7 @@ Come avevamo già visto, ogni utente in un sistema di crittografia asimmetrica d
 ## Come firmare un messaggio
 Per firmare un messaggio dobbiamo quindi trovare un modo per sfruttare cifrare il messaggio in un modo che solo il reale mittente potrebbe fare. 
 
-La cosa che potrebbe certificare il mittente di essere Bob è il dimostrare di conoscere la sua chiave privata, \\( k_{pr-B}\\). Certo, Bob non può però rivelare al mondo (altrimenti non sarebbe più privata) questo dato e quindi escogita un modo che trovo geniale: usa l'algoritmo di cifratura al contrario, invece che cifrare con la chiave pubblica del ricevente, cifra con la sua chiave privata. Chiaramente tutti saranno in grado di "decifrare" il messaggio, basterà applicare la chiave pubblica di Bob. Il nostro scopo infatti, vi ricordo, non è cifrare il messaggio ma fare in modo di verificare l'identità del mittente.
+La cosa che potrebbe certificare il mittente di essere Bob è il dimostrare di conoscere la sua chiave privata, \\( k_{pr\text{-}B} \\). Certo, Bob non può però rivelare al mondo (altrimenti non sarebbe più privata) questo dato e quindi escogita un modo che trovo geniale: usa l'algoritmo di cifratura al contrario, invece che cifrare con la chiave pubblica del ricevente, cifra con la sua chiave privata. Chiaramente tutti saranno in grado di "decifrare" il messaggio, basterà applicare la chiave pubblica di Bob. Il nostro scopo infatti, vi ricordo, non è cifrare il messaggio ma fare in modo di verificare l'identità del mittente.
 
 Cosa comporta questo? Che il messaggio è cifrato con una chiave che solo Bob può conoscere e di cui tutti sono in grado di verificarne la correttezza poichè tutti conoscono la *chiave pubblica* di Bob e quindi, dato che una è *"inverso"* dell'altra, è possibile effettuare \\( m = C(C(m, k_{pr}), k_{pu}) \\). 
 
@@ -44,7 +44,7 @@ Come aggirare il problema? Non viene di solito cifrato il messagio completo ma u
 Ecco, questa cosa è forse un po' tecnica e si discosta un po' dal *mood* di queste pagine che volevano essere una cosa generale da far capire a tutti. Tuttavia provo a lasciare le cose più semplici possibili, decidete voi se lo sono abbastanza da leggerle.
 
 Una funzione hash è una funzione che, dato in input un qualsiasi messaggio (stringa di bits di qualsiasi lunghezza), restituisce in output una serie di bits di lunghezza fissa. Chiaramente questa cosa comporta che vi sono moltissimi (leggasi infiniti) messaggi che possono corrispondere ad uno stesso *hash*, cioè:
-\\[ \exists i, j \ s.t.\ h(i)=h(j) \\]
+\\[ \exists\, i \neq j \ \text{t.c.}\ h(i) = h(j) \\]
 
 Tale affermazione è abbastanza intuitiva, infiniti inputs, finiti possibili outputs, infiniti inputs collideranno per il *pigeonhole principle*.
 
@@ -61,9 +61,9 @@ Un'altra caratteristica di queste funzioni, per la loro natura dimensionale (inf
 
 L'idea, per tornare ai nostri scopi, è di per sè molto semplice: mandare due valori, il messaggio in chiaro e l'hash del messaggio cifrato con la chiave privata
 
-\\[ <m, C(h(m), K_{pr-B})> \\]
+\\[ \langle m, C(h(m), k_{pr\text{-}B}) \rangle \\]
 
-Un eventuale ricevente non deve far nient'altro che prendere la *chiave pubblica* di Bob, e applicarla al secondo componente spedito. Se il procedimento è andato a buon fine il risultato sarà \\( <m, h(m)> \\). Basterà quindi calcolare l'hash di *m* e confrontarlo con il risultato della decifratura. 
+Un eventuale ricevente non deve far nient'altro che prendere la *chiave pubblica* di Bob, e applicarla al secondo componente spedito. Se il procedimento è andato a buon fine il risultato sarà \\( \langle m, h(m) \rangle \\). Basterà quindi calcolare l'hash di *m* e confrontarlo con il risultato della decifratura. 
 
 ![facebook certificato]({{ site.url }}/assets/img/post-image/facebook-certificate.png)
 

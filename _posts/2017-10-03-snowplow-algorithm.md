@@ -46,7 +46,7 @@ So the sorted runs are:
  - 1 5 9 42
 
 ## Conclusion
-As Ferragina says on [1], *Snow-Plow builds `O(n=M)` sorted runs, each longer than M and actually of length 2M on average. Using Snow-Plow for the formation of sorted runs in a Merge-based sorting scheme, this achieves an I/O-complexity of \\( O(\frac{n}{B}log_{2}{\frac{n}{2M}})\\) on average.*
+As Ferragina says on [1], *Snow-Plow builds \\( O(n/M) \\) sorted runs, each longer than M and actually of length 2M on average. Using Snow-Plow for the formation of sorted runs in a Merge-based sorting scheme, this achieves an I/O-complexity of \\( O(\frac{n}{B} \log_2 \frac{n}{2M}) \\) on average.*
 ## References
 [1] The magic of Algorithm, lecture notes of Paolo Ferragina
 

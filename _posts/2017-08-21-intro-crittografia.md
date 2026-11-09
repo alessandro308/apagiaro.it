@@ -33,9 +33,9 @@ Introduciamo un <a href="#glossario">operatore matematico</a> chiamato <i>modulo
 
 Facciamo un paio di esempi:
 
-\\[ 10 \ mod \ 3 = 1 \\]
+\\[ 10 \bmod 3 = 1 \\]
 
-Questo perchè 10 diviso 3 fa 3 con il resto di 1. Se è chiaro il concetto, sapete dirmi quanto fa \\( 15 \ mod\ 4  \\)?
+Questo perchè 10 diviso 3 fa 3 con il resto di 1. Se è chiaro il concetto, sapete dirmi quanto fa \\( 15 \bmod 4 \\)?
 Il risultato è 3. È interessante notare che il risultato dell'operatore modulo tra due numeri <i>x</i> e <i>y</i> è al più <i>y-1</i>, altrimenti potevo dividere ancora per <i>y</i> e il resto inferiore. Ma forse vi sto solo confondendo con questa ultima frase... Quindi, torniamo a noi. 
 
 Un'altro operatore che andiamo ad usare è l'elevamento a potenza, molto più familiare a tutti noi che ci dice quante volte un numero deve essere moltiplicato per se stesso:
@@ -49,25 +49,25 @@ Chiamiamo i due tipi che vogliono trovare una chiave condivisa comune Alice e Bo
  - A e B si accordano su due numeri, \\( p, g \\), dove p è un numero primo e g è un <a href="#glossario">generatore</a>. Nel nostro esempio <i> p = 23, g=5</i>. Questi numeri vengono scambiati tra Alice e Bob in maniera del tutto normale, senza dover nascondere nulla.
  - A questo punto, Alice sceglie un suo numero <b>segreto</b> a e Bob fa lo stesso, scegliendo un numero b.
  Nel nostro esempio: <i>a=6, b=15</i>.
- - Alice manda a Bob \\(g^a\ mod\ p \\), nel nostro esempio \\( 5^6\ mod\ 23 = 8 \\).
- - Bob fa lo stesso, mandando ad Alice \\(g^b\ mod\ p \\), cioè \\(5^{15}\ mod\ 23 = 19 \\).
+ - Alice manda a Bob \\( g^a \bmod p \\), nel nostro esempio \\( 5^6 \bmod 23 = 8 \\).
+ - Bob fa lo stesso, mandando ad Alice \\( g^b \bmod p \\), cioè \\( 5^{15} \bmod 23 = 19 \\).
  - A questo punto, sia Bob che Alice sono in grado di calcolare la chiave finale prendendo il numero che gli è arrivato ed elevandolo con il loro numero segreto.\\
- Alice farà quindi \\( (g^b\ mod\ p)^a\ mod\ p \\) mentre Bob farà \\( (g^a\ mod\ p)^b\ mod\ p \\).
+ Alice farà quindi \\( (g^b \bmod p)^a \bmod p \\) mentre Bob farà \\( (g^a \bmod p)^b \bmod p \\).
 
-Al termine di queste operazioni, sia Alice che Bob sono in possesso di \\(g^{ab}=g^{ba} \\). E potranno usare questo come chiave condivisa.
+Al termine di queste operazioni, sia Alice che Bob sono in possesso di \\( g^{ab} \bmod p = g^{ba} \bmod p \\). E potranno usare questo come chiave condivisa.
 
 ##### Allerta, qui si parla di matematica!!
-Qui arriva la parte complicata, convincervi che questa cosa funziona senza entrare in dettagli matematici complessi. Chiaramente tutta questa cosa funziona perchè usiamo quel famoso operatore <i>modulo</i>, senza infatti quello, tutto questo protocollo crollerebbe perchè potrei facilmente capire qual era il numero segreto di Alice semplicemente facendo \\( \log_g{g^a} \\). (Ok, ok, forse il logaritmo non è proprio la cosa più familiare a tutti ma fidatevi, è una cosa davvero semplicissima da fare).
+Qui arriva la parte complicata, convincervi che questa cosa funziona senza entrare in dettagli matematici complessi. Chiaramente tutta questa cosa funziona perchè usiamo quel famoso operatore <i>modulo</i>, senza infatti quello, tutto questo protocollo crollerebbe perchè potrei facilmente capire qual era il numero segreto di Alice semplicemente facendo \\( \log_g g^a \\). (Ok, ok, forse il logaritmo non è proprio la cosa più familiare a tutti ma fidatevi, è una cosa davvero semplicissima da fare).
 
 Quando invece ci troviamo con un operatore come quello del modulo, non stiamo più "giocando" con tutti i numeri come siamo abituati a fare ma entriamo in un campo un po' strano dove invertire le operazioni non è più tanto semplice. Volete un esempio?
 
-Proviamo a fare, senza usare il modulo \\( 13 * 5 \\). Quanto fa? Banale, fa 65. Ora, se io volessi trovare quel numero che, preso 65, lo moltiplico e mi torna due è semplice, è \\( \frac{1}{5} \\), difatti \\( 65*\frac{1}{5} = 15\\). Possiamo quindi dire che l'inverso di 5 è \\( \frac{1}{5}\\). 
+Proviamo a fare, senza usare il modulo \\( 13 \cdot 5 \\). Quanto fa? Banale, fa 65. Ora, se io volessi trovare quel numero che, moltiplicato per 65, mi riporta a 13 è semplice, è \\( \frac{1}{5} \\), difatti \\( 65 \cdot \frac{1}{5} = 13 \\). Possiamo quindi dire che l'inverso di 5 è \\( \frac{1}{5} \\). 
 
 Bene, proviamo ora a rifare tutto questo discorso con l'operatore modulo di mezzo. Prendiamo come valore del modulo 23 (numero scelto a caso).
-\\[ 13 * 5 \ mod\ 23 = 19\\]
+\\[ 13 \cdot 5 \bmod 23 = 19 \\]
 A questo punto dobbiamo provare ad invertire l'operazione, cioè trovare un numero tale che 
-\\[ 19 * 14 \ mod\ 23 = 13 \\]
-Quel valore che cerchiamo è 14. Quindi, l'inverso di \\( 14 \ mod\ 23 = 19 \\). Come potete vedere non è banalissimo trovare gli inversi e quindi invertire operazioni così semplici come anche una semplice moltiplicazione... pensate poi se lavoriamo con numeri moooolto mooooooolto grandi.
+\\[ 19 \cdot 14 \bmod 23 = 13 \\]
+Quel valore che cerchiamo è 14. Quindi, l'inverso di 5 modulo 23 è 14, perché \\( 5 \cdot 14 \bmod 23 = 1 \\). Come potete vedere non è banalissimo trovare gli inversi e quindi invertire operazioni così semplici come anche una semplice moltiplicazione... pensate poi se lavoriamo con numeri moooolto mooooooolto grandi.
 
 Se sono riuscito quindi a convincervi che questo operatore modulo complica abbastanza le cose da rendere complesse alcune operazioni, possiamo proseguire...
 
@@ -96,7 +96,7 @@ Ci sono degli algoritmi e dei protocolli che non richiedono di avere una chiave 
  	<b>Protocollo</b>: In informatica un protocollo di comunicazione è un insieme di regole formalmente descritte, definite al fine di favorire la comunicazione tra una o più entità. (Wikipedia)
  </li>
  <li>
- 	<b>Generatore</b>: qui la cosa si fa difficile da spiegare in poche righe, vi rimando alla [pagina Wikipedia](https://it.wikipedia.org/wiki/Generatore_(teoria_dei_numeri)).
+ 	<b>Generatore</b>: qui la cosa si fa difficile da spiegare in poche righe, vi rimando alla <a href="https://it.wikipedia.org/wiki/Generatore_(teoria_dei_numeri)">pagina Wikipedia</a>.
  </li>
 </ul>
 
